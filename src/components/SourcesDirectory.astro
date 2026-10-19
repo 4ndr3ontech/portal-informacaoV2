@@ -1,5 +1,7 @@
 ---
 import { sources } from '../data/sources';
+import SourceCard from './SourceCard.astro';
+import { getCategoryIcon } from '../lib/utils';
 
 const url = new URL(Astro.request.url);
 const search = url.searchParams.get('q')?.toLowerCase() || '';
@@ -17,27 +19,66 @@ const filteredSources = sources.filter(source => {
 
 const totalPages = Math.ceil(filteredSources.length / pageSize);
 const paginatedSources = filteredSources.slice((page - 1) * pageSize, page * pageSize);
+
+const mainCategories = [
+  'brasil', 'mundo', 'politica', 'economia', 
+  'tecnologia', 'ciencia', 'saude', 'esportes'
+];
 ---
 
-<div class="sources-directory">
-  <div class="flex justify-between items-center mb-4">
-    <p class="text-sm text-gray-600">
-      Exibindo {paginatedSources.length} de {filteredSources.length} fontes encontradas ({sources.length} no total)
-    </p>
-    <p class="text-sm font-medium">
-      Página {page} de {totalPages || 1}
-    </p>
-  </div>
-  
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {paginatedSources.map(source => (
-      <div class="card p-4 border rounded shadow-sm">
-        <h3 class="font-bold text-lg">{source.name}</h3>
-        <p class="text-sm text-gray-600 mb-2">{source.description}</p>
-        <a href={source.url} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline text-sm font-medium">
-          Acessar Fonte
-        </a>
-      </div>
+<div class="space-y-8">
+  <!-- Seletor Rápido de Categorias com Ícones -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+    {mainCategories.map(cat => (
+      <a
+        href={`?category=${cat}`}
+        class:list={[
+          "flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all duration-200",
+          category === cat
+            ? "border-cyan-500 bg-cyan-500/10 text-cyan-400 font-semibold shadow-md shadow-cyan-500/10"
+            : "border-slate-800 bg-slate-900/50 text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white"
+        ]}
+      >
+        <span class="text-2xl mb-1">{getCategoryIcon(cat)}</span>
+        <span class="text-xs capitalize">{cat}</span>
+      </a>
     ))}
   </div>
+
+  <!-- Barra de Informações de Busca e Paginação -->
+  <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-slate-900/40 p-4 rounded-xl border border-slate-800">
+    <p class="text-sm text-slate-400">
+      Exibindo <span class="font-semibold text-white">{paginatedSources.length}</span> de <span class="font-semibold text-white">{filteredSources.length}</span> fontes encontradas
+      {category && <span> na categoria <strong class="text-cyan-400 capitalize">{category}</strong></span>}
+    </p>
+    <p class="text-sm font-medium text-slate-400">
+      Página <span class="text-white">{page}</span> de <span class="text-white">{totalPages || 1}</span>
+    </p>
+  </div>
+
+  <!-- Grid de Cards de Veículos -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    {paginatedSources.map(source => (
+      <SourceCard source={source} />
+    ))}
+  </div>
+
+  <!-- Navegação de Páginas -->
+  {totalPages > 1 && (
+    <div class="flex justify-center items-center gap-2 pt-6">
+      {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+        <a
+          href={`?page=${p}${category ? `&category=${category}` : ''}${search ? `&q=${search}` : ''}`}
+          class:list={[
+            "px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all",
+            p === page
+              ? "bg-cyan-500 text-slate-950 font-bold"
+              : "bg-slate-900 text-slate-400 border border-slate-800 hover:border-slate-700 hover:text-white"
+          ]}
+        >
+          {p}
+        </a>
+      ))}
+    </div>
+  )}
 </div>
