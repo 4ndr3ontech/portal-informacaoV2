@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { products } from '../../data/products';
+import type { AffiliateProduct } from '../../types';
 ---
 
 <BaseLayout 
@@ -44,7 +45,7 @@ import { products } from '../../data/products';
             </tr>
           </thead>
           <tbody id="products-table-body">
-            {products.map((prod) => (
+            {products.map((prod: AffiliateProduct) => (
               <tr>
                 <td><code>{prod.id}</code></td>
                 <td>{prod.name}</td>
@@ -102,7 +103,6 @@ import { products } from '../../data/products';
       if (totalContactsEl) totalContactsEl.textContent = data.totals.contacts;
       if (totalClicksEl) totalClicksEl.textContent = data.totals.clicks;
 
-      // Atualiza cliques por produto na tabela
       if (Array.isArray(data.clicksByProduct)) {
         data.clicksByProduct.forEach((item: { product_id: string; total_clicks: number }) => {
           const cell = document.querySelector(`.click-count[data-product-id="${item.product_id}"]`);
@@ -110,7 +110,6 @@ import { products } from '../../data/products';
         });
       }
 
-      // Renderiza tabela de mensagens de contato
       if (contactsBody) {
         if (!data.contacts || data.contacts.length === 0) {
           contactsBody.innerHTML = '<tr><td colspan="5" class="empty-cell">Nenhuma mensagem registrada até o momento.</td></tr>';
