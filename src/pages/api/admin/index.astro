@@ -1,0 +1,262 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { products } from '../../data/products';
+---
+
+<BaseLayout 
+  title="Painel Administrativo e Métricas" 
+  description="Gestão interna de mensagens recebidas e estatísticas de ofertas do portal."
+>
+  <div class="container admin-container">
+    <header class="admin-header">
+      <div>
+        <h1>Painel de Controle Interno</h1>
+        <p class="subtitle">Monitoramento de engajamento, mensagens e ofertas comerciais.</p>
+      </div>
+      <div class="status-badge" id="db-status">Status: Conectando...</div>
+    </header>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <span class="card-label">Mensagens de Contato</span>
+        <strong class="card-value" id="total-contacts">0</strong>
+      </div>
+      <div class="metric-card">
+        <span class="card-label">Cliques em Afiliados</span>
+        <strong class="card-value" id="total-clicks">0</strong>
+      </div>
+      <div class="metric-card">
+        <span class="card-label">Produtos Cadastrados</span>
+        <strong class="card-value">{products.length}</strong>
+      </div>
+    </div>
+
+    <section class="admin-section">
+      <h2>Desempenho de Cliques por Produto</h2>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID do Produto</th>
+              <th>Nome no Catálogo</th>
+              <th>Categoria</th>
+              <th>Total de Cliques</th>
+            </tr>
+          </thead>
+          <tbody id="products-table-body">
+            {products.map((prod) => (
+              <tr>
+                <td><code>{prod.id}</code></td>
+                <td>{prod.name}</td>
+                <td>{prod.category}</td>
+                <td class="click-count" data-product-id={prod.id}>0</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Últimas Mensagens Recebidas</h2>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Assunto</th>
+              <th>Mensagem</th>
+            </tr>
+          </thead>
+          <tbody id="contacts-table-body">
+            <tr>
+              <td colspan="5" class="empty-cell">Carregando mensagens...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  async function loadDashboardStats() {
+    const statusBadge = document.getElementById('db-status');
+    const totalContactsEl = document.getElementById('total-contacts');
+    const totalClicksEl = document.getElementById('total-clicks');
+    const contactsBody = document.getElementById('contacts-table-body');
+
+    try {
+      const res = await fetch('/api/admin/stats');
+      const data = await res.json();
+
+      if (!data.success) throw new Error('Falha na resposta da API');
+
+      if (statusBadge) {
+        statusBadge.textContent = data.mode === 'live' ? 'D1 Database: Ativo' : 'D1 Database: Modo Local';
+        statusBadge.className = `status-badge ${data.mode === 'live' ? 'online' : 'local'}`;
+      }
+
+      if (totalContactsEl) totalContactsEl.textContent = data.totals.contacts;
+      if (totalClicksEl) totalClicksEl.textContent = data.totals.clicks;
+
+      // Atualiza cliques por produto na tabela
+      if (Array.isArray(data.clicksByProduct)) {
+        data.clicksByProduct.forEach((item: { product_id: string; total_clicks: number }) => {
+          const cell = document.querySelector(`.click-count[data-product-id="${item.product_id}"]`);
+          if (cell) cell.textContent = String(item.total_clicks);
+        });
+      }
+
+      // Renderiza tabela de mensagens de contato
+      if (contactsBody) {
+        if (!data.contacts || data.contacts.length === 0) {
+          contactsBody.innerHTML = '<tr><td colspan="5" class="empty-cell">Nenhuma mensagem registrada até o momento.</td></tr>';
+        } else {
+          contactsBody.innerHTML = data.contacts.map((msg: any) => `
+            <tr>
+              <td>${new Date(msg.created_at).toLocaleDateString('pt-BR')}</td>
+              <td><strong>${msg.name}</strong></td>
+              <td>${msg.email}</td>
+              <td>${msg.subject}</td>
+              <td>${msg.message}</td>
+            </tr>
+          `).join('');
+        }
+      }
+    } catch {
+      if (statusBadge) {
+        statusBadge.textContent = 'Erro ao carregar dados';
+        statusBadge.className = 'status-badge error';
+      }
+    }
+  }
+
+  loadDashboardStats();
+</script>
+
+<style>
+  .admin-container {
+    padding-top: 1rem;
+  }
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .admin-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+  }
+
+  .status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 700;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+  }
+
+  .status-badge.online {
+    background-color: #dcfce7;
+    color: #15803d;
+    border-color: #bbf7d0;
+  }
+
+  .status-badge.local {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border-color: #bae6fd;
+  }
+
+  .status-badge.error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-color: #fecaca;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .metric-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-value {
+    font-size: 2.25rem;
+    font-weight: 900;
+    color: var(--accent-cyan);
+  }
+
+  .admin-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .admin-section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-card);
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .data-table th {
+    background-color: var(--bg-secondary);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .empty-cell {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem !important;
+  }
+</style>
