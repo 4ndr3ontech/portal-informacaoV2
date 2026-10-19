@@ -1,0 +1,43 @@
+---
+import { sources } from '../data/sources';
+
+const url = new URL(Astro.request.url);
+const search = url.searchParams.get('q')?.toLowerCase() || '';
+const category = url.searchParams.get('category') || '';
+const country = url.searchParams.get('country') || '';
+const page = parseInt(url.searchParams.get('page') || '1', 10);
+const pageSize = 24;
+
+const filteredSources = sources.filter(source => {
+  const matchesSearch = !search || source.name.toLowerCase().includes(search) || source.description.toLowerCase().includes(search);
+  const matchesCategory = !category || source.categories.includes(category);
+  const matchesCountry = !country || source.country === country;
+  return matchesSearch && matchesCategory && matchesCountry;
+});
+
+const totalPages = Math.ceil(filteredSources.length / pageSize);
+const paginatedSources = filteredSources.slice((page - 1) * pageSize, page * pageSize);
+---
+
+<div class="sources-directory">
+  <div class="flex justify-between items-center mb-4">
+    <p class="text-sm text-gray-600">
+      Exibindo {paginatedSources.length} de {filteredSources.length} fontes encontradas ({sources.length} no total)
+    </p>
+    <p class="text-sm font-medium">
+      Página {page} de {totalPages || 1}
+    </p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {paginatedSources.map(source => (
+      <div class="card p-4 border rounded shadow-sm">
+        <h3 class="font-bold text-lg">{source.name}</h3>
+        <p class="text-sm text-gray-600 mb-2">{source.description}</p>
+        <a href={source.url} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline text-sm font-medium">
+          Acessar Fonte
+        </a>
+      </div>
+    ))}
+  </div>
+</div>

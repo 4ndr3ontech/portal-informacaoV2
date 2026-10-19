@@ -13,10 +13,10 @@ export interface NewsSource {
   country: string;
   language: string;
   categories: string[];
-  type: 'jornal' | 'revista' | 'agencia' | 'portal';
+  type: 'portal' | 'jornal' | 'revista' | 'agencia' | 'tv' | 'radio';
   active: boolean;
   lastVerified: string;
-  isInternational?: boolean;
+  isInternational: boolean;
 }
 
 export interface AffiliateProduct {

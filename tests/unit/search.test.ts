@@ -13,7 +13,8 @@ const mockSources: NewsSource[] = [
     categories: ['brasil', 'politica'],
     type: 'portal',
     active: true,
-    lastVerified: '2026-10-19'
+    lastVerified: '2026-10-19',
+    isInternational: false
   },
   {
     id: 'bbc',
@@ -38,7 +39,8 @@ const mockSources: NewsSource[] = [
     categories: ['brasil'],
     type: 'portal',
     active: false,
-    lastVerified: '2026-10-19'
+    lastVerified: '2026-10-19',
+    isInternational: false
   }
 ];
 
