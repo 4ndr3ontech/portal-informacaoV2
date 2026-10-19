@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Sobre o Portal" 
+  description="Conheça a missão do PortalInfo em organizar e facilitar o acesso a fontes de jornalismo profissional."
+>
+  <div class="container content-page">
+    <header class="page-header">
+      <h1>Sobre o PortalInfo</h1>
+      <p class="lead">Organizando o acesso à informação de qualidade com transparência e independência.</p>
+    </header>
+
+    <article class="prose">
+      <h2>Nossa Proposta</h2>
+      <p>
+        O <strong>PortalInfo</strong> nasceu com o propósito de agrupar, categorizar e organizar fontes oficiais de notícias e veículos jornalísticos do Brasil e do mundo em uma interface única, rápida e sem poluição visual.
+      </p>
+
+      <p>
+        Não republicamos o conteúdo integral nem copiamos artigos de veículos terceiros. Nosso papel é atuar como um diretório editorial que direciona o leitor diretamente ao site do veículo original responsável pela publicação.
+      </p>
+
+      <h2>Área Comercial e Sustentabilidade</h2>
+      <p>
+        Para garantir o baixo custo operacional e manter a plataforma acessível gratuitamente sem a necessidade de anúncios invasivos, disponibilizamos uma seção de ofertas comerciais recomendadas.
+      </p>
+
+      <p>
+        Os produtos apresentados contêm links do programa de afiliados do Mercado Livre. Quando uma compra é realizada através de nossos links, podemos receber uma comissão sem qualquer custo adicional para o consumidor.
+      </p>
+
+      <h2>Compromisso Editorial</h2>
+      <ul>
+        <li><strong>Transparência:</strong> Identificação clara de links comerciais e de fontes jornalísticas.</li>
+        <li><strong>Acessibilidade e Velocidade:</strong> Interface leve desenvolvida com Astro, focada na rápida navegação em computadores e celulares.</li>
+        <li><strong>Independência:</strong> O portal não possui vínculo com partidos políticos ou grupos de mídia específicos.</li>
+      </ul>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .content-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+</style>

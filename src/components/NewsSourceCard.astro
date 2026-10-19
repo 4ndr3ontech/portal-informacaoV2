@@ -1,0 +1,155 @@
+---
+import type { NewsSource } from '../types';
+import { sanitizeUrl, getExternalLinkProps } from '../lib/links';
+
+interface Props {
+  source: NewsSource;
+}
+
+const { source } = Astro.props;
+const safeUrl = sanitizeUrl(source.url);
+const externalProps = getExternalLinkProps();
+
+const typeLabels: Record<string, string> = {
+  jornal: 'Jornal',
+  revista: 'Revista',
+  agencia: 'Agência',
+  portal: 'Portal'
+};
+---
+
+<article class="source-card">
+  <header class="card-header">
+    <div class="card-meta">
+      <span class="source-type">{typeLabels[source.type] || 'Veículo'}</span>
+      <span class="source-country">{source.country}</span>
+      {source.isInternational && <span class="badge-int">Internacional</span>}
+    </div>
+    <h3 class="source-title">
+      <a href={`/fontes/${source.id}`}>{source.name}</a>
+    </h3>
+  </header>
+
+  <p class="source-description">{source.description}</p>
+
+  <footer class="card-footer">
+    <div class="categories-list">
+      {source.categories.map((cat) => (
+        <a href={`/categorias/${cat}`} class="category-tag">
+          #{cat}
+        </a>
+      ))}
+    </div>
+
+    <div class="action-row">
+      <a 
+        href={safeUrl} 
+        {...externalProps} 
+        class="direct-link"
+        aria-label={`Acessar site oficial de ${source.name}`}
+      >
+        Acessar site original ↗
+      </a>
+    </div>
+  </footer>
+</article>
+
+<style>
+  .source-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .source-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .badge-int {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+    color: var(--accent-blue);
+  }
+
+  .source-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .source-title a {
+    color: var(--text-primary);
+  }
+
+  .source-title a:hover {
+    color: var(--accent-blue);
+  }
+
+  .source-description {
+    font-size: 0.925rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.45;
+  }
+
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+  }
+
+  .categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .category-tag {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background-color: var(--bg-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .category-tag:hover {
+    color: var(--accent-blue);
+    text-decoration: none;
+  }
+
+  .action-row {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .direct-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+  }
+</style>

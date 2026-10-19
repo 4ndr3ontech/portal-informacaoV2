@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Política de Privacidade" 
+  description="Saiba como o PortalInfo trata dados pessoais, cookies e privacidade de acordo com a LGPD."
+>
+  <div class="container content-page">
+    <header class="page-header">
+      <h1>Política de Privacidade</h1>
+      <p class="lead">Última atualização: 19 de outubro de 2026</p>
+    </header>
+
+    <article class="prose">
+      <h2>1. Coleta de Dados</h2>
+      <p>
+        O <strong>PortalInfo</strong> opera prioritariamente como um portal de navegação estática e pública. Não solicitamos cadastro de usuários nem exigimos a criação de contas para navegação nas seções de notícias ou ofertas.
+      </p>
+
+      <h2>2. Utilização de Cookies</h2>
+      <p>
+        Utilizamos cookies estritamente necessários para registrar preferências de interface, como o tema visual selecionado (modo claro ou escuro) e o aceite do aviso de privacidade.
+      </p>
+
+      <h2>3. Links Externos e Afiliados</h2>
+      <p>
+        Nosso portal contém links para veículos de imprensa independentes e anúncios de produtos do <strong>Mercado Livre</strong>. Ao clicar em um link externo, o usuário será direcionado ao ambiente do terceiro, regido por sua respectiva política de privacidade.
+      </p>
+
+      <h2>4. Conformidade com a LGPD</h2>
+      <p>
+        Em cumprimento à Lei Geral de Proteção de Dados (Lei nº 13.709/2018), garantimos o respeito à privacidade dos visitantes, a limitação da coleta ao mínimo necessário e a transparência no uso das ferramentas de navegação.
+      </p>
+
+      <h2>5. Contato sobre Privacidade</h2>
+      <p>
+        Dúvidas ou solicitações relacionadas à privacidade podem ser encaminhadas através da nossa página de <a href="/contato">Contato</a>.
+      </p>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .content-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+
+  .prose h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+</style>

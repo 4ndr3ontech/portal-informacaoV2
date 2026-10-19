@@ -1,0 +1,16 @@
+{
+  "name": "PortalInfo - Fontes de Notícias e Ofertas",
+  "short_name": "PortalInfo",
+  "description": "Diretório de fontes de notícias confiáveis e seleção editorial de ofertas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0284c7",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

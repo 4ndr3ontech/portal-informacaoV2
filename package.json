@@ -1,0 +1,22 @@
+{
+  "name": "portal-informacao",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "astro": "^4.5.0",
+    "typescript": "^5.4.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.5.10",
+    "vitest": "^1.4.0"
+  }
+}

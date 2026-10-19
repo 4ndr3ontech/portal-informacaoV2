@@ -1,0 +1,71 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieNotice from '../components/CookieNotice.astro';
+import { generateSEOMetadata } from '../lib/seo';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { 
+  title, 
+  description = 'Portal de acesso à informação organizando veículos de notícias e ofertas recomendadas.',
+  image
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://seusite.com.br').toString();
+
+const seo = generateSEOMetadata({
+  title,
+  description,
+  canonicalUrl,
+  image
+});
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href={seo.canonical} />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={seo.openGraph.title} />
+    <meta property="og:description" content={seo.openGraph.description} />
+    <meta property="og:url" content={seo.openGraph.url} />
+    <meta property="og:type" content={seo.openGraph.type} />
+    <meta property="og:site_name" content={seo.openGraph.siteName} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content={seo.twitter.card} />
+    <meta name="twitter:title" content={seo.twitter.title} />
+    <meta name="twitter:description" content={seo.twitter.description} />
+  </head>
+  <body>
+    <Header />
+    <main id="main-content" class="main-container">
+      <slot />
+    </main>
+    <Footer />
+    <CookieNotice />
+  </body>
+</html>
+
+<style>
+  .main-container {
+    flex: 1;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+  }
+</style>

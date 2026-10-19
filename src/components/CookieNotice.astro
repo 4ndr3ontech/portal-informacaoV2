@@ -1,0 +1,82 @@
+---
+---
+
+<div id="cookie-notice" class="cookie-banner" role="dialog" aria-label="Aviso de cookies e privacidade" hidden>
+  <div class="container cookie-content">
+    <p class="cookie-text">
+      Utilizamos cookies essenciais e tecnologias de medição para garantir o funcionamento correto e melhorar sua navegação. Para saber mais, acesse nossa <a href="/privacidade">Política de Privacidade</a>.
+    </p>
+    <div class="cookie-actions">
+      <button id="accept-cookies" class="cookie-btn primary">Entendi e Aceitar</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-card);
+    border-top: 2px solid var(--accent-blue);
+    padding: 1rem 0;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .cookie-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 640px) {
+    .cookie-content {
+      flex-direction: row;
+    }
+  }
+
+  .cookie-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .cookie-text a {
+    color: var(--accent-blue);
+    font-weight: 600;
+  }
+
+  .cookie-btn {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .cookie-btn:hover {
+    background-color: var(--accent-blue-hover);
+  }
+</style>
+
+<script>
+  const cookieNotice = document.getElementById('cookie-notice');
+  const acceptBtn = document.getElementById('accept-cookies');
+
+  if (cookieNotice && !localStorage.getItem('cookies_accepted')) {
+    cookieNotice.removeAttribute('hidden');
+  }
+
+  acceptBtn?.addEventListener('click', () => {
+    localStorage.setItem('cookies_accepted', 'true');
+    cookieNotice?.setAttribute('hidden', 'true');
+  });
+</script>

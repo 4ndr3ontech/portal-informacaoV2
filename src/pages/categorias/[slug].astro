@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsSourceList from '../../components/NewsSourceList.astro';
+import { categories } from '../../data/categories';
+import { sources } from '../../data/sources';
+import { searchSources } from '../../lib/search';
+
+export function getStaticPaths() {
+  return categories.map((cat) => ({
+    params: { slug: cat.slug },
+    props: { category: cat }
+  }));
+}
+
+const { category } = Astro.props;
+const categorySources = searchSources(sources, { category: category.slug });
+---
+
+<BaseLayout 
+  title={`Notícias e Fontes de ${category.name}`}
+  description={category.description}
+>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Navegação em migalhas de pão">
+      <a href="/">Início</a> &gt; <a href="/noticias">Notícias</a> &gt; <span>{category.name}</span>
+    </nav>
+
+    <header class="category-header">
+      <h1>Fontes de {category.name}</h1>
+      <p>{category.description}</p>
+    </header>
+
+    <NewsSourceList sources={categorySources} />
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumb a {
+    color: var(--text-secondary);
+  }
+
+  .category-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+  }
+
+  .category-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .category-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+</style>

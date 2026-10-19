@@ -1,0 +1,106 @@
+---
+import type { NewsSource } from '../types';
+import { sanitizeUrl, getExternalLinkProps } from '../lib/links';
+
+interface Props {
+  source: NewsSource;
+}
+
+const { source } = Astro.props;
+const safeUrl = sanitizeUrl(source.url);
+const externalProps = getExternalLinkProps();
+---
+
+<div class="featured-banner">
+  <div class="featured-badge">Veículo em Destaque</div>
+  <div class="featured-content">
+    <h2><a href={`/fontes/${source.id}`}>{source.name}</a></h2>
+    <p>{source.description}</p>
+    <div class="featured-actions">
+      <a href={safeUrl} {...externalProps} class="featured-button">
+        Acessar portal oficial ↗
+      </a>
+      <a href={`/fontes/${source.id}`} class="details-button">
+        Ver detalhes
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .featured-banner {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 2px solid var(--accent-cyan);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    position: relative;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -0.75rem;
+    left: 1.5rem;
+    background-color: var(--accent-cyan);
+    color: #0f172a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .featured-content h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .featured-content h2 a {
+    color: var(--text-primary);
+  }
+
+  .featured-content p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    max-width: 800px;
+  }
+
+  .featured-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .featured-button {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .featured-button:hover {
+    background-color: var(--accent-blue-hover);
+    text-decoration: none;
+  }
+
+  .details-button {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .details-button:hover {
+    background-color: var(--border-color);
+    text-decoration: none;
+  }
+</style>
