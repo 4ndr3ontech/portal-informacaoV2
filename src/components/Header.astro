@@ -96,16 +96,8 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
       </div>
     </nav>
 
-    <!-- Ações e Busca (Direita) -->
+    <!-- Ações e Login Admin (Direita) -->
     <div class="flex items-center gap-2.5 flex-shrink-0">
-      <a
-        href="/noticias"
-        class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/40 transition-all cursor-pointer flex items-center justify-center"
-        title="Buscar veículos"
-      >
-        🔍
-      </a>
-
       <button
         type="button"
         class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-amber-400 hover:border-amber-500/40 transition-all cursor-pointer"
@@ -114,12 +106,16 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
         ☀️
       </button>
 
-      <!-- Botão Acessar Rápido -->
+      <!-- Botão Entrar (Área Admin / Restrita) -->
       <a
-        href="/noticias"
-        class="hidden lg:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/15 transition-all active:scale-95"
+        href="/admin/login"
+        class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 text-slate-200 hover:text-cyan-400 font-semibold text-xs transition-all shadow-sm"
+        title="Acesso restrito para administradores"
       >
-        Explorar Fontes ↗
+        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        <span>Entrar</span>
       </a>
     </div>
   </div>
