@@ -21,7 +21,7 @@ const typeLabels: Record<string, string> = {
 <article class="source-card">
   <header class="card-header">
     <div class="card-meta">
-      <span class="source-type">{typeLabels[source.type] || 'Veículo'}</span>
+      <span class="source-type">{typeLabels[source.type || 'portal'] || 'Veículo'}</span>
       <span class="source-country">{source.country}</span>
       {source.isInternational && <span class="badge-int">Internacional</span>}
     </div>

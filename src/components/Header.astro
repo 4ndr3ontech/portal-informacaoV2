@@ -1,84 +1,141 @@
 ---
+import { getCategoryIcon } from '../lib/utils';
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/noticias', label: 'Notícias' },
+  { href: '/ofertas', label: 'Ofertas' },
+  { href: '/sobre', label: 'Sobre' },
+];
+
+const categories = [
+  { slug: 'brasil', label: 'Brasil' },
+  { slug: 'mundo', label: 'Mundo' },
+  { slug: 'politica', label: 'Política' },
+  { slug: 'economia', label: 'Economia' },
+  { slug: 'tecnologia', label: 'Tecnologia' },
+  { slug: 'esportes', label: 'Esportes' },
+  { slug: 'ciencia', label: 'Ciência' },
+  { slug: 'saude', label: 'Saúde' },
+];
+
+const currentDate = new Date().toLocaleDateString('pt-BR', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long'
+});
 ---
 
-<header class="w-full bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800/80 sticky top-0 z-50 backdrop-blur-md transition-colors duration-200">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<header class="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl transition-all">
+  
+  <!-- Topbar Informativa -->
+  <div class="hidden sm:block border-b border-slate-800/50 bg-slate-900/40 py-1.5 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] text-slate-400 font-medium">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 text-emerald-400">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Fontes Atualizadas em Tempo Real
+        </span>
+        <span class="text-slate-700">•</span>
+        <span class="capitalize text-slate-400">{currentDate}</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="/contato" class="hover:text-cyan-400 transition-colors">Contato</a>
+        <a href="/privacidade" class="hover:text-cyan-400 transition-colors">Privacidade</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header Navigation -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
     
-    <!-- Logótipo -->
-    <a href="/" class="text-xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-0.5">
-      Portal<span class="text-cyan-600 dark:text-cyan-400">Info</span>
+    <!-- Logo Modernizado -->
+    <a href="/" class="flex items-center gap-3 group focus:outline-none">
+      <div class="relative flex items-center justify-center h-11 w-11 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 group-hover:scale-105 transition-all duration-300">
+        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+          <span class="font-black text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+            P
+          </span>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl sm:text-3xl font-black tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+            Portal<span class="text-cyan-400">Info</span>
+          </span>
+          <span class="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase tracking-widest">
+            PRO
+          </span>
+        </div>
+        <span class="text-[10px] text-slate-400 tracking-wider uppercase font-mono font-medium -mt-1 hidden sm:block">
+          Diretório de Mídia
+        </span>
+      </div>
     </a>
 
-    <!-- Navegação Desktop -->
-    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
-      <a href="/" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Início</a>
-      <a href="/noticias" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Notícias</a>
-      <a href="/ofertas" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Ofertas</a>
-      <a href="/sobre" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Sobre</a>
-      <a href="/contato" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Contato</a>
+    <!-- Nav Links Centralizados -->
+    <nav class="hidden md:flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800/80 shadow-inner">
+      {navLinks.map((link) => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class:list={[
+              "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200",
+              isActive
+                ? "bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20 font-bold"
+                : "text-slate-300 hover:text-white hover:bg-slate-800/60"
+            ]}
+          >
+            {link.label}
+          </a>
+        );
+      })}
     </nav>
 
-    <!-- Controlos: Tema e Menu Mobile -->
-    <div class="flex items-center gap-3">
-      <!-- Botão de Alternância de Tema -->
-      <button
-        id="theme-toggle"
-        type="button"
-        aria-label="Alternar modo escuro/claro"
-        class="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+    <!-- Ações e Busca -->
+    <div class="flex items-center gap-2.5">
+      <a
+        href="/noticias"
+        class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/40 transition-all cursor-pointer flex items-center justify-center"
+        title="Buscar veículos"
       >
-        <!-- Ícone Sol (Modo Claro) -->
-        <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <!-- Ícone Lua (Modo Escuro) -->
-        <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
+        🔍
+      </a>
+
+      <button
+        type="button"
+        class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-amber-400 hover:border-amber-500/40 transition-all cursor-pointer"
+        title="Alternar tema"
+      >
+        ☀️
       </button>
 
-      <!-- Botão Menu Mobile -->
-      <button
-        id="menu-toggle"
-        type="button"
-        aria-label="Abrir menu de navegação"
-        class="md:hidden p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+      <!-- Botão Acessar Rápido -->
+      <a
+        href="/noticias"
+        class="hidden lg:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/15 transition-all active:scale-95"
       >
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+        Explorar Fontes ↗
+      </a>
     </div>
-
   </div>
 
-  <!-- Menu Dropdown Mobile -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-3">
-    <a href="/" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Início</a>
-    <a href="/noticias" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Notícias</a>
-    <a href="/ofertas" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Ofertas</a>
-    <a href="/sobre" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Sobre</a>
-    <a href="/contato" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Contato</a>
+  <!-- Sub-barra com Pills de Categorias -->
+  <div class="border-t border-slate-900 bg-slate-950/60 py-2.5 overflow-x-auto scrollbar-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-xs font-medium whitespace-nowrap">
+      <span class="text-slate-500 text-[11px] font-mono uppercase tracking-wider pr-1 hidden sm:inline-block">Categorias:</span>
+      {categories.map((cat) => (
+        <a
+          href={`/noticias?category=${encodeURIComponent(cat.slug)}`}
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/40 hover:bg-slate-800 transition-all duration-200"
+        >
+          <span>{getCategoryIcon(cat.slug)}</span>
+          <span>{cat.label}</span>
+        </a>
+      ))}
+    </div>
   </div>
+
 </header>
-
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      });
-    }
-
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
-  });
-</script>

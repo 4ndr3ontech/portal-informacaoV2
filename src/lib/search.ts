@@ -5,47 +5,47 @@ export interface SearchOptions {
   category?: string;
   country?: string;
   language?: string;
-  isInternational?: boolean;
 }
 
 export function searchSources(sources: NewsSource[], options: SearchOptions = {}): NewsSource[] {
   return sources.filter((source) => {
-    if (!source.active) return false;
-
-    if (options.category && options.category !== 'todas') {
-      if (!source.categories.includes(options.category)) {
-        return false;
-      }
+    // Ignora fontes inativas
+    if (source.active === false) {
+      return false;
     }
 
+    // Filtro de Categoria
+    if (options.category) {
+      const targetCat = options.category.toLowerCase().trim();
+      const hasCat = source.categories?.some((c) => c.toLowerCase() === targetCat);
+      if (!hasCat) return false;
+    }
+
+    // Filtro de País
     if (options.country) {
-      if (source.country.toLowerCase() !== options.country.toLowerCase()) {
+      if (!source.country || source.country.toLowerCase() !== options.country.toLowerCase()) {
         return false;
       }
     }
 
+    // Filtro de Idioma
     if (options.language) {
-      if (source.language.toLowerCase() !== options.language.toLowerCase()) {
+      if (!source.language || source.language.toLowerCase() !== options.language.toLowerCase()) {
         return false;
       }
     }
 
-    if (options.isInternational !== undefined) {
-      if (Boolean(source.isInternational) !== options.isInternational) {
-        return false;
-      }
-    }
-
+    // Busca Textual Geral
     if (options.query) {
-      const q = options.query.trim().toLowerCase();
-      if (!q) return true;
-
+      const q = options.query.toLowerCase().trim();
       const nameMatch = source.name.toLowerCase().includes(q);
-      const descMatch = source.description.toLowerCase().includes(q);
-      const countryMatch = source.country.toLowerCase().includes(q);
-      const categoryMatch = source.categories.some((cat) => cat.toLowerCase().includes(q));
+      const descMatch = (source.description || '').toLowerCase().includes(q);
+      const countryMatch = (source.country || '').toLowerCase().includes(q);
+      const catMatch = source.categories?.some((c) => c.toLowerCase().includes(q));
 
-      return nameMatch || descMatch || countryMatch || categoryMatch;
+      if (!nameMatch && !descMatch && !countryMatch && !catMatch) {
+        return false;
+      }
     }
 
     return true;

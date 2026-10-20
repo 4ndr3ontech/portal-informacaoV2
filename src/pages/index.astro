@@ -1,73 +1,95 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SearchBar from '../components/SearchBar.astro';
 import SourceCard from '../components/SourceCard.astro';
 import { sources } from '../data/sources';
-import { categories } from '../data/categories';
-import { getCategoryIcon } from '../lib/utils';
-import type { NewsSource } from '../types';
+import { getFaviconUrl, getCountryFlag, getCategoryIcon } from '../lib/utils';
 
-// Fontes em destaque / ativas
-const featuredSources = sources.filter((s: NewsSource) => s.active).slice(0, 8);
+// Veículo em destaque padrão (Fallback para a renderização estática)
+const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
+const totalSources = sources.length;
+const nationalSources = sources.filter(s => s.country === 'BR').slice(0, 6);
+
+const categoriesList = [
+  { slug: 'brasil', label: 'Brasil', desc: 'Principais veículos de notícias nacionais' },
+  { slug: 'mundo', label: 'Mundo', desc: 'Análises e acontecimentos internacionais' },
+  { slug: 'politica', label: 'Política', desc: 'Bastidores dos poderes executivo e legislativo' },
+  { slug: 'economia', label: 'Economia', desc: 'Mercado financeiro, negócios e finanças' },
+  { slug: 'tecnologia', label: 'Tecnologia', desc: 'IA, software, inovação e cultura digital' },
+  { slug: 'ciencia', label: 'Ciência', desc: 'Pesquisas, astronomia e descobertas' },
+  { slug: 'saude', label: 'Saúde', desc: 'Avanços médicos e políticas públicas' },
+  { slug: 'esportes', label: 'Esportes', desc: 'Futebol, ligas mundiais e modalidades' },
+];
 ---
 
-<BaseLayout
-  title="PortalInfo | Conectando você aos maiores veículos de informação do planeta."
-  description="Navegue pelas manchetes e fontes de notícias verificadas do Brasil e do mundo."
->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 w-full">
+<BaseLayout title="Início | PortalInfo">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 w-full">
+    
+    <!-- Hero Section -->
+    <section class="relative text-center py-12 px-4 rounded-3xl bg-gradient-to-b from-slate-900/90 via-slate-900/40 to-transparent border border-slate-800/80 shadow-2xl overflow-hidden">
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none"></div>
 
-    <!-- Hero Banner -->
-    <section class="relative rounded-3xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8 sm:p-14 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden transition-colors duration-300">
-      <div class="relative z-10 max-w-3xl mx-auto text-center space-y-6">
-        
-        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 text-cyan-700 dark:text-cyan-400 text-xs font-semibold tracking-wide shadow-xs">
-          <span class="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse"></span>
-          {sources.length} Fontes Verificadas e Ativas
-        </span>
-
-        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.15]">
-          Diretório Global de <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">Fontes de Informação</span>
-        </h1>
-
-        <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
-          Conectando você aos maiores veículos de informação do planeta com direcionamento simples e direto.
-        </p>
-
-        <!-- Barra de Pesquisa -->
-        <div class="max-w-xl mx-auto pt-2">
-          <SearchBar />
-        </div>
-
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold mb-6">
+        <span class="h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+        <span>{totalSources} Fontes Verificadas e Ativas</span>
       </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-400 mb-4 max-w-4xl mx-auto leading-tight">
+        Diretório Global de Fontes de Informação
+      </h1>
+
+      <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
+        Acesso direto aos principais veículos de jornalismo do Brasil e do mundo, curados e validados rigorosamente.
+      </p>
+
+      <form action="/noticias" method="GET" class="max-w-2xl mx-auto relative group">
+        <div class="flex items-center rounded-2xl bg-slate-900/90 border border-slate-700/80 p-2 shadow-xl shadow-cyan-500/5 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+          <span class="pl-3 text-slate-400 text-lg">🔍</span>
+          <input
+            type="text"
+            name="q"
+            aria-label="Buscar por veículo, país, idioma ou palavra-chave"
+            placeholder="Buscar por veículo, país, idioma ou palavra-chave..."
+            class="w-full bg-transparent px-3 py-2 text-white placeholder-slate-500 focus:outline-none text-sm"
+          />
+          <button
+            type="submit"
+            class="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-md shadow-cyan-500/20 active:scale-95"
+          >
+            Buscar
+          </button>
+        </div>
+      </form>
     </section>
 
-    <!-- Seção de Categorias -->
+    <!-- Explore por Categoria -->
     <section class="space-y-6">
-      <div class="space-y-1">
-        <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-          Explore por Categoria
-        </h2>
-        <p class="text-slate-600 dark:text-slate-400 text-sm">
-          Navegue pelas editorias mais acessadas do portal
-        </p>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-white tracking-tight">Explore por Categoria</h2>
+          <p class="text-sm text-slate-400 mt-1">Navegue pelas editorias mais acessadas do portal</p>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {categories.slice(0, 6).map((cat) => (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {categoriesList.map(cat => (
           <a
-            href={`/categorias/${cat.slug}`}
-            class="group p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all duration-200 flex items-start gap-4"
+            href={`/noticias?category=${cat.slug}`}
+            class="group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-900 hover:shadow-xl hover:shadow-cyan-500/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
           >
-            <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-2xl group-hover:scale-110 transition-transform">
-              {getCategoryIcon(cat.slug)}
-            </div>
-            <div class="space-y-1">
-              <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                {cat.name}
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-3xl p-2 rounded-xl bg-slate-800/80 border border-slate-700/50 group-hover:scale-110 group-hover:border-cyan-500/30 transition-all">
+                  {getCategoryIcon(cat.slug)}
+                </span>
+                <span class="text-xs text-slate-500 group-hover:text-cyan-400 transition-colors font-mono">
+                  Explorar ↗
+                </span>
+              </div>
+              <h3 class="text-base font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                {cat.label}
               </h3>
-              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                {cat.description}
+              <p class="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                {cat.desc}
               </p>
             </div>
           </a>
@@ -75,27 +97,96 @@ const featuredSources = sources.filter((s: NewsSource) => s.active).slice(0, 8);
       </div>
     </section>
 
-    <!-- Seção de Veículos em Destaque -->
+    <!-- Veículo em Destaque (Atualizado dinamicamente via JS) -->
+    {featuredSource && (
+      <section class="space-y-4" id="featured-section">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+            <h2 class="text-xl font-bold text-white">Veículo em Destaque</h2>
+          </div>
+          <span 
+            id="featured-click-badge"
+            data-source-id={featuredSource.id}
+            class="text-xs font-semibold text-slate-300 bg-slate-800 px-3 py-1 rounded-full border border-slate-700/80"
+          >
+            🔥 0 acessos
+          </span>
+        </div>
+
+        <div class="relative rounded-2xl border border-cyan-500/40 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-800/50 p-6 lg:p-8 shadow-xl shadow-cyan-500/10 flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden">
+          <div class="space-y-4 max-w-2xl">
+            <div class="flex items-center gap-3">
+              <img
+                id="featured-logo"
+                src={getFaviconUrl(featuredSource.url, 128)}
+                alt={`Logo ${featuredSource.name}`}
+                class="h-12 w-12 rounded-xl bg-slate-800 p-2 object-contain border border-slate-700/80 shadow-md"
+                loading="lazy"
+                {...{ onerror: "this.onerror=null; this.src='/default-icon.svg';" }}
+              />
+              <div>
+                <span class="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
+                  Destaque da Semana
+                </span>
+                <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                  <span id="featured-name">{featuredSource.name}</span>
+                  <span id="featured-flag" class="text-base">{getCountryFlag(featuredSource.country || 'Global')}</span>
+                </h3>
+              </div>
+            </div>
+
+            <p id="featured-desc" class="text-slate-300 text-sm leading-relaxed">
+              {featuredSource.description || 'Plataforma e veículo de comunicação.'}
+            </p>
+
+            <div id="featured-categories" class="flex flex-wrap items-center gap-2 pt-1">
+              {(featuredSource.categories || ['geral']).map(cat => (
+                <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center gap-1">
+                  <span>{getCategoryIcon(cat)}</span>
+                  <span class="capitalize">{cat}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row md:flex-col gap-3 min-w-[200px]">
+            <a
+              id="featured-url"
+              href={featuredSource.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track-source={featuredSource.id}
+              class="track-click-btn px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm text-center transition-all shadow-lg shadow-cyan-500/20 active:scale-95"
+            >
+              Acessar portal oficial ↗
+            </a>
+            <a
+              id="featured-link"
+              href={`/fontes/${featuredSource.id}`}
+              class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/80 text-sm font-semibold text-center transition-all"
+            >
+              Ver ficha completa
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Principais Veículos Nacionais -->
     <section class="space-y-6">
       <div class="flex items-center justify-between">
-        <div class="space-y-1">
-          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-            Veículos em Destaque
-          </h2>
-          <p class="text-slate-600 dark:text-slate-400 text-sm">
-            Fontes verificadas e com alto volume de acessos
-          </p>
+        <div>
+          <h2 class="text-2xl font-bold text-white tracking-tight">Principais Veículos Nacionais</h2>
+          <p class="text-sm text-slate-400 mt-1">Fontes brasileiras com alta cobertura e relevância</p>
         </div>
-        <a
-          href="/noticias"
-          class="text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1"
-        >
-          Ver todas as fontes <span>→</span>
+        <a href="/noticias?country=BR" class="text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors">
+          Ver todas as fontes ➔
         </a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {featuredSources.map((source: NewsSource) => (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {nationalSources.map(source => (
           <SourceCard source={source} />
         ))}
       </div>
@@ -103,3 +194,92 @@ const featuredSources = sources.filter((s: NewsSource) => s.active).slice(0, 8);
 
   </main>
 </BaseLayout>
+
+<!-- Script dinâmico de contagem de cliques e atualização do Destaque -->
+<script is:inline define:vars={{ allSources: sources }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const badge = document.getElementById('featured-click-badge');
+    const featuredLogo = document.getElementById('featured-logo');
+    const featuredName = document.getElementById('featured-name');
+    const featuredFlag = document.getElementById('featured-flag');
+    const featuredDesc = document.getElementById('featured-desc');
+    const featuredCategories = document.getElementById('featured-categories');
+    const featuredUrl = document.getElementById('featured-url');
+    const featuredLink = document.getElementById('featured-link');
+
+    const countryFlags = {
+      BR: '🇧🇷', US: '🇺🇸', GB: '🇬🇧', AR: '🇦🇷', MX: '🇲🇽',
+      CL: '🇨🇱', CO: '🇨🇴', PE: '🇵🇪', UY: '🇺🇾', ES: '🇪🇸',
+      PT: '🇵🇹', FR: '🇫🇷', DE: '🇩🇪', IT: '🇮🇹', CA: '🇨🇦',
+      AU: '🇦🇺', JP: '🇯🇵', CN: '🇨🇳', IN: '🇮🇳'
+    };
+
+    const categoryIcons = {
+      brasil: '🇧🇷', mundo: '🌐', politica: '⚖️', economia: '📈',
+      tecnologia: '💻', ciencia: '🔬', saude: '🏥', esportes: '⚽', geral: '📌'
+    };
+
+    const getClicks = (id) => parseInt(localStorage.getItem(`clicks_${id}`) || '0', 10);
+    const setClicks = (id, count) => localStorage.setItem(`clicks_${id}`, count.toString());
+
+    function updateFeaturedCard() {
+      if (!allSources || allSources.length === 0) return;
+
+      const sortedSources = [...allSources].map(s => ({
+        ...s,
+        clicks: getClicks(s.id)
+      })).sort((a, b) => b.clicks - a.clicks);
+
+      const topSource = sortedSources[0];
+
+      if (topSource && featuredName) {
+        if (badge) {
+          badge.setAttribute('data-source-id', topSource.id);
+          badge.textContent = `🔥 ${topSource.clicks} ${topSource.clicks === 1 ? 'acesso' : 'acessos'}`;
+        }
+        featuredName.textContent = topSource.name;
+        if (featuredFlag) featuredFlag.textContent = countryFlags[topSource.country] || '🌐';
+        if (featuredDesc) featuredDesc.textContent = topSource.description || 'Plataforma e veículo de comunicação.';
+        if (featuredLogo) {
+          featuredLogo.src = `https://www.google.com/s2/favicons?domain=${topSource.url}&sz=128`;
+          featuredLogo.alt = `Logo ${topSource.name}`;
+        }
+        if (featuredUrl) {
+          featuredUrl.href = topSource.url;
+          featuredUrl.setAttribute('data-track-source', topSource.id);
+        }
+        if (featuredLink) {
+          featuredLink.href = `/fontes/${topSource.id}`;
+        }
+        if (featuredCategories) {
+          const cats = topSource.categories || ['geral'];
+          featuredCategories.innerHTML = cats.map(cat => `
+            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center gap-1">
+              <span>${categoryIcons[cat] || '📌'}</span>
+              <span class="capitalize">${cat}</span>
+            </span>
+          `).join('');
+        }
+      }
+    }
+
+    updateFeaturedCard();
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link) return;
+
+      let sourceId = link.getAttribute('data-track-source');
+      if (!sourceId && link.href) {
+        const match = link.href.match(/\/fontes\/([a-zA-Z0-9-]+)/);
+        if (match) sourceId = match[1];
+      }
+
+      if (sourceId) {
+        const currentClicks = getClicks(sourceId) + 1;
+        setClicks(sourceId, currentClicks);
+        updateFeaturedCard();
+      }
+    });
+  });
+</script>

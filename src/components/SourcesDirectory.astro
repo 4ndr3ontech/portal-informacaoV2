@@ -1,84 +1,190 @@
 ---
-import { sources } from '../data/sources';
-import SourceCard from './SourceCard.astro';
-import { getCategoryIcon } from '../lib/utils';
+import NewsSourceCard from './NewsSourceCard.astro';
+import type { NewsSource } from '../types';
 
-const url = new URL(Astro.request.url);
-const search = url.searchParams.get('q')?.toLowerCase() || '';
-const category = url.searchParams.get('category') || '';
-const country = url.searchParams.get('country') || '';
-const page = parseInt(url.searchParams.get('page') || '1', 10);
-const pageSize = 24;
+interface Props {
+  sources: NewsSource[];
+}
 
+const { sources } = Astro.props;
+
+// Parâmetros de URL para busca, paginação e limite por página
+const url = Astro.url;
+const search = url.searchParams.get('q')?.toLowerCase().trim() || '';
+const selectedCategory = url.searchParams.get('category')?.toLowerCase().trim() || '';
+const selectedCountry = url.searchParams.get('country')?.toUpperCase().trim() || '';
+const currentPage = parseInt(url.searchParams.get('page') || '1', 10);
+
+// Permite ao usuário escolher o limite de itens por página (padrão: 24, opções: 24, 48, 96, 150)
+const allowedLimits = [24, 48, 96, 150];
+const queryLimit = parseInt(url.searchParams.get('limit') || '24', 10);
+const itemsPerPage = allowedLimits.includes(queryLimit) ? queryLimit : 24;
+
+// Nome limpo e formatado da categoria (ex: economia -> Economia)
+const formattedCategoryName = selectedCategory ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) : '';
+
+// Filtragem robusta no servidor (SSG/SSR)
 const filteredSources = sources.filter(source => {
-  const matchesSearch = !search || source.name.toLowerCase().includes(search) || source.description.toLowerCase().includes(search);
-  const matchesCategory = !category || source.categories.includes(category);
-  const matchesCountry = !country || source.country === country;
-  return matchesSearch && matchesCategory && matchesCountry;
+  if (source.active === false) return false;
+
+  if (selectedCategory && (!source.categories || !source.categories.includes(selectedCategory))) {
+    return false;
+  }
+
+  if (selectedCountry && source.country !== selectedCountry) {
+    return false;
+  }
+
+  if (search) {
+    const nameMatch = source.name.toLowerCase().includes(search);
+    const descMatch = (source.description || '').toLowerCase().includes(search);
+    const countryMatch = (source.country || '').toLowerCase().includes(search);
+    const catMatch = source.categories?.some(c => c.toLowerCase().includes(search));
+    if (!nameMatch && !descMatch && !countryMatch && !catMatch) return false;
+  }
+
+  return true;
 });
 
-const totalPages = Math.ceil(filteredSources.length / pageSize);
-const paginatedSources = filteredSources.slice((page - 1) * pageSize, page * pageSize);
+// Paginação dos resultados filtrados
+const totalItems = filteredSources.length;
+const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+const validPage = Math.max(1, Math.min(currentPage, totalPages));
+const startIndex = (validPage - 1) * itemsPerPage;
+const paginatedSources = filteredSources.slice(startIndex, startIndex + itemsPerPage);
 
-const mainCategories = [
-  'brasil', 'mundo', 'politica', 'economia', 
-  'tecnologia', 'ciencia', 'saude', 'esportes'
-];
+// Função auxiliar para manter os parâmetros atuais nos links e seletores
+function createUrlWithParam(key: string, value: string | number) {
+  const params = new URLSearchParams(url.search);
+  params.set(key, value.toString());
+  if (key !== 'page') {
+    params.delete('page'); // Reseta para a página 1 ao alterar o limite ou filtros
+  }
+  return `${url.pathname}?${params.toString()}`;
+}
+
+function createPageUrl(pageNum: number) {
+  const params = new URLSearchParams(url.search);
+  if (pageNum > 1) {
+    params.set('page', pageNum.toString());
+  } else {
+    params.delete('page');
+  }
+  return `${url.pathname}?${params.toString()}`;
+}
 ---
 
-<div class="space-y-8">
-  <!-- Seletor Rápido de Categorias com Ícones -->
-  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-    {mainCategories.map(cat => (
-      <a
-        href={`?category=${cat}`}
-        class:list={[
-          "flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all duration-200",
-          category === cat
-            ? "border-cyan-500 bg-cyan-500/10 text-cyan-400 font-semibold shadow-md shadow-cyan-500/10"
-            : "border-slate-800 bg-slate-900/50 text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white"
-        ]}
-      >
-        <span class="text-2xl mb-1">{getCategoryIcon(cat)}</span>
-        <span class="text-xs capitalize">{cat}</span>
-      </a>
-    ))}
-  </div>
+<div class="space-y-8 w-full">
+  <!-- Título Limpo da Categoria Selecionada -->
+  {selectedCategory && (
+    <div class="text-center space-y-2 pb-2">
+      <h2 class="text-3xl font-extrabold text-white tracking-tight capitalize">
+        {formattedCategoryName}
+      </h2>
+      <p class="text-slate-400 text-sm">
+        Exibindo veículos especializados na editoria de {formattedCategoryName}.
+      </p>
+    </div>
+  )}
 
-  <!-- Barra de Informações de Busca e Paginação -->
-  <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-slate-900/40 p-4 rounded-xl border border-slate-800">
-    <p class="text-sm text-slate-400">
-      Exibindo <span class="font-semibold text-white">{paginatedSources.length}</span> de <span class="font-semibold text-white">{filteredSources.length}</span> fontes encontradas
-      {category && <span> na categoria <strong class="text-cyan-400 capitalize">{category}</strong></span>}
-    </p>
-    <p class="text-sm font-medium text-slate-400">
-      Página <span class="text-white">{page}</span> de <span class="text-white">{totalPages || 1}</span>
-    </p>
-  </div>
+  <!-- Cabeçalho de Resultados, Filtros e Seletor de Quantidade por Página -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+    <div class="text-slate-400 text-sm font-medium flex items-center gap-2 flex-wrap">
+      <span>Exibindo <span class="text-cyan-400 font-bold">{paginatedSources.length}</span> de <span class="text-white font-bold">{totalItems}</span> fontes</span>
+      {selectedCategory && (
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 capitalize">
+          {formattedCategoryName}
+        </span>
+      )}
+      {search && <span> para a busca "<strong class="text-white">{search}</strong>"</span>}
+    </div>
 
-  <!-- Grid de Cards de Veículos -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-    {paginatedSources.map(source => (
-      <SourceCard source={source} />
-    ))}
-  </div>
+    <div class="flex items-center gap-4 flex-wrap">
+      <!-- Seletor de Itens por Página -->
+      <div class="flex items-center gap-2 text-xs text-slate-400">
+        <span>Exibir:</span>
+        <div class="inline-flex rounded-xl bg-slate-900 border border-slate-800 p-1">
+          {allowedLimits.map(limit => (
+            <a
+              href={createUrlWithParam('limit', limit)}
+              class={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
+                itemsPerPage === limit
+                  ? 'bg-cyan-500 text-slate-950 shadow-sm'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              }`}
+            >
+              {limit}
+            </a>
+          ))}
+        </div>
+      </div>
 
-  <!-- Navegação de Páginas -->
-  {totalPages > 1 && (
-    <div class="flex justify-center items-center gap-2 pt-6">
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+      {(search || selectedCategory || selectedCountry || queryLimit !== 24) && (
         <a
-          href={`?page=${p}${category ? `&category=${category}` : ''}${search ? `&q=${search}` : ''}`}
-          class:list={[
-            "px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all",
-            p === page
-              ? "bg-cyan-500 text-slate-950 font-bold"
-              : "bg-slate-900 text-slate-400 border border-slate-800 hover:border-slate-700 hover:text-white"
-          ]}
+          href="/noticias"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl transition-all"
         >
-          {p}
+          ✕ Limpar filtros
         </a>
+      )}
+    </div>
+  </div>
+
+  <!-- Grade de Veículos Otimizada -->
+  {paginatedSources.length > 0 ? (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {paginatedSources.map(source => (
+        <NewsSourceCard source={source} />
       ))}
     </div>
+  ) : (
+    <div class="text-center py-20 bg-slate-900/40 rounded-3xl border border-slate-800/80 p-8 space-y-4">
+      <span class="text-4xl">🔍</span>
+      <h3 class="text-lg font-bold text-white">Nenhum veículo encontrado</h3>
+      <p class="text-slate-400 text-sm max-w-md mx-auto">
+        Não encontramos nenhuma fonte correspondente aos critérios selecionados.
+      </p>
+      <a
+        href="/noticias"
+        class="inline-block mt-4 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-md shadow-cyan-500/20"
+      >
+        Ver todas as fontes
+      </a>
+    </div>
+  )}
+
+  <!-- Controles de Paginação -->
+  {totalPages > 1 && (
+    <nav class="flex items-center justify-center gap-2 pt-6 border-t border-slate-800/80" aria-label="Paginação">
+      {validPage > 1 ? (
+        <a
+          href={createPageUrl(validPage - 1)}
+          class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white text-sm font-semibold transition-all"
+        >
+          ← Anterior
+        </a>
+      ) : (
+        <span class="px-4 py-2 rounded-xl bg-slate-900/50 border border-slate-800/50 text-slate-600 text-sm font-semibold cursor-not-allowed">
+          ← Anterior
+        </span>
+      )}
+
+      <span class="text-sm font-mono text-slate-400 px-4">
+        Página <strong class="text-white">{validPage}</strong> de <strong class="text-white">{totalPages}</strong>
+      </span>
+
+      {validPage < totalPages ? (
+        <a
+          href={createPageUrl(validPage + 1)}
+          class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white text-sm font-semibold transition-all"
+        >
+          Próxima →
+        </a>
+      ) : (
+        <span class="px-4 py-2 rounded-xl bg-slate-900/50 border border-slate-800/50 text-slate-600 text-sm font-semibold cursor-not-allowed">
+          Próxima →
+        </span>
+      )}
+    </nav>
   )}
 </div>

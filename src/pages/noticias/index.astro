@@ -1,105 +1,317 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SearchBar from '../../components/SearchBar.astro';
 import SourceCard from '../../components/SourceCard.astro';
 import { sources } from '../../data/sources';
-import { categories } from '../../data/categories';
-import { searchSources } from '../../lib/search';
 import type { NewsSource } from '../../types';
 
-const query = Astro.url.searchParams.get('q') || '';
-const categoryFilter = Astro.url.searchParams.get('categoria') || '';
-
-const filteredSources = searchSources(sources, {
-  query,
-  category: categoryFilter
-});
+// Total de fontes disponíveis no projeto estático (SSG)
+const allSources: NewsSource[] = sources;
+const totalSources = allSources.length;
 ---
 
-<BaseLayout 
-  title="Diretório de Fontes e Veículos de Notícias | PortalInfo" 
-  description="Explore jornais, portais, revistas e agências de notícias do Brasil e do mundo organizados por categoria."
->
+<BaseLayout title="Diretório de Notícias e Veículos | PortalInfo">
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 w-full">
-
-    <!-- Cabeçalho da Página de Notícias -->
-    <div class="text-center max-w-3xl mx-auto space-y-4">
-      <h1 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-        Diretório de Fontes e Veículos de Notícias
+    
+    <!-- Hero / Busca Header -->
+    <section class="text-center space-y-4 max-w-3xl mx-auto">
+      <h1 id="page-title" class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight capitalize">
+        Diretório de Fontes e Veículos
       </h1>
-      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-        Encontre veículos de comunicação confiáveis com direcionamento direto ao conteúdo original.
+      <p id="page-desc" class="text-slate-400 text-sm sm:text-base">
+        Encontre veículos de comunicação confiáveis organizados por categoria.
       </p>
 
-      <!-- Barra de Pesquisa Integrada -->
-      <div class="max-xl mx-auto pt-2">
-        <SearchBar initialQuery={query} />
+      <form id="search-form" class="pt-4">
+        <div class="flex items-center rounded-2xl bg-slate-900/90 border border-slate-700/80 p-2 shadow-xl focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+          <span class="pl-3 text-slate-400 text-lg">🔍</span>
+          <input
+            id="search-input"
+            type="text"
+            name="q"
+            aria-label="Buscar por veículo, país ou palavra-chave"
+            placeholder="Buscar por veículo, país ou palavra-chave..."
+            class="w-full bg-transparent px-3 py-2 text-white placeholder-slate-500 focus:outline-none text-sm"
+          />
+          <button
+            type="submit"
+            class="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-md shadow-cyan-500/20 active:scale-95 cursor-pointer"
+          >
+            Buscar
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Barra de Filtros Ativos e Contador -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 gap-4">
+      <div class="flex items-center gap-3 flex-wrap">
+        <p class="text-sm text-slate-400">
+          Exibindo <span id="results-count" class="font-bold text-white">{totalSources}</span> fontes
+        </p>
+
+        <!-- Badge da categoria (invisível por defeito, ativado via JS) -->
+        <span id="active-category-badge" class="hidden items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 capitalize">
+          <span id="category-name">Todas</span>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-4 flex-wrap">
+        <!-- Botão para limpar filtros -->
+        <a href="/noticias" id="clear-filters" class="hidden text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
+          ✕ Limpar Filtros
+        </a>
       </div>
     </div>
 
-    <!-- Filtros por Categoria / Tags -->
-    <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start sm:justify-center">
-      <a
-        href="/noticias"
-        class:list={[
-          "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border",
-          !categoryFilter
-            ? "bg-cyan-600 dark:bg-cyan-500 text-white border-cyan-600 dark:border-cyan-500 shadow-sm"
-            : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-cyan-500/50"
-        ]}
-      >
-        Todas
-      </a>
-      {categories.map((cat) => (
-        <a
-          href={`/noticias?categoria=${cat.slug}${query ? `&q=${query}` : ''}`}
-          class:list={[
-            "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border",
-            categoryFilter === cat.slug
-              ? "bg-cyan-600 dark:bg-cyan-500 text-white border-cyan-600 dark:border-cyan-500 shadow-sm"
-              : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-cyan-500/50"
-          ]}
+    <!-- Grid de Fontes Renderizadas -->
+    <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {allSources.map((source: NewsSource, index: number) => (
+        <div 
+          class="source-card-wrapper" 
+          data-index={index}
+          data-name={source.name.toLowerCase()} 
+          data-desc={(source.description || '').toLowerCase()}
+          data-country={(source.country || 'global').toLowerCase()}
+          data-categories={source.categories.join(',').toLowerCase()}
         >
-          {cat.name}
-        </a>
+          <SourceCard source={source} />
+        </div>
       ))}
     </div>
 
-    <!-- Contador de Resultados -->
-    <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-4">
-      <h2 class="text-lg font-bold text-slate-900 dark:text-white">
-        {categoryFilter 
-          ? `Fontes na categoria "${categories.find(c => c.slug === categoryFilter)?.name || categoryFilter}"`
-          : query 
-            ? `Resultados para "${query}"` 
-            : 'Todas as fontes cadastradas'}
-      </h2>
-      <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
-        {filteredSources.length} {filteredSources.length === 1 ? 'veículo encontrado' : 'veículos encontrados'}
-      </span>
-    </div>
+    <!-- Controles de Paginação via Cliente e Seletor de Limite na parte inferior -->
+    <nav id="pagination-nav" class="hidden flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 border-t border-slate-800/80" aria-label="Paginação">
+      
+      <!-- Botões de Navegação -->
+      <div class="flex items-center gap-3">
+        <button
+          id="prev-page-btn"
+          type="button"
+          class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white text-sm font-semibold transition-all cursor-pointer"
+        >
+          ← Anterior
+        </button>
 
-    <!-- Grelha de Cartões Unificada -->
-    <section>
-      {filteredSources.length > 0 ? (
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredSources.map((source: NewsSource) => (
-            <SourceCard source={source} />
-          ))}
-        </div>
-      ) : (
-        <div class="text-center py-20 space-y-3 bg-white dark:bg-slate-900/50 rounded-3xl border border-slate-200 dark:border-slate-800">
-          <p class="text-4xl">🔍</p>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Nenhum veículo encontrado</h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400">Tente pesquisar por outros termos ou remover os filtros aplicados.</p>
-          <div class="pt-2">
-            <a href="/noticias" class="inline-block px-4 py-2 rounded-xl bg-cyan-600 text-white text-xs font-bold hover:bg-cyan-700 transition-colors">
-              Ver todas as fontes
-            </a>
-          </div>
-        </div>
-      )}
-    </section>
+        <span class="text-sm font-mono text-slate-400 px-3">
+          Página <strong id="current-page-num" class="text-white">1</strong> de <strong id="total-pages-num" class="text-white">1</strong>
+        </span>
+
+        <button
+          id="next-page-btn"
+          type="button"
+          class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white text-sm font-semibold transition-all cursor-pointer"
+        >
+          Próxima →
+        </button>
+      </div>
+
+      <!-- Novo Seletor de Quantidade de Páginas movido para o lado direito da paginação -->
+      <div class="flex items-center gap-2 text-xs text-slate-400 sm:ml-4 sm:pl-4 sm:border-l border-slate-800">
+        <label for="limit-select" class="font-medium">Exibir por página:</label>
+        <select id="limit-select" class="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-white focus:outline-none focus:border-cyan-500 cursor-pointer">
+          <option value="24">24</option>
+          <option value="48">48</option>
+          <option value="96">96</option>
+          <option value="150">150</option>
+        </select>
+      </div>
+
+    </nav>
+
+    <!-- Mensagem de Nenhuma Fonte Encontrada -->
+    <div id="no-results" class="hidden text-center py-16 space-y-3">
+      <span class="text-4xl">🔍</span>
+      <h3 class="text-xl font-bold text-white">Nenhum veículo encontrado</h3>
+      <p class="text-slate-400 text-sm">
+        Tente buscar por outros termos ou selecione uma categoria diferente.
+      </p>
+      <a href="/noticias" class="inline-block mt-2 px-4 py-2 rounded-xl bg-slate-800 text-cyan-400 text-xs font-bold border border-slate-700 hover:bg-slate-700 transition-all">
+        Ver todas as fontes
+      </a>
+    </div>
 
   </main>
 </BaseLayout>
+
+<!-- Script do Cliente: Paginação de alta performance e filtragem em tempo real -->
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const rawQ = urlParams.get('q') || '';
+    const rawCategory = urlParams.get('category') || '';
+    const rawCountry = urlParams.get('country') || '';
+    
+    // Lê o limite da URL ou assume 24 por defeito
+    const rawLimit = parseInt(urlParams.get('limit')) || 24;
+    const itemsPerPage = [24, 48, 96, 150].includes(rawLimit) ? rawLimit : 24;
+
+    const normalizeStr = (str) => str ? str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim() : '';
+
+    const queryParam = normalizeStr(rawQ);
+    const categoryParam = normalizeStr(rawCategory);
+    const countryParam = normalizeStr(rawCountry);
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput && rawQ) searchInput.value = rawQ;
+
+    // Configura o valor do seletor e adiciona o evento de alteração
+    const limitSelect = document.getElementById('limit-select');
+    if (limitSelect) {
+      limitSelect.value = itemsPerPage.toString();
+      limitSelect.addEventListener('change', (e) => {
+        const newLimit = e.target.value;
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('limit', newLimit);
+        currentUrl.searchParams.delete('page'); // Volta à página 1
+        window.location.href = currentUrl.toString();
+      });
+    }
+
+    const cards = document.querySelectorAll('.source-card-wrapper');
+    let currentPage = parseInt(urlParams.get('page')) || 1;
+    let matchedCards = [];
+
+    function filterAndPaginate() {
+      matchedCards = [];
+
+      cards.forEach(card => {
+        const name = normalizeStr(card.getAttribute('data-name'));
+        const desc = normalizeStr(card.getAttribute('data-desc'));
+        const categories = normalizeStr(card.getAttribute('data-categories'));
+        const country = normalizeStr(card.getAttribute('data-country'));
+
+        let matchQuery = true;
+        let matchCategory = true;
+        let matchCountry = true;
+
+        if (queryParam) {
+          matchQuery = name.includes(queryParam) || desc.includes(queryParam) || categories.includes(queryParam) || country.includes(queryParam);
+        }
+
+        if (categoryParam) {
+          const catArray = categories.split(',');
+          matchCategory = catArray.includes(categoryParam);
+        }
+
+        if (countryParam) {
+          matchCountry = country === countryParam;
+        }
+
+        if (matchQuery && matchCategory && matchCountry) {
+          matchedCards.push(card);
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      const totalVisible = matchedCards.length;
+      document.getElementById('results-count').textContent = totalVisible;
+
+      if (totalVisible === 0) {
+        document.getElementById('no-results').classList.remove('hidden');
+        document.getElementById('sources-grid').classList.add('hidden');
+        document.getElementById('pagination-nav').classList.add('hidden');
+        return;
+      } else {
+        document.getElementById('no-results').classList.add('hidden');
+        document.getElementById('sources-grid').classList.remove('hidden');
+      }
+
+      const totalPages = Math.ceil(totalVisible / itemsPerPage);
+      if (currentPage > totalPages) currentPage = 1;
+
+      // Exibe apenas os itens da página atual
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+
+      matchedCards.forEach((card, index) => {
+        if (index >= startIndex && index < endIndex) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Controla a exibição da barra de paginação
+      const paginationNav = document.getElementById('pagination-nav');
+      if (totalPages > 1) {
+        paginationNav.classList.remove('hidden');
+        paginationNav.classList.add('flex'); // Usa flex para posicionamento
+        document.getElementById('current-page-num').textContent = currentPage;
+        document.getElementById('total-pages-num').textContent = totalPages;
+
+        document.getElementById('prev-page-btn').disabled = currentPage === 1;
+        document.getElementById('prev-page-btn').style.opacity = currentPage === 1 ? '0.5' : '1';
+
+        document.getElementById('next-page-btn').disabled = currentPage === totalPages;
+        document.getElementById('next-page-btn').style.opacity = currentPage === totalPages ? '0.5' : '1';
+      } else {
+        paginationNav.classList.add('hidden');
+      }
+    }
+
+    // Função para atualizar a URL da página sem recarregar totalmente
+    function updatePageUrl(newPage) {
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('page', newPage);
+      window.history.pushState({}, '', currentUrl);
+      currentPage = newPage;
+      filterAndPaginate();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Botões de navegação da paginação
+    document.getElementById('prev-page-btn').addEventListener('click', () => {
+      if (currentPage > 1) {
+        updatePageUrl(currentPage - 1);
+      }
+    });
+
+    document.getElementById('next-page-btn').addEventListener('click', () => {
+      const totalPages = Math.ceil(matchedCards.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        updatePageUrl(currentPage + 1);
+      }
+    });
+
+    // Executa a filtragem inicial
+    filterAndPaginate();
+
+    if (rawCategory || rawQ || rawCountry || rawLimit !== 24) {
+      const clearBtn = document.getElementById('clear-filters');
+      clearBtn.classList.remove('hidden');
+      clearBtn.classList.add('inline-block');
+    }
+
+    if (rawCategory) {
+      const badge = document.getElementById('active-category-badge');
+      badge.classList.remove('hidden');
+      badge.classList.add('inline-flex');
+      
+      const capitalizedCategory = rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
+      document.getElementById('category-name').textContent = capitalizedCategory;
+      
+      document.getElementById('page-title').textContent = capitalizedCategory;
+      document.getElementById('page-desc').textContent = `Exibindo veículos especializados na editoria de ${capitalizedCategory}.`;
+    }
+
+    const searchForm = document.getElementById('search-form');
+    if (searchForm) {
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newQ = searchInput.value.trim();
+        const currentUrl = new URL(window.location.href);
+        
+        if (newQ) {
+          currentUrl.searchParams.set('q', newQ);
+        } else {
+          currentUrl.searchParams.delete('q');
+        }
+        currentUrl.searchParams.delete('page');
+        
+        window.location.href = currentUrl.toString();
+      });
+    }
+  });
+</script>
