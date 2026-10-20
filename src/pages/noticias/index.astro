@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+<<<<<<< HEAD
 import SourceCard from '../../components/SourceCard.astro';
 import { sources } from '../../data/sources';
 import type { NewsSource } from '../../types';
@@ -83,10 +84,52 @@ const availableTags = [
           ]}
         >
           {tag.label}
+=======
+import SearchBar from '../../components/SearchBar.astro';
+import NewsSourceList from '../../components/NewsSourceList.astro';
+import { sources } from '../../data/sources';
+import { categories } from '../../data/categories';
+import { searchSources } from '../../lib/search';
+
+const query = Astro.url.searchParams.get('q') || '';
+const categoryFilter = Astro.url.searchParams.get('categoria') || '';
+
+const filteredSources = searchSources(sources, {
+  query,
+  category: categoryFilter
+});
+---
+
+<BaseLayout 
+  title="Diretório de Notícias" 
+  description="Explore jornais, portais, revistas e agências de notícias do Brasil e do mundo organizados por categoria."
+>
+  <div class="container">
+    <header class="page-header">
+      <h1>Diretório de Fuentes e Veículos de Notícias</h1>
+      <p class="page-subtitle">Encontre veículos de comunicação confiáveis com direcionamento direto ao conteúdo original.</p>
+      
+      <div class="search-wrapper">
+        <SearchBar initialQuery={query} />
+      </div>
+    </header>
+
+    <div class="filter-pills">
+      <a href="/noticias" class:list={['pill', { active: !categoryFilter }]}>
+        Todas
+      </a>
+      {categories.map((cat) => (
+        <a 
+          href={`/noticias?categoria=${cat.slug}${query ? `&q=${query}` : ''}`} 
+          class:list={['pill', { active: categoryFilter === cat.slug }]}
+        >
+          {cat.name}
+>>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd
         </a>
       ))}
     </div>
 
+<<<<<<< HEAD
     <!-- Contador de Resultados -->
     <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-4">
       <h2 class="text-lg font-bold text-slate-900 dark:text-white">
@@ -121,3 +164,97 @@ const availableTags = [
 
   </main>
 </BaseLayout>
+=======
+    <section class="results-section">
+      <div class="results-header">
+        <h2>
+          {categoryFilter 
+            ? `Fontes na categoria "${categories.find(c => c.slug === categoryFilter)?.name || categoryFilter}"`
+            : 'Todas as fontes cadastradas'
+          }
+        </h2>
+        <span class="count-badge">{filteredSources.length} veículos encontrados</span>
+      </div>
+
+      <NewsSourceList sources={filteredSources} />
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-wrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .pill {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .pill:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    text-decoration: none;
+  }
+
+  .pill.active {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    border-color: var(--accent-blue);
+  }
+
+  .results-section {
+    margin-top: 1rem;
+  }
+
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+  }
+
+  .results-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .count-badge {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+</style>
+>>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd
