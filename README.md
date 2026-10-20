@@ -24,3 +24,4 @@ Ao conectar o repositório ao Cloudflare Pages, utilize exatamente os seguintes 
 # portal-informacaoV2
 # portal-informacaoV2
 # portal-informacaoV2
+# portal-informacaoV2
