@@ -1,250 +1,84 @@
 ---
-<<<<<<< HEAD
-const currentPath = Astro.url.pathname;
-
-const categories = [
-  { slug: 'brasil', label: 'Brasil' },
-  { slug: 'mundo', label: 'Mundo' },
-  { slug: 'politica', label: 'Política' },
-  { slug: 'economia', label: 'Economia' },
-  { slug: 'tecnologia', label: 'Tecnologia' },
-  { slug: 'esportes', label: 'Esportes' },
-];
-
-const navItems = [
-  { href: '/noticias', label: 'Notícias' },
-  { href: '/ofertas', label: 'Ofertas', highlight: true },
-  { href: '/sobre', label: 'Sobre' },
-];
 ---
 
 <header class="w-full bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800/80 sticky top-0 z-50 backdrop-blur-md transition-colors duration-200">
-  
-  <!-- Barra Superior -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-3 items-center h-20">
-      
-      <!-- Coluna Esquerda: Espaçador para equilibrar o layout e garantir o logo perfeitamente ao centro -->
-      <div class="hidden md:block"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    
+    <!-- Logótipo -->
+    <a href="/" class="text-xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-0.5">
+      Portal<span class="text-cyan-600 dark:text-cyan-400">Info</span>
+    </a>
 
-      <!-- Coluna Centro: Logótipo Exatamente no Centro -->
-      <div class="flex justify-start md:justify-center col-span-2 md:col-span-1">
-        <a href="/" class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-0.5">
-          Portal<span class="text-cyan-600 dark:text-cyan-400">Info</span>
-        </a>
-      </div>
-
-      <!-- Coluna Direita: Menu de Navegação + Botão de Tema -->
-      <div class="flex items-center justify-end gap-6">
-        <nav class="hidden md:flex items-center gap-5 text-sm font-semibold text-slate-700 dark:text-slate-300">
-          {navItems.map((item) => (
-            item.highlight ? (
-              <a
-                href={item.href}
-                class:list={[
-                  "px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-2 group relative overflow-hidden",
-                  currentPath.startsWith(item.href)
-                    ? "bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-orange-500/30 ring-2 ring-orange-400/50 scale-105"
-                    : "bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-rose-500/15 text-amber-700 dark:text-amber-400 border border-orange-500/30 hover:from-amber-500 hover:via-orange-500 hover:to-rose-500 hover:text-white hover:border-transparent dark:hover:text-white shadow-sm hover:shadow-orange-500/20 hover:scale-105"
-                ]}
-              >
-                <span class="text-sm animate-bounce">🔥</span>
-                <span class="tracking-wide">Ofertas</span>
-                <span class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-              </a>
-            ) : (
-              <a
-                href={item.href}
-                class:list={[
-                  "transition-colors hover:text-cyan-600 dark:hover:text-cyan-400 py-1",
-                  currentPath.startsWith(item.href)
-                    ? "text-cyan-600 dark:text-cyan-400 font-bold"
-                    : "hover:text-cyan-600 dark:hover:text-cyan-400"
-                ]}
-              >
-                {item.label}
-              </a>
-            )
-          ))}
-        </nav>
-
-        <!-- Web Component Inquebrável para Tema -->
-        <theme-toggle class="flex items-center">
-          <button
-            type="button"
-            aria-label="Alternar Tema Claro e Escuro"
-            class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all focus:outline-none cursor-pointer"
-          >
-            <!-- Ícone Sol (Exibido no Modo Escuro) -->
-            <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <!-- Ícone Lua (Exibido no Modo Claro) -->
-            <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          </button>
-        </theme-toggle>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Sub-barra de Categorias -->
-  <div class="border-t border-slate-200 dark:border-slate-800/60 bg-slate-50/80 dark:bg-slate-950/40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex items-center justify-center gap-6 py-2.5 overflow-x-auto text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
-        {categories.map((cat) => (
-          <a
-            href={`/categorias/${cat.slug}`}
-            class:list={[
-              "transition-colors whitespace-nowrap hover:text-cyan-600 dark:hover:text-cyan-400",
-              currentPath === `/categorias/${cat.slug}` ? "text-cyan-600 dark:text-cyan-400 font-bold" : ""
-            ]}
-          >
-            {cat.label}
-          </a>
-        ))}
-      </nav>
-    </div>
-  </div>
-
-</header>
-
-<script>
-  class ThemeToggle extends HTMLElement {
-    constructor() {
-      super();
-      const button = this.querySelector('button');
-      if (button) {
-        button.addEventListener('click', () => {
-          const isDark = document.documentElement.classList.toggle('dark');
-          localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-      }
-    }
-  }
-
-  if (!customElements.get('theme-toggle')) {
-    customElements.define('theme-toggle', ThemeToggle);
-  }
-=======
-import CategoryNav from './CategoryNav.astro';
----
-
-<header class="site-header">
-  <div class="container header-content">
-    <div class="logo-area">
-      <a href="/" class="brand-link">
-        <span class="brand-title">Portal<span class="brand-accent">Info</span></span>
-      </a>
-    </div>
-
-    <nav class="main-nav" aria-label="Navegação principal">
-      <a href="/noticias" class="nav-link">Notícias</a>
-      <a href="/ofertas" class="nav-link highlight">Ofertas</a>
-      <a href="/sobre" class="nav-link">Sobre</a>
+    <!-- Navegação Desktop -->
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+      <a href="/" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Início</a>
+      <a href="/noticias" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Notícias</a>
+      <a href="/ofertas" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Ofertas</a>
+      <a href="/sobre" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Sobre</a>
+      <a href="/contato" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Contato</a>
     </nav>
 
-    <div class="actions">
-      <button id="theme-toggle" class="theme-button" aria-label="Alternar tema de cores">
-        <span class="theme-icon" aria-hidden="true">🌙</span>
+    <!-- Controlos: Tema e Menu Mobile -->
+    <div class="flex items-center gap-3">
+      <!-- Botão de Alternância de Tema -->
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Alternar modo escuro/claro"
+        class="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+      >
+        <!-- Ícone Sol (Modo Claro) -->
+        <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <!-- Ícone Lua (Modo Escuro) -->
+        <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+
+      <!-- Botão Menu Mobile -->
+      <button
+        id="menu-toggle"
+        type="button"
+        aria-label="Abrir menu de navegação"
+        class="md:hidden p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
     </div>
+
   </div>
 
-  <CategoryNav />
+  <!-- Menu Dropdown Mobile -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-3">
+    <a href="/" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Início</a>
+    <a href="/noticias" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Notícias</a>
+    <a href="/ofertas" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Ofertas</a>
+    <a href="/sobre" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Sobre</a>
+    <a href="/contato" class="block text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600">Contato</a>
+  </div>
 </header>
 
-<style>
-  .site-header {
-    background-color: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-  .header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 4rem;
-  }
-
-  .brand-link {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    text-decoration: none;
-  }
-
-  .brand-accent {
-    color: var(--accent-cyan);
-  }
-
-  .main-nav {
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .nav-link {
-    font-weight: 500;
-    color: var(--text-secondary);
-    transition: color 0.2s;
-  }
-
-  .nav-link:hover {
-    color: var(--accent-blue);
-    text-decoration: none;
-  }
-
-  .nav-link.highlight {
-    color: var(--accent-blue);
-    font-weight: 600;
-  }
-
-  .theme-button {
-    background: none;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 0.4rem 0.6rem;
-    cursor: pointer;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .theme-button:hover {
-    background-color: var(--bg-secondary);
-  }
-</style>
-
-<script>
-  const themeToggle = document.getElementById('theme-toggle');
-  
-  function getInitialTheme() {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
-  function setTheme(theme: string) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    const icon = themeToggle?.querySelector('.theme-icon');
-    if (icon) {
-      icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
     }
-  }
 
-  const currentTheme = getInitialTheme();
-  setTheme(currentTheme);
-
-  themeToggle?.addEventListener('click', () => {
-    const active = document.documentElement.getAttribute('data-theme');
-    setTheme(active === 'dark' ? 'light' : 'dark');
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
   });
->>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd
 </script>

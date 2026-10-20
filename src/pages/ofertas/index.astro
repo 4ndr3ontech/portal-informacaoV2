@@ -8,18 +8,17 @@ const activeProducts = products.filter((p) => p.active);
 ---
 
 <BaseLayout 
-<<<<<<< HEAD
   title="Ofertas Selecionadas e Recomendadas | PortalInfo" 
-  description="Seleção editorial de produtos e equipamentos recomendados com links diretos para o Mercado Livre."
+  description="Seleção editorial de produtos e equipamentos recomendados com links diretos para parceiros e plataformas de e-commerce."
 >
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 w-full">
     
     <!-- Cabeçalho da Página -->
     <header class="text-center space-y-3 max-w-3xl mx-auto">
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
         Ofertas Selecionadas
       </h1>
-      <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
         Produtos úteis para leitura, trabalho, tecnologia e produtividade recomendados pela equipe do portal.
       </p>
     </header>
@@ -29,67 +28,10 @@ const activeProducts = products.filter((p) => p.active);
 
     <!-- Grid de Produtos -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-=======
-  title="Ofertas Selecionadas e Recomendadas" 
-  description="Seleção editorial de produtos e equipamentos recomendados com links diretos para o Mercado Livre."
->
-  <div class="container">
-    <header class="page-header">
-      <h1>Ofertas Selecionadas</h1>
-      <p class="page-subtitle">Produtos úteis para leitura, trabalho, tecnologia e produtividade recomendados pela equipe do portal.</p>
-    </header>
-
-    <AffiliateDisclosure />
-
-    <section class="products-grid">
->>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd
       {activeProducts.map((product) => (
         <AffiliateProductCard product={product} />
       ))}
     </section>
-<<<<<<< HEAD
 
   </main>
 </BaseLayout>
-=======
-  </div>
-</BaseLayout>
-
-<style>
-  .page-header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .page-header h1 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-  }
-
-  .page-subtitle {
-    color: var(--text-secondary);
-    font-size: 1.05rem;
-    max-width: 650px;
-    margin: 0 auto;
-  }
-
-  .products-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 640px) {
-    .products-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .products-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-</style>
->>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd

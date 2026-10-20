@@ -1,64 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-<<<<<<< HEAD
 import SourceCard from '../../components/SourceCard.astro';
-import { sources } from '../../data/sources';
-
-export function getStaticPaths() {
-  return [
-    { params: { slug: 'brasil' }, props: { label: 'Brasil', desc: 'Principais veículos de notícias com cobertura do território nacional.' } },
-    { params: { slug: 'mundo' }, props: { label: 'Mundo', desc: 'Análises e acontecimentos internacionais.' } },
-    { params: { slug: 'politica' }, props: { label: 'Política', desc: 'Bastidores dos poderes executivo e legislativo.' } },
-    { params: { slug: 'economia' }, props: { label: 'Economia', desc: 'Mercado financeiro, negócios e finanças.' } },
-    { params: { slug: 'tecnologia' }, props: { label: 'Tecnologia', desc: 'IA, software, inovação e cultura digital.' } },
-    { params: { slug: 'esportes' }, props: { label: 'Esportes', desc: 'Futebol, ligas mundiais e modalidades.' } },
-  ];
-}
-
-const { slug } = Astro.params;
-const { label, desc } = Astro.props;
-
-const categorySources = sources.filter(s => 
-  slug === 'brasil' ? s.country === 'BR' : s.categories.includes(slug)
-);
----
-
-<BaseLayout title={`Fontes de ${label} | PortalInfo`}>
-  <!-- Contentor principal centralizado -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
-    
-    <!-- Breadcrumbs / Navegação -->
-    <nav aria-label="Navegação estruturada" class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-      <a href="/" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Início</a>
-      <span>&gt;</span>
-      <a href="/noticias" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Notícias</a>
-      <span>&gt;</span>
-      <span class="text-slate-900 dark:text-slate-200 font-medium">{label}</span>
-    </nav>
-
-    <!-- Cabeçalho da Categoria -->
-    <header class="space-y-2">
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-        Fontes de {label}
-      </h1>
-      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-3xl">
-        {desc}
-      </p>
-    </header>
-
-    <!-- Grelha de Fontes -->
-    <section>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {categorySources.map(source => (
-          <SourceCard source={source} />
-        ))}
-      </div>
-    </section>
-
-  </div>
-</BaseLayout>
-=======
-import NewsSourceList from '../../components/NewsSourceList.astro';
 import { categories } from '../../data/categories';
 import { sources } from '../../data/sources';
 import { searchSources } from '../../lib/search';
@@ -75,49 +17,53 @@ const categorySources = searchSources(sources, { category: category.slug });
 ---
 
 <BaseLayout 
-  title={`Notícias e Fontes de ${category.name}`}
+  title={`Notícias e Fontes de ${category.name} | PortalInfo`}
   description={category.description}
 >
-  <div class="container">
-    <nav class="breadcrumb" aria-label="Navegação em migalhas de pão">
-      <a href="/">Início</a> &gt; <a href="/noticias">Notícias</a> &gt; <span>{category.name}</span>
+  <!-- Contentor principal centralizado -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
+    
+    <!-- Breadcrumbs / Navegação -->
+    <nav aria-label="Navegação estruturada" class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <a href="/" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Início</a>
+      <span>&gt;</span>
+      <a href="/noticias" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Notícias</a>
+      <span>&gt;</span>
+      <span class="text-slate-900 dark:text-slate-200 font-medium">{category.name}</span>
     </nav>
 
-    <header class="category-header">
-      <h1>Fontes de {category.name}</h1>
-      <p>{category.description}</p>
+    <!-- Cabeçalho da Categoria -->
+    <header class="space-y-2 border-b border-slate-200 dark:border-slate-800/80 pb-6">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        Fontes de {category.name}
+      </h1>
+      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-3xl">
+        {category.description}
+      </p>
     </header>
 
-    <NewsSourceList sources={categorySources} />
+    <!-- Grelha de Fontes -->
+    <section>
+      {categorySources.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {categorySources.map(source => (
+            <SourceCard source={source} />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16 bg-white dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-800 p-8">
+          <p class="text-slate-600 dark:text-slate-400 text-base mb-4">
+            Nenhuma fonte encontrada nesta categoria no momento.
+          </p>
+          <a
+            href="/noticias"
+            class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-semibold text-white bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 transition-colors"
+          >
+            Ver todas as notícias
+          </a>
+        </div>
+      )}
+    </section>
+
   </div>
 </BaseLayout>
-
-<style>
-  .breadcrumb {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-  }
-
-  .breadcrumb a {
-    color: var(--text-secondary);
-  }
-
-  .category-header {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
-  }
-
-  .category-header h1 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-  }
-
-  .category-header p {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-  }
-</style>
->>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd

@@ -11,11 +11,7 @@ export function getFaviconUrl(websiteUrl: string, size: number = 64): string {
 }
 
 /**
-<<<<<<< HEAD
  * Converte o código ISO Alpha-2 do país (ex: 'BR', 'US') em Emoji de bandeira.
-=======
- * Converte o código ISO Alpha-2 do país (ex: 'BR', 'US') na sua bandeira correspondente em Emoji.
->>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd
  */
 export function getCountryFlag(countryCode: string): string {
   if (!countryCode || countryCode.length !== 2) return '🌐';
@@ -27,11 +23,7 @@ export function getCountryFlag(countryCode: string): string {
 }
 
 /**
-<<<<<<< HEAD
  * Retorna o ícone em emoji correspondente a cada categoria.
-=======
- * Mapeia e retorna um ícone temático para cada categoria do portal.
->>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd
  */
 export function getCategoryIcon(category: string): string {
   const icons: Record<string, string> = {
