@@ -12,13 +12,13 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-<<<<<<< HEAD
+
     "@astrojs/tailwind": "^6.0.2",
     "astro": "^4.5.0",
     "tailwindcss": "^3.4.19",
-=======
+
     "astro": "^4.5.0",
->>>>>>> bbd1cfd0071e0b9ddbe6684f5e8ae2ca7ace60cd
+
     "typescript": "^5.4.0"
   },
   "devDependencies": {
