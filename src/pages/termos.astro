@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Termos de Uso" 
+  description="Termos e condições gerais de uso do PortalInfo."
+>
+  <div class="container content-page">
+    <header class="page-header">
+      <h1>Termos de Uso</h1>
+      <p class="lead">Última atualização: 19 de outubro de 2026</p>
+    </header>
+
+    <article class="prose">
+      <h2>1. Aceitação dos Termos</h2>
+      <p>
+        Ao acessar e navegar pelo <strong>PortalInfo</strong>, o visitante concorda expressamente com os presentes Termos de Uso e com as diretrizes da nossa Política de Privacidade.
+      </p>
+
+      <h2>2. Natureza dos Serviços</h2>
+      <p>
+        O PortalInfo é um diretório e agregador editorial de links que direcionam para notícias publicadas em portais oficiais de imprensa. O portal não produz artigos jornalísticos próprios nem garante o conteúdo publicado em sites de terceiros.
+      </p>
+
+      <h2>3. Isenção de Responsabilidade Comercial</h2>
+      <p>
+        As ofertas apresentadas na área comercial contêm preços e condições verificadas periodicamente, sujeitas a alterações sem aviso prévio pelas lojas parceiras. A responsabilidade pela venda, entrega e garantia dos produtos é exclusiva dos anunciantes e do Mercado Livre.
+      </p>
+
+      <h2>4. Propriedade Intelectual</h2>
+      <p>
+        As marcas, logotipos e nomes de veículos citados pertencem aos seus respectivos proprietários e são utilizados apenas com fins indicativos de identificação e direcionamento.
+      </p>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .content-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+
+  .prose h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+</style>

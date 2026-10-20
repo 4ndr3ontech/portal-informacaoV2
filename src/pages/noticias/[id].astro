@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sources } from '../../data/sources';
+import { getFaviconUrl, getCountryFlag } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  return sources.map((source) => ({
+    params: { id: source.id },
+    props: { source },
+  }));
+}
+
+const { source } = Astro.props;
+
+const flag = getCountryFlag(source.country);
+const favicon = getFaviconUrl(source.url);
+---
+
+<BaseLayout 
+  title={`${source.name} - Ficha Técnica | PortalInfo`}
+  description={source.description}
+>
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-6">
+    
+    <!-- Botão de Retorno -->
+    <a 
+      href="/noticias" 
+      class="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+    >
+      ← Voltar para o diretório
+    </a>
+
+    <!-- Cartão da Ficha Técnica -->
+    <article class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-6 sm:p-10 shadow-xl dark:shadow-2xl space-y-8 transition-colors duration-200">
+      
+      <!-- Cabeçalho e Tags -->
+      <div class="space-y-4">
+        <div class="flex flex-wrap items-center gap-3 text-xs font-mono font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase">
+          <span class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 text-cyan-700 dark:text-cyan-400">
+            {source.type}
+          </span>
+          <span>PAÍS: {flag} {source.country}</span>
+          <span>•</span>
+          <span>IDIOMA: {source.language}</span>
+        </div>
+
+        <!-- Título e Favicon -->
+        <div class="flex items-center gap-4">
+          <img 
+            src={favicon} 
+            alt={`Logo de ${source.name}`} 
+            class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-100 dark:bg-slate-800 p-2 border border-slate-200 dark:border-slate-700/60 object-contain"
+            onerror="this.style.display='none'"
+          />
+          <h1 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+            {source.name}
+          </h1>
+        </div>
+      </div>
+
+      <hr class="border-slate-200 dark:border-slate-800/80" />
+
+      <!-- Sobre o Veículo -->
+      <div class="space-y-2">
+        <h2 class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Sobre o Veículo</h2>
+        <p class="text-slate-800 dark:text-slate-200 text-base sm:text-lg leading-relaxed">
+          {source.description}
+        </p>
+      </div>
+
+      <!-- Metadados em Grelha -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
+        <div class="space-y-1">
+          <span class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Tipo de Mídia</span>
+          <p class="text-slate-800 dark:text-slate-200 font-semibold capitalize">{source.type}</p>
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Última Verificação</span>
+          <p class="text-slate-800 dark:text-slate-200 font-mono font-semibold">{source.lastVerified}</p>
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Situação</span>
+          <p class={`font-semibold flex items-center gap-2 text-sm ${source.active ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>
+            <span class={`w-2 h-2 rounded-full ${source.active ? 'bg-emerald-500 dark:bg-emerald-400' : 'bg-amber-500 dark:bg-amber-400'}`}></span>
+            {source.active ? 'Ativo e Verificado' : 'Em Análise'}
+          </p>
+        </div>
+      </div>
+
+      <!-- Categorias Cobertas -->
+      <div class="space-y-3">
+        <h2 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Categorias Cobertas</h2>
+        <div class="flex flex-wrap gap-2">
+          {source.categories.map((cat) => (
+            <a 
+              href={`/categorias/${cat.toLowerCase()}`}
+              class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/50 transition-all"
+            >
+              {cat}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <hr class="border-slate-200 dark:border-slate-800/80" />
+
+      <!-- Chamada para Ação / Link Oficial -->
+      <div class="text-center space-y-4 pt-2">
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Você será redirecionado para o site oficial e independente de <strong class="text-slate-800 dark:text-slate-200">{source.name}</strong>.
+        </p>
+        <a 
+          href={source.url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-sm sm:text-base transition-all shadow-lg shadow-cyan-500/10 active:scale-95"
+        >
+          Acessar {source.name} no site oficial ↗
+        </a>
+      </div>
+
+    </article>
+  </main>
+</BaseLayout>

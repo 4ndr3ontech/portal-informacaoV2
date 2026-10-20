@@ -1,0 +1,62 @@
+---
+import type { Category } from '../types';
+
+const categories: Category[] = [
+  { id: '1', name: 'Brasil', slug: 'brasil', description: 'Notícias do Brasil' },
+  { id: '2', name: 'Mundo', slug: 'mundo', description: 'Notícias internacionais' },
+  { id: '3', name: 'Política', slug: 'politica', description: 'Política nacional e internacional' },
+  { id: '4', name: 'Economia', slug: 'economia', description: 'Mercados, finanças e negócios' },
+  { id: '5', name: 'Tecnologia', slug: 'tecnologia', description: 'Inovação e ciência da computação' },
+  { id: '6', name: 'Esportes', slug: 'esportes', description: 'Cobertura esportiva global' },
+];
+---
+
+<nav class="category-nav" aria-label="Navegação por categorias">
+  <div class="container nav-scroll">
+    <ul class="category-list">
+      {categories.map((category) => (
+        <li>
+          <a href={`/categorias/${category.slug}`} class="category-item">
+            {category.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .category-nav {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .nav-scroll {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .category-list {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    white-space: nowrap;
+  }
+
+  .category-item {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .category-item:hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+</style>

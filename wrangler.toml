@@ -1,0 +1,10 @@
+name = "portal-informacao"
+compatibility_date = "2026-10-19"
+
+[assets]
+directory = "./dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "portal_info_db"
+database_id = "f211514c-4056-4018-bfe5-a8d1d798646a"

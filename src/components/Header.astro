@@ -1,0 +1,130 @@
+---
+const currentPath = Astro.url.pathname;
+
+const categories = [
+  { slug: 'brasil', label: 'Brasil' },
+  { slug: 'mundo', label: 'Mundo' },
+  { slug: 'politica', label: 'Política' },
+  { slug: 'economia', label: 'Economia' },
+  { slug: 'tecnologia', label: 'Tecnologia' },
+  { slug: 'esportes', label: 'Esportes' },
+];
+
+const navItems = [
+  { href: '/noticias', label: 'Notícias' },
+  { href: '/ofertas', label: 'Ofertas', highlight: true },
+  { href: '/sobre', label: 'Sobre' },
+];
+---
+
+<header class="w-full bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800/80 sticky top-0 z-50 backdrop-blur-md transition-colors duration-200">
+  
+  <!-- Barra Superior -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-3 items-center h-20">
+      
+      <!-- Coluna Esquerda: Espaçador para equilibrar o layout e garantir o logo perfeitamente ao centro -->
+      <div class="hidden md:block"></div>
+
+      <!-- Coluna Centro: Logótipo Exatamente no Centro -->
+      <div class="flex justify-start md:justify-center col-span-2 md:col-span-1">
+        <a href="/" class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-0.5">
+          Portal<span class="text-cyan-600 dark:text-cyan-400">Info</span>
+        </a>
+      </div>
+
+      <!-- Coluna Direita: Menu de Navegação + Botão de Tema -->
+      <div class="flex items-center justify-end gap-6">
+        <nav class="hidden md:flex items-center gap-5 text-sm font-semibold text-slate-700 dark:text-slate-300">
+          {navItems.map((item) => (
+            item.highlight ? (
+              <a
+                href={item.href}
+                class:list={[
+                  "px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-2 group relative overflow-hidden",
+                  currentPath.startsWith(item.href)
+                    ? "bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-orange-500/30 ring-2 ring-orange-400/50 scale-105"
+                    : "bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-rose-500/15 text-amber-700 dark:text-amber-400 border border-orange-500/30 hover:from-amber-500 hover:via-orange-500 hover:to-rose-500 hover:text-white hover:border-transparent dark:hover:text-white shadow-sm hover:shadow-orange-500/20 hover:scale-105"
+                ]}
+              >
+                <span class="text-sm animate-bounce">🔥</span>
+                <span class="tracking-wide">Ofertas</span>
+                <span class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              </a>
+            ) : (
+              <a
+                href={item.href}
+                class:list={[
+                  "transition-colors hover:text-cyan-600 dark:hover:text-cyan-400 py-1",
+                  currentPath.startsWith(item.href)
+                    ? "text-cyan-600 dark:text-cyan-400 font-bold"
+                    : "hover:text-cyan-600 dark:hover:text-cyan-400"
+                ]}
+              >
+                {item.label}
+              </a>
+            )
+          ))}
+        </nav>
+
+        <!-- Web Component Inquebrável para Tema -->
+        <theme-toggle class="flex items-center">
+          <button
+            type="button"
+            aria-label="Alternar Tema Claro e Escuro"
+            class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all focus:outline-none cursor-pointer"
+          >
+            <!-- Ícone Sol (Exibido no Modo Escuro) -->
+            <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- Ícone Lua (Exibido no Modo Claro) -->
+            <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+        </theme-toggle>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Sub-barra de Categorias -->
+  <div class="border-t border-slate-200 dark:border-slate-800/60 bg-slate-50/80 dark:bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center justify-center gap-6 py-2.5 overflow-x-auto text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
+        {categories.map((cat) => (
+          <a
+            href={`/categorias/${cat.slug}`}
+            class:list={[
+              "transition-colors whitespace-nowrap hover:text-cyan-600 dark:hover:text-cyan-400",
+              currentPath === `/categorias/${cat.slug}` ? "text-cyan-600 dark:text-cyan-400 font-bold" : ""
+            ]}
+          >
+            {cat.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+
+</header>
+
+<script>
+  class ThemeToggle extends HTMLElement {
+    constructor() {
+      super();
+      const button = this.querySelector('button');
+      if (button) {
+        button.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+      }
+    }
+  }
+
+  if (!customElements.get('theme-toggle')) {
+    customElements.define('theme-toggle', ThemeToggle);
+  }
+</script>

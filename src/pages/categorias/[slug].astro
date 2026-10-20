@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SourceCard from '../../components/SourceCard.astro';
+import { sources } from '../../data/sources';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'brasil' }, props: { label: 'Brasil', desc: 'Principais veículos de notícias com cobertura do território nacional.' } },
+    { params: { slug: 'mundo' }, props: { label: 'Mundo', desc: 'Análises e acontecimentos internacionais.' } },
+    { params: { slug: 'politica' }, props: { label: 'Política', desc: 'Bastidores dos poderes executivo e legislativo.' } },
+    { params: { slug: 'economia' }, props: { label: 'Economia', desc: 'Mercado financeiro, negócios e finanças.' } },
+    { params: { slug: 'tecnologia' }, props: { label: 'Tecnologia', desc: 'IA, software, inovação e cultura digital.' } },
+    { params: { slug: 'esportes' }, props: { label: 'Esportes', desc: 'Futebol, ligas mundiais e modalidades.' } },
+  ];
+}
+
+const { slug } = Astro.params;
+const { label, desc } = Astro.props;
+
+const categorySources = sources.filter(s => 
+  slug === 'brasil' ? s.country === 'BR' : s.categories.includes(slug)
+);
+---
+
+<BaseLayout title={`Fontes de ${label} | PortalInfo`}>
+  <!-- Contentor principal centralizado -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
+    
+    <!-- Breadcrumbs / Navegação -->
+    <nav aria-label="Navegação estruturada" class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <a href="/" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Início</a>
+      <span>&gt;</span>
+      <a href="/noticias" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Notícias</a>
+      <span>&gt;</span>
+      <span class="text-slate-900 dark:text-slate-200 font-medium">{label}</span>
+    </nav>
+
+    <!-- Cabeçalho da Categoria -->
+    <header class="space-y-2">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        Fontes de {label}
+      </h1>
+      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-3xl">
+        {desc}
+      </p>
+    </header>
+
+    <!-- Grelha de Fontes -->
+    <section>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {categorySources.map(source => (
+          <SourceCard source={source} />
+        ))}
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>

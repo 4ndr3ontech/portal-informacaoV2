@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SourceCard from '../components/SourceCard.astro';
+import { sources } from '../data/sources';
+import { getCategoryIcon } from '../lib/utils';
+import type { NewsSource } from '../types';
+
+// Fontes em destaque / ativas
+const featuredSources = sources.filter((s: NewsSource) => s.active).slice(0, 8);
+
+const categories = [
+  { slug: 'brasil', name: 'Brasil', description: 'Principais veículos de notícias nacionais' },
+  { slug: 'mundo', name: 'Mundo', description: 'Análises e acontecimentos internacionais' },
+  { slug: 'politica', name: 'Política', description: 'Bastidores dos poderes executivo e legislativo' },
+  { slug: 'economia', name: 'Economia', description: 'Mercado financeiro, negócios e finanças' },
+  { slug: 'tecnologia', name: 'Tecnologia', description: 'Inovação, software, IA e gadgets' },
+  { slug: 'esportes', name: 'Esportes', description: 'Futebol, modalidades olímpicas e cobertura esportiva' },
+];
+---
+
+<BaseLayout
+  title="PortalInfo | Conectando você aos maiores veículos de informação do planeta."
+  description="Navegue pelas manchetes que movem o planeta"
+>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 w-full">
+
+    <!-- Hero Banner -->
+    <section class="relative rounded-3xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8 sm:p-14 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden transition-colors duration-300">
+      <div class="relative z-10 max-w-3xl mx-auto text-center space-y-6">
+        
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 text-cyan-700 dark:text-cyan-400 text-xs font-semibold tracking-wide shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse"></span>
+          {sources.length} Fontes Verificadas e Ativas
+        </span>
+
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.15]">
+          Diretório Global de <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">Fontes de Informação</span>
+        </h1>
+
+        <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
+          Conectando você aos maiores veículos de informação do planeta.
+        </p>
+
+        <!-- Formulário de Busca Dinâmico Corrigido -->
+        <form action="/noticias" method="GET" class="flex items-center max-w-xl mx-auto bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700/80 rounded-2xl p-1.5 shadow-md dark:shadow-lg focus-within:border-cyan-500 dark:focus-within:border-cyan-400 transition-all">
+          <span class="pl-3 text-slate-400">🔍</span>
+          <input
+            type="text"
+            name="q"
+            placeholder="Buscar por veículo, país, idioma ou palavra-chave..."
+            class="w-full bg-transparent px-3 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none"
+          />
+          <button
+            type="submit"
+            class="px-6 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-sm transition-all whitespace-nowrap cursor-pointer shadow-sm"
+          >
+            Buscar
+          </button>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- Seção de Categorias -->
+    <section class="space-y-6">
+      <div class="space-y-1">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+          Explore por Categoria
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-sm">
+          Navegue pelas editorias mais acessadas do portal
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {categories.map((cat) => (
+          <a
+            href={`/categorias/${cat.slug}`}
+            class="group p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all duration-200 flex items-start gap-4"
+          >
+            <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-2xl group-hover:scale-110 transition-transform">
+              {getCategoryIcon(cat.slug)}
+            </div>
+            <div class="space-y-1">
+              <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                {cat.name}
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                {cat.description}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Seção de Veículos em Destaque -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div class="space-y-1">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+            Veículos em Destaque
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">
+            Fontes verificadas e com alto volume de acessos
+          </p>
+        </div>
+        <a
+          href="/noticias"
+          class="text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1"
+        >
+          Ver todas as fontes <span>→</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {featuredSources.map((source: NewsSource) => (
+          <SourceCard source={source} />
+        ))}
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>

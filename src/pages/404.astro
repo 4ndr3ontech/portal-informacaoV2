@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Página Não Encontrada (404)" 
+  description="A página que você está procurando não foi encontrada ou foi movida."
+>
+  <div class="container error-page">
+    <div class="error-code">404</div>
+    <h1>Página Não Encontrada</h1>
+    <p class="error-desc">
+      O endereço digitado pode estar incorreto ou a página foi alterada/removida do nosso portal.
+    </p>
+
+    <div class="error-actions">
+      <a href="/" class="btn-primary">Voltar para a Página Inicial</a>
+      <a href="/noticias" class="btn-secondary">Explorar Notícias</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-page {
+    text-align: center;
+    padding: 4rem 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .error-code {
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--accent-cyan);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-page h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .error-desc {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-blue-hover);
+    text-decoration: none;
+  }
+
+  .btn-secondary {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--border-color);
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sources } from '../../data/sources';
+import { categories } from '../../data/categories';
+import { sanitizeUrl, getExternalLinkProps } from '../../lib/links';
+
+export function getStaticPaths() {
+  return sources.map((source) => ({
+    params: { slug: source.id },
+    props: { source }
+  }));
+}
+
+const { source } = Astro.props;
+const safeUrl = sanitizeUrl(source.url);
+const externalProps = getExternalLinkProps();
+
+const sourceCategories = categories.filter((c) => source.categories.includes(c.slug));
+---
+
+<BaseLayout 
+  title={`${source.name} - Fonte de Notícia`}
+  description={source.description}
+>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Navegação de retorno">
+      <a href="/">Início</a> &gt; <a href="/noticias">Fontes</a> &gt; <span>{source.name}</span>
+    </nav>
+
+    <article class="source-detail-card">
+      <header class="detail-header">
+        <div class="detail-tags">
+          <span class="type-tag">{source.type}</span>
+          <span class="country-tag">País: {source.country}</span>
+          <span class="lang-tag">Idioma: {source.language}</span>
+        </div>
+        <h1>{source.name}</h1>
+      </header>
+
+      <div class="detail-body">
+        <h2>Sobre o Veículo</h2>
+        <p>{source.description}</p>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Tipo de Mídia:</strong>
+            <span style="text-transform: capitalize;">{source.type}</span>
+          </div>
+          <div class="info-item">
+            <strong>Última Verificação:</strong>
+            <span>{source.lastVerified}</span>
+          </div>
+          <div class="info-item">
+            <strong>Situação:</strong>
+            <span class="status-active">Ativo e Verificado</span>
+          </div>
+        </div>
+
+        <h3>Categorias Cobertas</h3>
+        <div class="categories-flex">
+          {sourceCategories.map((cat) => (
+            <a href={`/categorias/${cat.slug}`} class="cat-link">
+              {cat.name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <footer class="detail-footer">
+        <p class="disclaimer">
+          Você será redirecionado para o site oficial e independente de <strong>{source.name}</strong>.
+        </p>
+        <a href={safeUrl} {...externalProps} class="access-button">
+          Acessar {source.name} no site oficial ↗
+        </a>
+      </footer>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumb a {
+    color: var(--text-secondary);
+  }
+
+  .source-detail-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .detail-tags {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-body {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .detail-body h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-body p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background-color: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+  }
+
+  .info-item strong {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .status-active {
+    color: #16a34a;
+    font-weight: 600;
+  }
+
+  .categories-flex {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .cat-link {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+  }
+
+  .cat-link:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    text-decoration: none;
+  }
+
+  .detail-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    text-align: center;
+  }
+
+  .disclaimer {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .access-button {
+    display: inline-block;
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+  }
+
+  .access-button:hover {
+    background-color: var(--accent-blue-hover);
+    text-decoration: none;
+  }
+</style>

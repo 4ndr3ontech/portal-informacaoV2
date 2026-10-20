@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Variáveis de Tema Global */
+  :root {
+    --bg-page: #f8fafc;        /* slate-50 */
+    --bg-surface: #ffffff;     /* white */
+    --border-color: #e2e8f0;   /* slate-200 */
+    --text-primary: #0f172a;   /* slate-900 */
+    --text-secondary: #475569; /* slate-600 */
+    --text-muted: #64748b;     /* slate-500 */
+    --accent-cyan: #0891b2;    /* cyan-600 */
+    --max-width: 1280px;
+    --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  html.dark {
+    --bg-page: #020617;        /* slate-950 */
+    --bg-surface: #0f172a;     /* slate-900 */
+    --border-color: #1e293b;   /* slate-800 */
+    --text-primary: #f8fafc;   /* slate-50 */
+    --text-secondary: #cbd5e1; /* slate-300 */
+    --text-muted: #94a3b8;     /* slate-400 */
+    --accent-cyan: #06b6d4;    /* cyan-500 */
+  }
+
+  html {
+    font-family: var(--font-family);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+
+  /* Seleção de texto personalizada */
+  ::selection {
+    background-color: var(--accent-cyan);
+    color: #020617;
+  }
+
+  /* Foco acessível para navegação por teclado */
+  :focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Container personalizado reutilizável */
+  .custom-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
