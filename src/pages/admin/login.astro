@@ -1,0 +1,80 @@
+---
+// src/pages/admin/login.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Login Administrativo | PortalInfo PRO">
+  <div class="min-h-[80vh] flex items-center justify-center px-4 py-12">
+    <div class="max-w-md w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-8 shadow-2xl backdrop-blur-xl">
+      
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 mb-4">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h1 class="text-2xl font-black text-white tracking-tight">Área Restrita</h1>
+        <p class="text-xs text-slate-400 mt-1 uppercase font-mono">Painel de Administração</p>
+      </div>
+
+      <form id="login-form" class="space-y-5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Usuário ou E-mail</label>
+          <input 
+            type="text" 
+            id="username" 
+            required
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors"
+            placeholder="admin@portalinfo.com"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Palavra-passe</label>
+          <input 
+            type="password" 
+            id="password" 
+            required
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <div id="error-msg" class="hidden text-xs text-rose-400 font-medium text-center bg-rose-500/10 border border-rose-500/20 py-2 rounded-lg">
+          Credenciais inválidas. Tente novamente.
+        </div>
+
+        <button 
+          type="submit"
+          class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20 transition-all cursor-pointer"
+        >
+          Entrar no Sistema
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <a href="/" class="text-xs text-slate-400 hover:text-cyan-400 transition-colors">← Voltar para a página inicial</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form') as HTMLFormElement;
+    const errorMsg = document.getElementById('error-msg');
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = (document.getElementById('username') as HTMLInputElement).value;
+      const pass = (document.getElementById('password') as HTMLInputElement).value;
+
+      // Autenticação simples local (pode ajustar o usuário e senha desejados aqui)
+      if (user === 'admin' && pass === 'admin123') {
+        localStorage.setItem('portal_admin_auth', 'true');
+        window.location.href = '/admin';
+      } else {
+        errorMsg?.classList.remove('hidden');
+      }
+    });
+  </script>
+</BaseLayout>
