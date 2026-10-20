@@ -18,4 +18,4 @@ Ao conectar o repositório ao Cloudflare Pages, utilize exatamente os seguintes 
 ## Comandos do Projeto
 - `npm run dev`: Inicia o servidor local de desenvolvimento (`http://localhost:4321`).
 - `npm run test`: Executa a suíte de testes unitários e de integridade de dados.
-- `npm run build`: Executa a verificação estática de tipos e gera a versão de produção na pasta `dist/`.
+- `npm run build`: Executa a verificação estática de tipos e gera a versão de produção na pasta `dist/`.# portal-informacaoV2
