@@ -1,260 +1,265 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import CookieNotice from '../components/CookieNotice.astro';
-import { generateSEOMetadata } from '../lib/seo';
-import '../styles/global.css';
 
 interface Props {
-  title?: string;
+  title: string;
   description?: string;
-  image?: string;
 }
 
-const { 
-  title = 'O mundo em um click | Diretório de Fontes de Informação', 
-  description = 'Acesso direto aos principais veículos de jornalismo do Brasil e do mundo.',
-  image
-} = Astro.props;
-
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://seusite.com.br').toString();
-
-const seo = generateSEOMetadata({
-  title,
-  description,
-  canonicalUrl,
-  image
-});
+const { title, description = "O mundo inteiro em um só lugar - Diretório Global de Fontes de Informação" } = Astro.props;
 ---
 
-<!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<!doctype html>
+<html lang="pt-BR" class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/default-icon.svg" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="canonical" href={seo.canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-
-    <title>{seo.title}</title>
-    <meta name="description" content={seo.description} />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content={seo.openGraph.title} />
-    <meta property="og:description" content={seo.openGraph.description} />
-    <meta property="og:url" content={seo.openGraph.url} />
-    <meta property="og:type" content={seo.openGraph.type} />
-    <meta property="og:site_name" content={seo.openGraph.siteName} />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content={seo.twitter.card} />
-    <meta name="twitter:title" content={seo.twitter.title} />
-    <meta name="twitter:description" content={seo.twitter.description} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
   </head>
-  <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased">
+  <body class="min-h-full flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-cyan-500 selection:text-slate-950 relative">
+    
+    <!-- Topo -->
     <Header />
-    <main id="main-content" class="flex-1 w-full">
+
+    <!-- Conteúdo principal -->
+    <main class="flex-1 w-full">
       <slot />
     </main>
-    <Footer />
-    <CookieNotice />
 
-    <!-- MODAL GLOBAL DE INFORMAÇÕES DO VEÍCULO -->
-    <div id="source-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div class="relative w-full max-w-xl rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl space-y-6 transform transition-all scale-95 opacity-0 duration-200" id="modal-container">
+    <!-- Rodapé -->
+    <Footer />
+
+    <!-- Botão Voltar ao Topo (Flutuante de Alto Contraste) -->
+    <button
+      id="back-to-top-btn"
+      type="button"
+      aria-label="Voltar ao topo da página"
+      class="fixed bottom-6 right-6 z-40 hidden items-center justify-center w-12 h-12 rounded-2xl bg-slate-900 text-cyan-400 border border-slate-700/80 shadow-2xl hover:bg-cyan-500 hover:text-slate-950 hover:border-cyan-400 transition-all duration-300 active:scale-95 cursor-pointer group"
+    >
+      <span class="text-xl font-black transition-transform duration-300 group-hover:-translate-y-0.5">↑</span>
+    </button>
+
+    <!-- Modal Popup de Ficha Técnica Completa -->
+    <div 
+      id="source-detail-modal" 
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 sm:p-6"
+    >
+      <div class="relative w-full max-w-2xl rounded-3xl bg-white border border-slate-200 p-6 sm:p-10 shadow-2xl space-y-6">
         
-        <!-- Botão Fechar -->
-        <button id="close-modal-btn" type="button" class="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all cursor-pointer">
+        <!-- Botão Fechar (X) -->
+        <button 
+          id="close-modal-btn" 
+          type="button" 
+          class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors cursor-pointer"
+          aria-label="Fechar"
+        >
           ✕
         </button>
 
-        <!-- Cabeçalho do Modal -->
-        <div>
-          <div class="text-xs font-semibold text-cyan-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <span id="modal-source-type">AGENCIA</span> • 
-            <span>PAÍS: <span id="modal-source-country">GB</span></span> • 
-            <span>IDIOMA: <span id="modal-source-lang">PT-BR</span></span>
-          </div>
-          <h3 id="modal-source-name" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            BBC News Brasil
-          </h3>
+        <!-- Cabeçalho de Metadados -->
+        <div class="flex flex-wrap items-center gap-3 text-xs font-black text-slate-800 uppercase tracking-wider">
+          <span id="modal-source-type-badge" class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">PORTAL</span>
+          <span>PAÍS: <strong id="modal-source-country">BR</strong></span>
+          <span>IDIOMA: <strong id="modal-source-language">PT-BR</strong></span>
         </div>
 
-        <hr class="border-slate-800" />
+        <!-- Título do Veículo -->
+        <h2 id="modal-source-name" class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          Nome do Veículo
+        </h2>
 
-        <!-- Conteúdo / Sobre o Veículo -->
-        <div class="space-y-4">
-          <h4 class="text-sm font-bold text-white uppercase tracking-wider">Sobre o Veículo</h4>
-          <p id="modal-source-desc" class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Serviço em português da BBC com reportagens aprofundadas.
+        <!-- Seção: Sobre o Veículo -->
+        <div class="space-y-2">
+          <h3 class="text-lg font-extrabold text-slate-900">Sobre o Veículo</h3>
+          <p id="modal-source-desc" class="text-slate-800 text-base font-bold leading-relaxed">
+            Carregando informações sobre a plataforma...
           </p>
+        </div>
 
-          <!-- Metadados em Grid -->
-          <div class="grid grid-cols-3 gap-4 py-2 text-xs">
-            <div>
-              <span class="block text-slate-400 font-medium">Tipo de Mídia:</span>
-              <span id="modal-info-type" class="font-semibold text-white capitalize">Agencia</span>
-            </div>
-            <div>
-              <span class="block text-slate-400 font-medium">Última Verificação:</span>
-              <span id="modal-info-verified" class="font-semibold text-white">2026-10-19</span>
-            </div>
-            <div>
-              <span class="block text-slate-400 font-medium">Situação:</span>
-              <span id="modal-info-status" class="font-semibold text-emerald-400">Ativo e Verificado</span>
-            </div>
-          </div>
-
-          <!-- Categorias -->
+        <!-- Grade com Informações Técnicas -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
           <div>
-            <span class="block text-xs font-semibold text-slate-400 mb-2">Categorias Cobertas</span>
-            <div id="modal-source-categories" class="flex flex-wrap gap-2">
-              <!-- Injetado dinamicamente via JS -->
-            </div>
+            <span class="block text-xs font-black text-slate-800 mb-1">Tipo de Mídia:</span>
+            <span id="modal-grid-type" class="text-slate-900 font-extrabold capitalize">Portal</span>
+          </div>
+          <div>
+            <span class="block text-xs font-black text-slate-800 mb-1">Última Verificação:</span>
+            <span id="modal-source-verified" class="text-slate-900 font-extrabold">2026-10-20</span>
+          </div>
+          <div>
+            <span class="block text-xs font-black text-slate-800 mb-1">Situação:</span>
+            <span class="text-emerald-600 font-black">Ativo e Verificado</span>
           </div>
         </div>
 
-        <hr class="border-slate-800" />
+        <!-- Seção: Categorias Cobertas -->
+        <div class="space-y-2 pt-2">
+          <h3 class="text-lg font-extrabold text-slate-900">Categorias Cobertas</h3>
+          <div id="modal-source-categories" class="flex flex-wrap gap-3 font-black text-slate-900 text-sm">
+            <!-- Injetado via JS -->
+          </div>
+        </div>
 
-        <!-- Ação do Modal -->
-        <div class="text-center space-y-3 pt-2">
-          <p class="text-xs text-slate-400">
-            Você será redirecionado para o site oficial e independente de <strong id="modal-source-bold-name" class="text-slate-200">BBC News Brasil</strong>.
+        <!-- Rodapé e Redirecionamento -->
+        <div class="pt-6 border-t border-slate-100 text-center space-y-4">
+          <p class="text-sm font-extrabold text-slate-800">
+            Você será redirecionado para o site oficial e independente de <span id="modal-source-footer-name">Fonte</span>.
           </p>
-          <a
-            id="modal-source-action-btn"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="track-click-btn inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-cyan-500/20 active:scale-95"
+          
+          <a 
+            id="modal-source-link" 
+            href="#" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="track-click-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-cyan-600/20"
           >
-            Acessar <span id="modal-btn-name">BBC News Brasil</span> no site oficial ↗
+            Acessar Site Oficial ↗
           </a>
         </div>
+
       </div>
     </div>
 
-    <!-- Botão Voltar ao Topo -->
-    <button
-      id="back-to-top"
-      aria-label="Voltar ao topo"
-      class="fixed bottom-6 right-6 z-50 translate-y-10 opacity-0 p-3 rounded-2xl bg-slate-800 border border-slate-700 text-cyan-400 shadow-xl shadow-cyan-500/10 hover:bg-slate-700 hover:text-cyan-300 hover:border-cyan-500/50 hover:shadow-cyan-500/20 transition-all duration-300 cursor-pointer pointer-events-none focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
-    >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-      </svg>
-    </button>
+    <script>
+      // Lógica do Botão Voltar ao Topo
+      function setupBackToTop() {
+        const backToTopBtn = document.getElementById('back-to-top-btn');
+        if (!backToTopBtn) return;
 
-    <!-- Script de Controle do Modal e Botão Voltar ao Topo -->
-    <script is:inline>
-      document.addEventListener('DOMContentLoaded', () => {
-        // --- Lógica do Modal ---
-        const modal = document.getElementById('source-detail-modal');
-        const modalContainer = document.getElementById('modal-container');
-        const closeBtn = document.getElementById('close-modal-btn');
-
-        const mType = document.getElementById('modal-source-type');
-        const mCountry = document.getElementById('modal-source-country');
-        const mLang = document.getElementById('modal-source-lang');
-        const mName = document.getElementById('modal-source-name');
-        const mDesc = document.getElementById('modal-source-desc');
-        const mInfoType = document.getElementById('modal-info-type');
-        const mVerified = document.getElementById('modal-info-verified');
-        const mStatus = document.getElementById('modal-info-status');
-        const mCategories = document.getElementById('modal-source-categories');
-        const mBoldName = document.getElementById('modal-source-bold-name');
-        const mActionBtn = document.getElementById('modal-source-action-btn');
-        const mBtnName = document.getElementById('modal-btn-name');
-
-        function openModal(data) {
-          if (!modal || !data) return;
-
-          mType.textContent = (data.type || 'PORTAL').toUpperCase();
-          mCountry.textContent = (data.country || 'GLOBAL').toUpperCase();
-          mLang.textContent = (data.language || 'PT-BR').toUpperCase();
-          mName.textContent = data.name;
-          mDesc.textContent = data.description || 'Sem descrição disponível.';
-          mInfoType.textContent = data.type || 'Portal';
-          mVerified.textContent = data.lastVerified || '2026-10-19';
-          mStatus.textContent = data.active !== false ? 'Ativo e Verificado' : 'Inativo';
-          mBoldName.textContent = data.name;
-          mBtnName.textContent = data.name;
-
-          if (mActionBtn) {
-            mActionBtn.href = data.url;
-            mActionBtn.setAttribute('data-track-source', data.id);
+        const toggleVisibility = () => {
+          if (window.scrollY > 300) {
+            backToTopBtn.classList.remove('hidden');
+            backToTopBtn.classList.add('flex');
+          } else {
+            backToTopBtn.classList.add('hidden');
+            backToTopBtn.classList.remove('flex');
           }
+        };
 
-          if (data.categories && mCategories) {
-            mCategories.innerHTML = data.categories.map(cat => `
-              <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700/60 text-xs font-medium capitalize">
-                ${cat}
-              </span>
-            `).join('');
-          }
-
-          modal.classList.remove('hidden');
-          modal.classList.add('flex');
-          setTimeout(() => {
-            modalContainer.classList.remove('scale-95', 'opacity-0');
-            modalContainer.classList.add('scale-100', 'opacity-100');
-          }, 10);
-        }
-
-        function closeModal() {
-          if (!modal) return;
-          modalContainer.classList.remove('scale-100', 'opacity-100');
-          modalContainer.classList.add('scale-95', 'opacity-0');
-          setTimeout(() => {
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-          }, 150);
-        }
-
-        document.addEventListener('click', (e) => {
-          const btn = e.target.closest('.open-source-modal');
-          if (btn) {
-            e.preventDefault();
-            const sourceData = JSON.parse(btn.getAttribute('data-source') || '{}');
-            openModal(sourceData);
-          }
-        });
-
-        if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-        if (modal) {
-          modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
+        window.addEventListener('scroll', toggleVisibility, { passive: true });
+        
+        backToTopBtn.addEventListener('click', () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
           });
-        }
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') closeModal();
         });
 
-        // --- Lógica do Botão Voltar ao Topo ---
-        const backToTopBtn = document.getElementById('back-to-top');
+        // Checagem inicial
+        toggleVisibility();
+      }
 
-        if (backToTopBtn) {
-          window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-              backToTopBtn.classList.remove('translate-y-10', 'opacity-0', 'pointer-events-none');
-              backToTopBtn.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-            } else {
-              backToTopBtn.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-              backToTopBtn.classList.add('translate-y-10', 'opacity-0', 'pointer-events-none');
+      // Lógica do Modal Popup
+      function setupSourcePopup() {
+        if ((window as any).__POPUP_EVENT_BOUND__) return;
+        (window as any).__POPUP_EVENT_BOUND__ = true;
+
+        document.addEventListener('click', (event) => {
+          const target = event.target as HTMLElement | null;
+          const modalBtn = target?.closest('.open-source-modal') as HTMLButtonElement | null;
+          
+          if (modalBtn) {
+            const rawData = modalBtn.getAttribute('data-source');
+            if (!rawData) return;
+
+            try {
+              const source = JSON.parse(rawData);
+              const modal = document.getElementById('source-detail-modal');
+              if (!modal) return;
+
+              const nameEl = document.getElementById('modal-source-name');
+              const footerNameEl = document.getElementById('modal-source-footer-name');
+              const descEl = document.getElementById('modal-source-desc');
+              const countryEl = document.getElementById('modal-source-country');
+              const langEl = document.getElementById('modal-source-language');
+              const badgeTypeEl = document.getElementById('modal-source-type-badge');
+              const gridTypeEl = document.getElementById('modal-grid-type');
+              const verifiedEl = document.getElementById('modal-source-verified');
+              const categoriesContainer = document.getElementById('modal-source-categories');
+              const linkEl = document.getElementById('modal-source-link') as HTMLAnchorElement | null;
+
+              if (nameEl) nameEl.textContent = source.name;
+              if (footerNameEl) footerNameEl.textContent = source.name;
+              if (descEl) descEl.textContent = source.description || 'Descrição não informada.';
+              if (countryEl) countryEl.textContent = source.country || 'BR';
+              if (langEl) langEl.textContent = source.language || 'PT-BR';
+              if (badgeTypeEl) badgeTypeEl.textContent = (source.type || 'PORTAL').toUpperCase();
+              if (gridTypeEl) gridTypeEl.textContent = source.type || 'Portal';
+              if (verifiedEl) verifiedEl.textContent = source.lastVerified || '2026-10-20';
+
+              if (linkEl) {
+                linkEl.href = source.url || '#';
+                linkEl.setAttribute('data-track-source', source.id || '');
+              }
+
+              if (categoriesContainer) {
+                categoriesContainer.innerHTML = '';
+                const cats = source.categories || ['Geral'];
+                cats.forEach((cat: string) => {
+                  const span = document.createElement('span');
+                  span.className = 'px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-slate-900 text-sm font-black capitalize';
+                  span.textContent = cat;
+                  categoriesContainer.appendChild(span);
+                });
+              }
+
+              modal.classList.remove('hidden');
+              modal.classList.add('flex');
+              document.body.style.overflow = 'hidden';
+            } catch (err) {
+              console.error('Erro ao carregar dados do modal:', err);
             }
-          });
+          }
 
-          backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            });
-          });
-        }
+          const modal = document.getElementById('source-detail-modal');
+          if (modal && !modal.classList.contains('hidden')) {
+            if (
+              target?.id === 'close-modal-btn' ||
+              target?.closest('#close-modal-btn') ||
+              target === modal
+            ) {
+              modal.classList.add('hidden');
+              modal.classList.remove('flex');
+              document.body.style.overflow = '';
+            }
+          }
+        });
+      }
+
+      // Executa as inicializações
+      setupBackToTop();
+      setupSourcePopup();
+
+      document.addEventListener('astro:page-load', () => {
+        setupBackToTop();
+        setupSourcePopup();
       });
     </script>
   </body>
 </html>
+
+<style is:global>
+  * {
+    font-weight: 900 !important;
+  }
+
+  html, body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.15 !important;
+    letter-spacing: -0.015em !important;
+  }
+
+  p, li, article {
+    line-height: 1.6 !important;
+    letter-spacing: 0.015em !important;
+  }
+</style>

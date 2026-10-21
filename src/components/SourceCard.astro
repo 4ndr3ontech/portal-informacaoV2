@@ -8,83 +8,168 @@ interface Props {
 }
 
 const { source, featured = false } = Astro.props;
-const favicon = getFaviconUrl(source.url, 128); // Resolução mais alta para não desfocar
+const favicon = getFaviconUrl(source.url, 128);
 const flag = getCountryFlag(source.country || 'Global');
+const categories = source.categories || [];
 ---
 
 <div
   class:list={[
-    "group relative flex flex-col justify-between rounded-xl border transition-all duration-300",
+    "group relative flex flex-col justify-between rounded-2xl border transition-all duration-300 overflow-hidden",
     featured
-      ? "border-cyan-500/50 bg-slate-800/90 p-6 shadow-lg shadow-cyan-500/10 hover:border-cyan-400 hover:shadow-cyan-500/20"
-      : "border-slate-800 bg-slate-900/70 p-5 hover:-translate-y-1 hover:border-cyan-500/40 hover:bg-slate-900 hover:shadow-xl hover:shadow-cyan-500/5"
+      ? "border-cyan-500/40 bg-gradient-to-b from-cyan-50/50 to-white p-6 shadow-md shadow-cyan-500/10 hover:border-cyan-500 hover:shadow-2xl hover:shadow-cyan-500/15"
+      : "border-slate-200/80 bg-white p-5 shadow-sm hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-xl hover:shadow-slate-200/70"
   ]}
 >
+  <!-- Detalhe decorativo de borda no hover -->
+  <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
   <div>
-    <!-- Cabeçalho: Logo + Nome (Acionador do Modal) + Bandeira + Badge -->
-    <div class="flex items-start justify-between gap-3 mb-3">
+    <!-- Cabeçalho: Logo + Nome + Bandeira + Badge -->
+    <div class="flex items-start justify-between gap-3 mb-3.5">
       <div class="flex items-center gap-3.5">
-        <!-- Logo/Favicon Aumentado (h-12 w-12 e h-14 w-14 se featured) -->
-        <img
-          src={favicon}
-          alt={`Logo ${source.name}`}
-          class:list={[
-            "rounded-xl bg-slate-800 p-1.5 object-contain border border-slate-700/60 group-hover:border-cyan-500/40 transition-colors shadow-sm shrink-0",
-            featured ? "h-14 w-14" : "h-12 w-12"
-          ]}
-          loading="lazy"
-          {...{ onerror: "this.onerror=null; this.src='/default-icon.svg';" }}
-        />
+        <!-- Favicon -->
+        <div class="relative shrink-0">
+          <img
+            src={favicon}
+            alt={`Logo ${source.name}`}
+            class:list={[
+              "rounded-xl bg-slate-50 p-1.5 object-contain border border-slate-200/80 group-hover:border-cyan-500/50 transition-all duration-300 shadow-sm",
+              featured ? "h-14 w-14" : "h-12 w-12"
+            ]}
+            loading="lazy"
+            {...{ onerror: "this.onerror=null; this.src='/default-icon.svg';" }}
+          />
+        </div>
+
         <div>
+          <!-- Título principal com maior destaque -->
           <button
             type="button"
-            class="open-source-modal text-left font-semibold text-white text-base hover:text-cyan-400 transition-colors cursor-pointer"
+            class="open-source-modal text-left text-slate-900 text-lg sm:text-xl tracking-tight leading-snug hover:text-cyan-600 transition-colors cursor-pointer block"
             data-source={JSON.stringify(source)}
           >
             {source.name}
           </button>
-          <p class="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+          
+          <!-- Linha de metadados refinada -->
+          <p class="text-[10px] sm:text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 tracking-widest uppercase font-mono">
             <span title={`País: ${source.country}`}>{flag}</span>
-            <span class="uppercase tracking-wider text-[10px] font-mono text-slate-400">{source.country}</span>
-            <span class="text-slate-600">•</span>
-            <span class="capitalize text-slate-300">{source.type}</span>
+            <span>{source.country}</span>
+            <span class="text-slate-300">•</span>
+            <span class="capitalize font-sans text-slate-600">{source.type}</span>
           </p>
         </div>
       </div>
 
+      <!-- Badge de Verificado em caixa alta bem espaçada -->
       {source.active && (
-        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400 border border-emerald-500/20 shrink-0">
-          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50/90 px-2.5 py-1 text-[10px] text-emerald-700 uppercase tracking-widest border border-emerald-200/80 shrink-0 shadow-2xs">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
           Verificado
         </span>
       )}
     </div>
 
-    <!-- Descrição da Fonte -->
-    <p class="text-sm text-slate-300 line-clamp-2 mb-4 leading-relaxed font-normal">
+    <!-- Descrição com contraste e respirabilidade otimizados -->
+    <p class="text-xs sm:text-sm text-slate-600/90 line-clamp-2 mb-4 leading-relaxed tracking-wide">
       {source.description}
     </p>
   </div>
 
-  <!-- Rodapé do Card: Categorias e Link Externo -->
-  <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
-    <div class="flex flex-wrap gap-1">
-      {source.categories.slice(0, 2).map((cat) => (
-        <span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700/50 flex items-center gap-1">
-          <span>{getCategoryIcon(cat)}</span>
+  <!-- Rodapé do Card: Categorias e Botão -->
+  <div class="pt-3.5 border-t border-slate-100 flex items-center justify-between gap-2 mt-auto">
+    <!-- Etiquetas de Categorias em tamanho compacto -->
+    <div class="flex flex-wrap gap-1.5">
+      {categories.slice(0, 2).map((cat: string) => (
+        <span class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-100/80 text-slate-600 border border-slate-200/60 flex items-center gap-1.5 uppercase tracking-wider transition-colors hover:bg-slate-200/60">
+          <span class="text-xs">{getCategoryIcon(cat)}</span>
           <span class="capitalize">{cat}</span>
         </span>
       ))}
     </div>
 
+    <!-- Botão Acessar com tipografia em caixa alta clara -->
     <a
       href={source.url}
       target="_blank"
       rel="noopener noreferrer"
       data-track-source={source.id}
-      class="track-click-btn inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 hover:text-cyan-300 group-hover:translate-x-0.5 transition-all"
+      class="track-click-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-500 text-cyan-700 hover:text-white border border-cyan-200/60 hover:border-cyan-500 text-xs uppercase tracking-wider transition-all duration-200 group/btn shadow-2xs"
     >
-      Acessar <span class="text-sm">↗</span>
+      <span>Acessar</span>
+      <span class="text-sm transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">↗</span>
     </a>
   </div>
 </div>
+
+<script>
+  function initModalHandler() {
+    if ((window as any).__SOURCE_MODAL_HANDLER_BOUND__) return;
+    (window as any).__SOURCE_MODAL_HANDLER_BOUND__ = true;
+
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement | null;
+      const modalBtn = target?.closest('.open-source-modal') as HTMLButtonElement | null;
+      
+      if (!modalBtn) return;
+      
+      const rawData = modalBtn.getAttribute('data-source');
+      if (!rawData) return;
+
+      try {
+        const source = JSON.parse(rawData);
+        const modal = document.getElementById('source-detail-modal');
+        if (!modal) return;
+
+        const nameEl = document.getElementById('modal-source-name');
+        const footerNameEl = document.getElementById('modal-source-footer-name');
+        const descEl = document.getElementById('modal-source-desc');
+        const countryEl = document.getElementById('modal-source-country');
+        const langEl = document.getElementById('modal-source-language');
+        const badgeTypeEl = document.getElementById('modal-source-type-badge');
+        const gridTypeEl = document.getElementById('modal-grid-type');
+        const verifiedEl = document.getElementById('modal-source-verified');
+        const categoriesContainer = document.getElementById('modal-source-categories');
+        const linkEl = document.getElementById('modal-source-link') as HTMLAnchorElement | null;
+
+        if (nameEl) nameEl.textContent = source.name;
+        if (footerNameEl) footerNameEl.textContent = source.name;
+        if (descEl) descEl.textContent = source.description || 'Descrição não informada.';
+        if (countryEl) countryEl.textContent = source.country || 'BR';
+        if (langEl) langEl.textContent = source.language || 'PT-BR';
+        if (badgeTypeEl) badgeTypeEl.textContent = (source.type || 'PORTAL').toUpperCase();
+        if (gridTypeEl) gridTypeEl.textContent = source.type || 'Portal';
+        if (verifiedEl) verifiedEl.textContent = source.lastVerified || '2026-10-20';
+
+        if (linkEl) {
+          linkEl.href = source.url || '#';
+          linkEl.setAttribute('data-track-source', source.id || '');
+        }
+
+        if (categoriesContainer) {
+          categoriesContainer.innerHTML = '';
+          const cats = source.categories || ['Geral'];
+          cats.forEach((cat: string) => {
+            const span = document.createElement('span');
+            span.className = 'px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-slate-900 text-sm font-black capitalize';
+            span.textContent = cat;
+            categoriesContainer.appendChild(span);
+          });
+        }
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      } catch (err) {
+        console.error('Erro ao abrir modal do veículo:', err);
+      }
+    });
+  }
+
+  initModalHandler();
+  document.addEventListener('astro:page-load', initModalHandler);
+</script>
