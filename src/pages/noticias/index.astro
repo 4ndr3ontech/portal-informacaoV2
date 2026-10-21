@@ -1,11 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SourceCard from '../../components/SourceCard.astro';
-import { sources } from '../../data/sources';
+
+// 1. Importa as fontes originais (Mundo, outras categorias, etc.)
+import { sources as fontesOriginais } from '../../data/sources';
+
+// 2. Importa as novas 278 fontes do Brasil
+import fontesBrasil from '../../data/brazil-sources.json';
+
 import type { NewsSource } from '../../types';
 
-// Total de fontes disponíveis no projeto estático (SSG)
-const allSources: NewsSource[] = sources;
+// 3. Junta as duas listas numa só!
+const allSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
 const totalSources = allSources.length;
 ---
 

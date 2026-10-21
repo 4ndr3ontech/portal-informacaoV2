@@ -1,0 +1,5006 @@
+[
+  {
+    "id": "br-g1-1-acd9a6",
+    "rank": 1,
+    "name": "G1",
+    "country": "BR",
+    "url": "https://g1.globo.com",
+    "score": 94.99,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias do Brasil e do mundo, sobre política, economia, emprego, educação, saúde, meio ambiente, tecnologia, ciência, cultura e carros. Vídeos dos telejornais da TV Globo e da GloboNews.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-uol-2-79ddd9",
+    "rank": 2,
+    "name": "UOL",
+    "country": "BR",
+    "url": "https://www.uol.com.br",
+    "score": 94.98,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "UOL, a maior empresa brasileira de conteúdo, serviços digitais e tecnologia com vários canais de jornalismo e diversas soluções para você ou seu negócio.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-de-s-paulo-3-953b69",
+    "rank": 3,
+    "name": "Folha de S.Paulo",
+    "country": "BR",
+    "url": "https://www.folha.uol.com.br",
+    "score": 94.97,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Siga a Folha e fique informado sobre tudo o que acontece no Brasil e no mundo. NotÃ­cias sobre polÃ­tica, economia, cultura, esporte, entretenimento e mais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-estad-o-4-b4ba5a",
+    "rank": 4,
+    "name": "Estadão",
+    "country": "BR",
+    "url": "https://www.estadao.com.br",
+    "score": 94.96,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "As principais e as últimas notícias do Brasil e do mundo sobre política, economia, esportes, cultura, tecnologia, estilo de vida e muito mais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cnn-brasil-5-dfaae9",
+    "rank": 5,
+    "name": "CNN Brasil",
+    "country": "BR",
+    "url": "https://www.cnnbrasil.com.br",
+    "score": 94.95,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Pense bem, pense CNN - Notícias ao vivo, fatos da política nacional e internacional no maior canal de notícias do mundo!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-metr-poles-6-e434ee",
+    "rank": 6,
+    "name": "Metrópoles",
+    "country": "BR",
+    "url": "https://www.metropoles.com",
+    "score": 94.94,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Tudo sobre política, saúde, justiça, comportamento, entretenimento. Confira os fatos mais relevantes do país e do mundo em tempo real e de graça",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-terra-7-749089",
+    "rank": 7,
+    "name": "Terra",
+    "country": "BR",
+    "url": "https://www.terra.com.br",
+    "score": 94.93,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe no Terra as últimas notícias do Brasil e do mundo sobre Entretenimento, Esportes, Tecnologia, Saúde, Horóscopo, Receitas e muito mais",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-r7-8-885273",
+    "rank": 8,
+    "name": "R7",
+    "country": "BR",
+    "url": "https://www.r7.com",
+    "score": 94.92,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e vídeos do Brasil e do mundo sobre política, esportes, entretenimento e muito mais no portal da Record TV.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-banduol-9-dd1a7e",
+    "rank": 9,
+    "name": "BandUOL",
+    "country": "BR",
+    "url": "https://www.band.uol.com.br",
+    "score": 94.91,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal BandUOL.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-poder360-10-1ecbe3",
+    "rank": 10,
+    "name": "Poder360",
+    "country": "BR",
+    "url": "https://www.poder360.com.br",
+    "score": 94.9,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Home | Notícias do poder e da política. Editado por Fernando Rodrigues e equipe",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-antagonista-11-daea92",
+    "rank": 11,
+    "name": "O Antagonista",
+    "country": "BR",
+    "url": "https://oantagonista.com.br",
+    "score": 94.89,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "O mais influente site Jornalístico de Política do Brasil. Veja Agora Notícias do Brasil e do Mundo!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cartacapital-12-6fa896",
+    "rank": 12,
+    "name": "CartaCapital",
+    "country": "BR",
+    "url": "https://www.cartacapital.com.br",
+    "score": 94.88,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "CartaCapital – Tudo o que importa para quem se importa. Jornalismo crítico e transparente. Notícias sobre política, economia, justiça e sociedade.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-brasil-247-13-c78a84",
+    "rank": 13,
+    "name": "Brasil 247",
+    "country": "BR",
+    "url": "https://www.brasil247.com",
+    "score": 94.87,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "O que acontece, por que acontece. 24 horas por dia, 7 dias por semana",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-do-brasil-14-77e90f",
+    "rank": 14,
+    "name": "Jornal do Brasil",
+    "country": "BR",
+    "url": "https://www.jb.com.br",
+    "score": 94.86,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal do Brasil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-globo-15-c83746",
+    "rank": 15,
+    "name": "O Globo",
+    "country": "BR",
+    "url": "https://oglobo.globo.com",
+    "score": 94.85,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Fique atualizado com as principais notícias e acompanhe tudo o que está acontecendo no Brasil e no mundo. Acesse O GLOBO!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-extra-16-4225fd",
+    "rank": 16,
+    "name": "Extra",
+    "country": "BR",
+    "url": "https://extra.globo.com",
+    "score": 94.84,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Leia as principais notícias do Rio e do mundo",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-meia-hora-17-67aa66",
+    "rank": 17,
+    "name": "Meia Hora",
+    "country": "BR",
+    "url": "https://www.meiahora.com.br",
+    "score": 94.83,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias, fotos e Vídeos do Rio de Janeiro",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-com-rcio-sp-18-9fc793",
+    "rank": 18,
+    "name": "Diário do Comércio SP",
+    "country": "BR",
+    "url": "https://dcomercio.com.br",
+    "score": 94.82,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Diário do Comércio SP.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-agora-s-paulo-19-2ad01d",
+    "rank": 19,
+    "name": "Agora S.Paulo",
+    "country": "BR",
+    "url": "https://agora.folha.uol.com.br",
+    "score": 94.81,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Leia o Agora e fique por dentro do que acontece em SÃ£o Paulo e no Brasil. NotÃ­cias sobre polÃ­tica, grana, INSS, as ruas da cidade, esporte, entretenimento e mais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-gazeta-do-povo-20-8b0a7e",
+    "rank": 20,
+    "name": "Gazeta do Povo",
+    "country": "BR",
+    "url": "https://www.gazetadopovo.com.br",
+    "score": 94.8,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Mantenha-se informado sobre notícias do Brasil e do mundo com análises de quem entende de política, economia e cidadania. Acesse a Gazeta do Povo!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tribuna-do-paran-21-59c284",
+    "rank": 21,
+    "name": "Tribuna do Paraná",
+    "country": "BR",
+    "url": "https://www.tribunapr.com.br",
+    "score": 94.79,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe na Tribuna do Paraná as notícias de Curitiba, seus bairros e da região metropolitana. Muito futebol com Atlético, Coritiba, Paraná Clube e a suburbana.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-estado-de-minas-22-3b728f",
+    "rank": 22,
+    "name": "Estado de Minas",
+    "country": "BR",
+    "url": "https://www.em.com.br",
+    "score": 94.78,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as Ãºltimas notÃ­cias e fique bem informado sobre tudo o que acontece em Minas Gerais, Brasil e no mundo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-tempo-23-3190d4",
+    "rank": 23,
+    "name": "O Tempo",
+    "country": "BR",
+    "url": "https://www.otempo.com.br",
+    "score": 94.77,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias de Belo Horizonte, de Minas Gerais, de Brasil e do Mundo. Tudo quente e bem apurado, aqui!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-hoje-em-dia-24-ae49be",
+    "rank": 24,
+    "name": "Hoje em Dia",
+    "country": "BR",
+    "url": "https://www.hojeemdia.com.br",
+    "score": 94.76,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Minas, Últimas, Geral, Publicidade Legal, Educação, Emprego e carreiras, Saúde e bem-estar, Entretenimento, Esportes, Opinião, Plural, Política, HD Auto",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-nordeste-25-306eae",
+    "rank": 25,
+    "name": "Diário do Nordeste",
+    "country": "BR",
+    "url": "https://diariodonordeste.verdesmares.com.br",
+    "score": 94.75,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Saiba as principais notícias do Ceará e do Brasil sobre esportes, segurança, entretenimento, economia, BBB, politica, concursos e loterias | Diário do Nordeste",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-povo-26-cc9302",
+    "rank": 26,
+    "name": "O Povo",
+    "country": "BR",
+    "url": "https://www.opovo.com.br",
+    "score": 94.74,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias sobre o Ceará, política, eleições, esportes, economia, entretenimento e análises sobre o cenário brasileiro e mundial. Confira!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-correio-braziliense-27-cbd495",
+    "rank": 27,
+    "name": "Correio Braziliense",
+    "country": "BR",
+    "url": "https://www.correiobraziliense.com.br",
+    "score": 94.73,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O Correio Braziliense (CB) Ã© o mais importante canal de notÃ­cias de BrasÃ­lia. Aqui vocÃª encontra as Ãºltimas notÃ­cias do DF, do Brasil e do mundo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-de-bras-lia-28-fc1a7d",
+    "rank": 28,
+    "name": "Jornal de Brasília",
+    "country": "BR",
+    "url": "https://jornaldebrasilia.com.br",
+    "score": 94.72,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Informação e Opinião",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-zero-hora-29-d82fcf",
+    "rank": 29,
+    "name": "Zero Hora",
+    "country": "BR",
+    "url": "https://gauchazh.clicrbs.com.br",
+    "score": 94.71,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O jornal digital que te conecta com as notícias do RS, do mundo e do seu time. Tudo aqui, em GZH.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-correio-do-povo-30-e769c2",
+    "rank": 30,
+    "name": "Correio do Povo",
+    "country": "BR",
+    "url": "https://www.correiodopovo.com.br",
+    "score": 94.7,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias do Rio Grande do Sul, Brasil e mundo. Política, Esportes, Cultura, Economia e mais no Correio do Povo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-do-commercio-31-235cc0",
+    "rank": 31,
+    "name": "Jornal do Commercio",
+    "country": "BR",
+    "url": "https://jc.ne10.uol.com.br",
+    "score": 94.69,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O Jornal do Commercio (JC) traz as últimas notícias sobre política, economia, segurança, entretenimento, futebol, empregos e concursos",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-de-pernambuco-32-ae8323",
+    "rank": 32,
+    "name": "Diário de Pernambuco",
+    "country": "BR",
+    "url": "https://www.diariodepernambuco.com.br",
+    "score": 94.68,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O Diario de Pernambuco Ã© lÃ­der entre os jornais de Pernambuco. SÃ£o mais de 3,7 milhÃµes de leitores e seguidores entre as redes sociais e lideranÃ§a no Instagram, com mais de 1,6 milhÃ£o de seguidores, e um novo portal digital que alcanÃ§a mais de 400 mil acessos no site por dia.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-a-tarde-33-e2f65e",
+    "rank": 33,
+    "name": "A Tarde",
+    "country": "BR",
+    "url": "https://atarde.com.br",
+    "score": 94.67,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias Sobre Salvador e Região - Notícias, Classificados, Esportes e Cultura - A TARDE Online.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-correio-da-bahia-34-3222bb",
+    "rank": 34,
+    "name": "Correio da Bahia",
+    "country": "BR",
+    "url": "https://www.correio24horas.com.br",
+    "score": 94.66,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O Jornal Correio está presente em todas as plataformas digitais, com notícias sempre atualizadas e relevantes de Salvador, da Bahia e do Brasil. E há 3 anos consecutivos é líder em audiência entre todos os portais baianos",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-a-gazeta-es-35-96e271",
+    "rank": 35,
+    "name": "A Gazeta ES",
+    "country": "BR",
+    "url": "https://www.agazeta.com.br",
+    "score": 94.65,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Confira as últimas notícias sobre política, economia, polícia, entretenimento e empregos no Espírito Santo, no Brasil e no mundo e fique bem informado.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tribuna-da-bahia-36-9290ca",
+    "rank": 36,
+    "name": "Tribuna da Bahia",
+    "country": "BR",
+    "url": "https://www.tribunada-bahia.com.br",
+    "score": 94.64,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Tribuna da Bahia.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-op--o-37-eefb29",
+    "rank": 37,
+    "name": "Jornal Opção",
+    "country": "BR",
+    "url": "https://www.jornalopcao.com.br",
+    "score": 94.63,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal Opção.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-popular-go-38-c20039",
+    "rank": 38,
+    "name": "O Popular GO",
+    "country": "BR",
+    "url": "https://www.opolar.com.br",
+    "score": 94.62,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal O Popular GO.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-campo-grande-news-39-834668",
+    "rank": 39,
+    "name": "Campo Grande News",
+    "country": "BR",
+    "url": "https://www.campograndenews.com.br",
+    "score": 94.61,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Campo Grande News.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-correio-do-estado-40-857785",
+    "rank": 40,
+    "name": "Correio do Estado",
+    "country": "BR",
+    "url": "https://www.correiodoestado.com.br",
+    "score": 94.6,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Correio do Estado - Notícias de Mato Grosso do Sul e do Brasil",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-cuiabano-41-8977c3",
+    "rank": 41,
+    "name": "Diário Cuiabano",
+    "country": "BR",
+    "url": "https://www.diariocuiabano.com.br",
+    "score": 94.59,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Diário Cuiabano.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-a-cr-tica-ms-42-41bba9",
+    "rank": 42,
+    "name": "A Crítica MS",
+    "country": "BR",
+    "url": "https://www.acritica.net",
+    "score": 94.58,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal A Crítica MS.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-de-boa-vista-43-4f7833",
+    "rank": 43,
+    "name": "Folha de Boa Vista",
+    "country": "BR",
+    "url": "https://folha.bv.br",
+    "score": 94.57,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Folha de Boa Vista.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-do-tocantins-44-4629de",
+    "rank": 44,
+    "name": "Jornal do Tocantins",
+    "country": "BR",
+    "url": "https://jornaldotocantins.com.br",
+    "score": 94.56,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O maior jornal do estado do Tocantins traz para você as principais notícias regionais sobre política, economia, esporte e cultura",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-amaz-nia-45-abad6b",
+    "rank": 45,
+    "name": "Portal Amazônia",
+    "country": "BR",
+    "url": "https://portalamazonia.com",
+    "score": 94.55,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Portal Amazônia.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-a-cr-tica-am-46-9b9fe2",
+    "rank": 46,
+    "name": "A Crítica AM",
+    "country": "BR",
+    "url": "https://www.acritica.com",
+    "score": 94.54,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal A Crítica AM.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-amazonas-47-49f557",
+    "rank": 47,
+    "name": "Diário do Amazonas",
+    "country": "BR",
+    "url": "https://daziarioam.com.br",
+    "score": 94.53,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Diário do Amazonas.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-do-par-48-a90782",
+    "rank": 48,
+    "name": "Jornal do Pará",
+    "country": "BR",
+    "url": "https://www.oliberal.com",
+    "score": 94.52,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal do Pará.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-par-49-520e91",
+    "rank": 49,
+    "name": "Diário do Pará",
+    "country": "BR",
+    "url": "https://www.diarioonline.com.br",
+    "score": 94.51,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias de Belém do Pará, Região Norte, Amazônia e do mundo sobre emprego, concursos, saúde, educação, tecnologia, política, polícia, cultura, cotid...",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-do-mate-50-8bc7f0",
+    "rank": 50,
+    "name": "Folha do Mate",
+    "country": "BR",
+    "url": "https://folhadomate.com",
+    "score": 94.5,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Folha do Mate.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-nordeste-us-51-a4615c",
+    "rank": 51,
+    "name": "Nordeste Us",
+    "country": "BR",
+    "url": "https://ne9.com.br",
+    "score": 94.49,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "] ] Economia Turismo Política ] Entretenimento ] Cotidiano Esportes Empregos Nederlandse casinospelers die houden van spanning en kwaliteit vinden bij",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tribuna-do-norte-52-98d709",
+    "rank": 52,
+    "name": "Tribuna do Norte",
+    "country": "BR",
+    "url": "https://www.tribunadonorte.com.br",
+    "score": 94.48,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Tribuna do Norte.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-da-para-ba-53-b47122",
+    "rank": 53,
+    "name": "Jornal da Paraíba",
+    "country": "BR",
+    "url": "https://jornaldaparaiba.com.br",
+    "score": 94.47,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "A notícia que você confia. Blogs especializados e cobertura completa de Política, Cultura, Esportes, Educação, Saúde, Economia, Concursos e Emprego.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-infonet-se-54-3a489e",
+    "rank": 54,
+    "name": "Infonet SE",
+    "country": "BR",
+    "url": "https://infonet.com.br",
+    "score": 94.46,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias de Aracaju e Sergipe em tempo real. Política, economia, segurança, entretenimento, agenda cultural, cinema, e muito mais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-do-dia-se-55-573093",
+    "rank": 55,
+    "name": "Jornal do Dia SE",
+    "country": "BR",
+    "url": "https://jornaldodiase.com.br",
+    "score": 94.45,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Portal de Notícias Online e Impresso de Sergipe",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-o-dia-pi-56-5c34bf",
+    "rank": 56,
+    "name": "Portal O Dia PI",
+    "country": "BR",
+    "url": "https://portalodia.com",
+    "score": 94.44,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias recentes do Piauí (Teresina e outros municípios) em tempo real e com a credibilidade que é marca registrada do Sistema O Dia de Comunicação.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cidade-verde-pi-57-829398",
+    "rank": 57,
+    "name": "Cidade Verde PI",
+    "country": "BR",
+    "url": "https://cidadeverde.com",
+    "score": 94.43,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias do Piauí, Brasil e do Mundo. Ceará, Maranhão, Nordeste, Jornal, Péricles Mendel, Tempo Real, Teresina",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-seles-nafes-ap-58-f5d46b",
+    "rank": 58,
+    "name": "Seles Nafes AP",
+    "country": "BR",
+    "url": "https://selesnafes.com",
+    "score": 94.42,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Seles Nafes AP.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-de-cuiab-59-1ea868",
+    "rank": 59,
+    "name": "Diário de Cuiabá",
+    "country": "BR",
+    "url": "https://www.diariodecuiaba.com.br",
+    "score": 94.41,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Diário de Cuiabá.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tecnoblog-60-26cd48",
+    "rank": 60,
+    "name": "Tecnoblog",
+    "country": "BR",
+    "url": "https://tecnoblog.net",
+    "score": 94.4,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Tecnoblog.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-canaltech-61-593f68",
+    "rank": 61,
+    "name": "Canaltech",
+    "country": "BR",
+    "url": "https://canaltech.com.br",
+    "score": 94.39,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Leia no Canaltech notícias sobre tecnologia, ciência, entretenimento, quadrinhos, carros, review de celulares, além de dicas e tutoriais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-olhar-digital-62-3beb46",
+    "rank": 62,
+    "name": "Olhar Digital",
+    "country": "BR",
+    "url": "https://olhardigital.com.br",
+    "score": 94.38,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "O futuro passa primeiro aqui",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tecmundo-63-ce41ef",
+    "rank": 63,
+    "name": "TecMundo",
+    "country": "BR",
+    "url": "https://www.tecmundo.com.br",
+    "score": 94.37,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "No TecMundo você fica por dentro dos principais acontecimentos da tecnologia. Segurança digital, análises, games, ciência, séries e mais, você descobre aqui!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-the-enemy-64-274855",
+    "rank": 64,
+    "name": "The Enemy",
+    "country": "BR",
+    "url": "https://www.theenemy.com.br",
+    "score": 94.36,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal The Enemy.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-adrenaline-65-357f92",
+    "rank": 65,
+    "name": "Adrenaline",
+    "country": "BR",
+    "url": "https://www.adrenaline.com.br",
+    "score": 94.35,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Fonte de informação sobre Tecnologia e Jogos, com notícias e análises de eletrônicos de consumo, gadgets, hardwares para computador e games.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-macmagazine-66-d24deb",
+    "rank": 66,
+    "name": "MacMagazine",
+    "country": "BR",
+    "url": "https://macmagazine.com.br",
+    "score": 94.34,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal MacMagazine.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-infomoney-67-69fdc2",
+    "rank": 67,
+    "name": "InfoMoney",
+    "country": "BR",
+    "url": "https://www.infomoney.com.br",
+    "score": 94.33,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "InfoMoney é o maior portal de investimentos, mercados e negócios do Brasil. Acompanhe notícias, bolsa de valores, ações, economia e cotações em tempo real",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-exame-68-2d84b9",
+    "rank": 68,
+    "name": "Exame",
+    "country": "BR",
+    "url": "https://exame.com",
+    "score": 94.32,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Notícias do Brasil e do Mundo. Economia, Política, Finanças e mais. Entrevistas, Análises e Opinião de quem entende do Assunto! Acesse!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-valor-econ-mico-69-933324",
+    "rank": 69,
+    "name": "Valor Econômico",
+    "country": "BR",
+    "url": "https://valor.globo.com",
+    "score": 94.31,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "O Valor Econômico é o mais importante veículo de economia, finanças e negócios do Brasil. Traz notícias, cotações, blogs e conteúdo sobre cultura, estilo, carreiras e investimentos",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-investnews-70-7e97de",
+    "rank": 70,
+    "name": "InvestNews",
+    "country": "BR",
+    "url": "https://investnews.com.br",
+    "score": 94.3,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Sua cobertura diária de notícias sobre negócios, economia e investimento! Tudo sobre empresas, economia e investimentos de forma simples e descomplicada",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-suno-not-cias-71-8d7246",
+    "rank": 71,
+    "name": "Suno Notícias",
+    "country": "BR",
+    "url": "https://www.suno.com.br/noticias",
+    "score": 94.29,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Portal de notícias da Suno com as principais informações sobre o mundo dos negócios, política e economia do Brasil e do Mundo",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-seu-dinheiro-72-8156cd",
+    "rank": 72,
+    "name": "Seu Dinheiro",
+    "country": "BR",
+    "url": "https://www.seudinheiro.com",
+    "score": 94.28,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Invista com Inteligência",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-money-times-73-61f1e7",
+    "rank": 73,
+    "name": "Money Times",
+    "country": "BR",
+    "url": "https://www.moneytimes.com.br",
+    "score": 94.27,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "As notícias que impactam o dia a dia do mercado financeiro e do seu bolso.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ge--globo-esporte-74-a0bfc9",
+    "rank": 74,
+    "name": "ge (Globo Esporte)",
+    "country": "BR",
+    "url": "https://ge.globo.com",
+    "score": 94.26,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "No ge.globo você encontra a melhor cobertura sobre o Futebol e Outros Esportes, no Brasil e no Mundo: Notícias, Vídeos, Tabelas, Agenda e muito mais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-lance-75-3683f3",
+    "rank": 75,
+    "name": "Lance!",
+    "country": "BR",
+    "url": "https://www.lance.com.br",
+    "score": 94.25,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Notícias de futebol e outros esportes, resultados, tempo real, jogos, estatísticas, fora de campo, tabela, simulador e mercado da bola. Um LANCE! muda tudo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-gazeta-esportiva-76-362be5",
+    "rank": 76,
+    "name": "Gazeta Esportiva",
+    "country": "BR",
+    "url": "https://www.gazetaesportiva.com",
+    "score": 94.24,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "As últimas notícias dos times de futebol, campeonatos nacionais e internacionais, jogos ao vivo, basquete, vôlei, fórmula 1, tênis e muitos outros esportes.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-superesportes-mg-77-67ec12",
+    "rank": 77,
+    "name": "Superesportes MG",
+    "country": "BR",
+    "url": "https://www.uai.com.br/esportes",
+    "score": 94.23,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Superesportes MG.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-espn-brasil-78-74d7db",
+    "rank": 78,
+    "name": "ESPN Brasil",
+    "country": "BR",
+    "url": "https://www.espn.com.br",
+    "score": 94.22,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal ESPN Brasil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-uol-esporte-79-33a270",
+    "rank": 79,
+    "name": "UOL Esporte",
+    "country": "BR",
+    "url": "https://www.uol.com.br/esporte",
+    "score": 94.21,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Veja resultados, notícias, entrevistas, fotos, vídeos e os bastidores do esporte. Acompanhe ao vivo os principais eventos esportivos no Brasil e do mundo",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-terra-esportes-80-80ec9f",
+    "rank": 80,
+    "name": "Terra Esportes",
+    "country": "BR",
+    "url": "https://www.terra.com.br/esportes",
+    "score": 94.2,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Fique por dentro de tudo que rola nos esportes: notícias de futebol, basquete, vôlei, surfe, lutas e muito mais! Olimpíadas, Campeonatos e Copas!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-bbc-news-brasil-81-1ef7eb",
+    "rank": 81,
+    "name": "BBC News Brasil",
+    "country": "BR",
+    "url": "https://www.bbc.com/portuguese",
+    "score": 94.19,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "mundo"
+    ],
+    "description": "Na BBC News Brasil você fica por dentro do que acontece no Brasil e no mundo. Com redações em Londres e São Paulo e mais de 200 repórteres internacionais, nossa cobertura leva a você as principais notícias de política, economia, ciência, saúde e comportamento.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-dw-brasil-82-2c5278",
+    "rank": 82,
+    "name": "DW Brasil",
+    "country": "BR",
+    "url": "https://www.dw.com/pt-br",
+    "score": 94.18,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "mundo"
+    ],
+    "description": "Página inicial da DW Brasil com notícias e análises sobre os temas mais relevantes do dia no Brasil e no mundo, além de fotos, vídeos e colunas semanais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-rfi-brasil-83-aa877a",
+    "rank": 83,
+    "name": "RFI Brasil",
+    "country": "BR",
+    "url": "https://www.rfi.fr/br/",
+    "score": 94.17,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "mundo"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal RFI Brasil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-sputnik-brasil-84-79d12d",
+    "rank": 84,
+    "name": "Sputnik Brasil",
+    "country": "BR",
+    "url": "https://sputniknews.brasil.com",
+    "score": 94.16,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "mundo"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Sputnik Brasil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-super-interessante-85-3fe8e4",
+    "rank": 85,
+    "name": "Super Interessante",
+    "country": "BR",
+    "url": "https://super.abril.com.br",
+    "score": 94.15,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "Ciência, história, tecnologia, cultura, curiosidades e tudo mais o que for interessante, de um jeito que só a SUPER sabe explicar.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-revista-galileu-86-110f39",
+    "rank": 86,
+    "name": "Revista Galileu",
+    "country": "BR",
+    "url": "https://revistagalileu.globo.com",
+    "score": 94.14,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "Galileu",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cnn-sa-de-87-90efd1",
+    "rank": 87,
+    "name": "CNN Saúde",
+    "country": "BR",
+    "url": "https://www.cnnbrasil.com.br/saude",
+    "score": 94.13,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "Acesse a CNN Brasil e acompanhe as principais notícias sobre Saúde e Bem estar. Destaques da medicina, nutrição, vacinas e mais. Visite e Confira!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ag-ncia-brasil-88-c5eb83",
+    "rank": 88,
+    "name": "Agência Brasil",
+    "country": "BR",
+    "url": "https://agenciabrasil.ebc.com.br",
+    "score": 94.12,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Agência pública de notícias da EBC. Informações sobre política, economia, educação, direitos humanos e outros assuntos.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-sbt-news-89-bef594",
+    "rank": 89,
+    "name": "SBT News",
+    "country": "BR",
+    "url": "https://sbtnews.sbt.com.br",
+    "score": 94.11,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O fato como ele é. Notícias 24h, Ao Vivo, do Brasil e do Mundo sobre política, economia, internacional, saúde, tecnologia, educação e meio ambiente.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jovem-pan-90-485ff5",
+    "rank": 90,
+    "name": "Jovem Pan",
+    "country": "BR",
+    "url": "https://jovempan.com.br",
+    "score": 94.1,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jovem Pan.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ig-91-4435ee",
+    "rank": 91,
+    "name": "iG",
+    "country": "BR",
+    "url": "https://www.ig.com.br",
+    "score": 94.09,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Leia também sobre Celebridades, Moda, Horóscopo, Games, Cultura, Economia, Turismo, Saúde e notícias internacionais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-dia-92-239052",
+    "rank": 92,
+    "name": "O Dia",
+    "country": "BR",
+    "url": "https://odia.ig.com.br",
+    "score": 94.08,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "No jornal O DIA você encontra as últimas notícias sobre o Rio, esportes, economia, diversão, Brasil, mundo e mais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-catraca-livre-93-7dc50e",
+    "rank": 93,
+    "name": "Catraca Livre",
+    "country": "BR",
+    "url": "https://catracalivre.com.br",
+    "score": 94.07,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Eventos gratuitos, cultura, lazer, gastronomia, educação e bem-estar em um só lugar. Explore conteúdos atualizados diariamente e aproveite experiências incríveis sem pesar no bolso. A Catraca Livre conecta você ao que realmente importa.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-brasil-de-fato-94-0601cb",
+    "rank": 94,
+    "name": "Brasil de Fato",
+    "country": "BR",
+    "url": "https://www.brasildefato.com.br",
+    "score": 94.06,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Uma visão popular do Brasil e do Mundo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-congresso-em-foco-95-36f6ff",
+    "rank": 95,
+    "name": "Congresso em Foco",
+    "country": "BR",
+    "url": "https://congressoemfoco.uol.com.br",
+    "score": 94.05,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Congresso em Foco.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-centro-do-mundo-96-1046a7",
+    "rank": 96,
+    "name": "Diário do Centro do Mundo",
+    "country": "BR",
+    "url": "https://www.diariodocentrodomundo.com.br",
+    "score": 94.04,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "O Diário do Centro do Mundo é um jornalismo que marca ponto na vida nacional. Leia agora mesmo o jornal Diário do Centro do Mundo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-revista-f-rum-97-8b96cd",
+    "rank": 97,
+    "name": "Revista Fórum",
+    "country": "BR",
+    "url": "https://revistaforum.com.br",
+    "score": 94.03,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Descubra a trajetória da Revista Fórum, sua influência e legado na mídia brasileira desde 2001 até sua última edição em 2013.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-poder360-98-1ecbe3",
+    "rank": 98,
+    "name": "Poder360",
+    "country": "BR",
+    "url": "https://www.poder360.com.br",
+    "score": 94.02,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Home | Notícias do poder e da política. Editado por Fernando Rodrigues e equipe",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-ggn-99-7626a4",
+    "rank": 99,
+    "name": "Jornal GGN",
+    "country": "BR",
+    "url": "https://jornalggn.com.br",
+    "score": 94.01,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Eleições 2026 Colunistas Ver mais Últimas notícias Ver mais Mais lidas Artigos Ver mais Vídeos Ver mais As mais comentadas Ver todos Junte-se à comunidade que pensa e constrói o futuro do País Acessar Projeto Brasil Política Ver mais Luís Nassif Ver mais Geopolítica Ver mais Matérias Especiais Especiais Ver mais Economia Ver mais Justiça […]",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-povo-100-cc9302",
+    "rank": 100,
+    "name": "O Povo",
+    "country": "BR",
+    "url": "https://www.opovo.com.br",
+    "score": 94.0,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias sobre o Ceará, política, eleições, esportes, economia, entretenimento e análises sobre o cenário brasileiro e mundial. Confira!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cn7-101-47f179",
+    "rank": 101,
+    "name": "CN7",
+    "country": "BR",
+    "url": "https://cn7.com.br",
+    "score": 93.99,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias do Ceará com foco em política, segurança pública, bastidores e desenvolvimento regional.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-bahia-not-cias-102-bc4c8b",
+    "rank": 102,
+    "name": "Bahia Notícias",
+    "country": "BR",
+    "url": "https://www.bahianoticias.com.br",
+    "score": 93.98,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe o Bahia Notícias e leia as últimas notícias de Salvador, da Bahia e do Brasil",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-bnews-103-0e89cc",
+    "rank": 103,
+    "name": "BNews",
+    "country": "BR",
+    "url": "https://www.bnews.com.br",
+    "score": 93.97,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal BNews.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-aratu-on-104-bc04c1",
+    "rank": 104,
+    "name": "Aratu On",
+    "country": "BR",
+    "url": "https://aratuon.com.br",
+    "score": 93.96,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Aratu On: notícias em tempo real de Salvador, da Bahia e do Brasil. Acompanhe tudo sobre política, economia, saúde, esportes, entretenimento e demais temas relevantes.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-de-pernambuco-105-4f132b",
+    "rank": 105,
+    "name": "Folha de Pernambuco",
+    "country": "BR",
+    "url": "https://www.folhape.com.br",
+    "score": 93.95,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Folha PE - portal de notícias da Folha de Pernambuco - Últimas notícias de política, economia, esportes, cultura, cotidiano, sociedade, concursos e empregos, gastronomia, veículos, educação, saúde, tecnologia, trânsito, cinema, rádio. Blogs de finanças pessoais, sustentabilidade, sexualidade, holística. Rádio Folha. E o programa de vídeo No Cafezinho.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-blog-do-jamildo-106-ef80cf",
+    "rank": 106,
+    "name": "Blog do Jamildo",
+    "country": "BR",
+    "url": "https://jc.ne10.uol.com.br/blogs/jamildo",
+    "score": 93.94,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "O Jornal do Commercio (JC) traz as últimas notícias sobre política, economia, segurança, entretenimento, futebol, empregos e concursos",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-leiaj-107-91ce6a",
+    "rank": 107,
+    "name": "LeiaJá",
+    "country": "BR",
+    "url": "https://www.leiaja.com",
+    "score": 93.93,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal LeiaJá.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-maispb-108-6a5eac",
+    "rank": 108,
+    "name": "MaisPB",
+    "country": "BR",
+    "url": "https://www.maispb.com.br",
+    "score": 93.92,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Portal fundado em dezembro de 2009. Foco no noticiário político. Em 5 anos, um dos mais influentes veículos na internet do Estado da Paraíba.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-pol-mica-para-ba-109-d9a2cf",
+    "rank": 109,
+    "name": "Polêmica Paraíba",
+    "country": "BR",
+    "url": "https://www.polemicaparaiba.com.br",
+    "score": 93.91,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias de todo o estado da Paraíba, do Brasil e do mundo, Política, Esportes, Entretenimento, Economia, Tecnologia e muito mais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-clickpb-110-ec2e75",
+    "rank": 110,
+    "name": "ClickPB",
+    "country": "BR",
+    "url": "https://www.clickpb.com.br",
+    "score": 93.9,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Confira as últimas notícias em Capa",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-agora-rn-111-0249f2",
+    "rank": 111,
+    "name": "Agora RN",
+    "country": "BR",
+    "url": "https://agorarn.com.br",
+    "score": 93.89,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Informação de Natal e do Rio Grande do Norte em tempo real, com política, economia, segurança, esportes, cultura e serviços.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-bo-112-825db6",
+    "rank": 112,
+    "name": "Portal BO",
+    "country": "BR",
+    "url": "https://portalbo.com",
+    "score": 93.88,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "A informação da segurança pública com credibilidade!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tnh1-113-c34628",
+    "rank": 113,
+    "name": "TNH1",
+    "country": "BR",
+    "url": "https://www.tnh1.com.br",
+    "score": 93.87,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias do portal líder em Alagoas que traz tudo na hora sobre política, economia, polícia, esportes, emprego, diversão de Maceió e do interior.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-gazeta-web-114-6456d9",
+    "rank": 114,
+    "name": "Gazeta Web",
+    "country": "BR",
+    "url": "https://www.gazetaweb.com",
+    "score": 93.86,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O portal pioneiro em Alagoas, que traz as últimas notícias de Maceió e do interior: política, economia, esportes e diversão você vê primeiro na Gazetaweb.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cada-minuto-115-c65d75",
+    "rank": 115,
+    "name": "Cada Minuto",
+    "country": "BR",
+    "url": "https://www.cadaminuto.com.br",
+    "score": 93.85,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Portal de notícias de Alagoas com cobertura local, política, esportes e principais acontecimentos do estado.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-f5-news-116-458c46",
+    "rank": 116,
+    "name": "F5 News",
+    "country": "BR",
+    "url": "https://www.f5news.com.br",
+    "score": 93.84,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal F5 News.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-meio-norte-117-f10878",
+    "rank": 117,
+    "name": "Meio Norte",
+    "country": "BR",
+    "url": "https://www.meionorte.com",
+    "score": 93.83,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O Meio News é um portal de notícias que oferece cobertura completa dos principais eventos do Piauí, do Brasil e do mundo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-imparcial-118-a9dd83",
+    "rank": 118,
+    "name": "O Imparcial",
+    "country": "BR",
+    "url": "https://oimparcial.com.br",
+    "score": 93.82,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Leia as últimas notícias de São Luís e do estado do MA; vídeos, fotos, matérias especiais sobre política, cidades, cultura popular, esportes e concursos.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-imirante-119-ceb039",
+    "rank": 119,
+    "name": "Imirante",
+    "country": "BR",
+    "url": "https://imirante.com",
+    "score": 93.81,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Imirante.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-a-cr-tica-120-9b9fe2",
+    "rank": 120,
+    "name": "A Crítica",
+    "country": "BR",
+    "url": "https://www.acritica.com",
+    "score": 93.8,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal A Crítica.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-do-holanda-121-12907b",
+    "rank": 121,
+    "name": "Portal do Holanda",
+    "country": "BR",
+    "url": "https://www.portaldoholanda.com.br",
+    "score": 93.79,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Portal de notícias e conteúdo",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-bnc-amazonas-122-0351db",
+    "rank": 122,
+    "name": "BNC Amazonas",
+    "country": "BR",
+    "url": "https://bncamazonas.com.br",
+    "score": 93.78,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O site BNC Amazonas é especializado em política.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-liberal-123-a90782",
+    "rank": 123,
+    "name": "O Liberal",
+    "country": "BR",
+    "url": "https://www.oliberal.com",
+    "score": 93.77,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal O Liberal.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-dol-124-0e1283",
+    "rank": 124,
+    "name": "DOL",
+    "country": "BR",
+    "url": "https://diarioonline.com.br",
+    "score": 93.76,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias de Belém do Pará, Região Norte, Amazônia e do mundo sobre emprego, concursos, saúde, educação, tecnologia, política, polícia, cultura, cotid...",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-roma-news-125-630f27",
+    "rank": 125,
+    "name": "Roma News",
+    "country": "BR",
+    "url": "https://www.romanews.com.br",
+    "score": 93.75,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "As principais notícias você encontra aqui. O maior portal de notícias de Belém. Saiba tudo sobre o mundo em tempo real conosco. Conheça nosso novo portal.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-t1-not-cias-126-63de1e",
+    "rank": 126,
+    "name": "T1 Notícias",
+    "country": "BR",
+    "url": "https://www.t1noticias.com.br",
+    "score": 93.74,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as notícias sobre política, eleições, palmas, concursos, opinião da Roberta Tum e demais assuntos no site que faz a diferença no Tocantins.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cleber-toledo-127-d6a3ee",
+    "rank": 127,
+    "name": "Cleber Toledo",
+    "country": "BR",
+    "url": "https://clebertoledo.com.br",
+    "score": 93.73,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "COLUNA & OPINIÃO JOSÉ CÂNDIDO PÓVOA | Corpo humano, um milagre disfarçado CRÔNICAS DO PORTELINHA | Quando as perguntas ficam sem respostas JOSEILTON BATISTA FRANCA – JB | Vitrines em Chamas: A Revolta dos Consumidores Falhos e o Vazio da Modernidade Líquida DESTAQUES editar post Política Vice-presidente do PT exige que Dorinha entregue cargos no governo […]",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ac24horas-128-e683b4",
+    "rank": 128,
+    "name": "ac24horas",
+    "country": "BR",
+    "url": "https://ac24horas.com",
+    "score": 93.72,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Fique por dentro das principais notícias do Acre, do Brasil e do mundo. Acesse ac24horas e acompanhe atualizações em tempo real, análises e reportagens exclusivas!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-contilnet-129-400591",
+    "rank": 129,
+    "name": "ContilNet",
+    "country": "BR",
+    "url": "https://contilnetnoticias.com.br",
+    "score": 93.71,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as principais notícias do Acre em tempo real. Informação de credibilidade sobre política, polícia, economia e cotidiano no portal ContilNet.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-do-acre-130-e60992",
+    "rank": 130,
+    "name": "Folha do Acre",
+    "country": "BR",
+    "url": "https://folhadoacre.com.br",
+    "score": 93.7,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Fique por dentro das últimas notícias do Acre, com cobertura completa de política, segurança, esportes, entretenimento e cidades acreanas. Atualização 24h no Folha do Acre.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-rondoniagora-131-9d7e63",
+    "rank": 131,
+    "name": "Rondoniagora",
+    "country": "BR",
+    "url": "https://www.rondoniagora.com",
+    "score": 93.69,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias em tempo real de Rondônia e da Amazônia.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tudo-rond-nia-132-812c54",
+    "rank": 132,
+    "name": "Tudo Rondônia",
+    "country": "BR",
+    "url": "https://www.tudorondonia.com",
+    "score": 93.68,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias de rondônia, política, emprego, educação, saúde, meio ambiente.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-roraima-em-tempo-133-8aebe9",
+    "rank": 133,
+    "name": "Roraima em Tempo",
+    "country": "BR",
+    "url": "https://roraimaemtempo.com.br",
+    "score": 93.67,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Roraima registrou 126.220 casos de Covid-19 desde o início da pandemia. Além disso, estado soma 2.001 mortes.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-amap-134-359e2e",
+    "rank": 134,
+    "name": "Diário do Amapá",
+    "country": "BR",
+    "url": "https://www.diariodoamapa.com.br",
+    "score": 93.66,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Diário do Amapá - Compromisso com a Notícia",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-midiamax-135-fa0e4f",
+    "rank": 135,
+    "name": "Midiamax",
+    "country": "BR",
+    "url": "https://midiamax.uol.com.br",
+    "score": 93.65,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Midiamax.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-dourados-news-136-4f4996",
+    "rank": 136,
+    "name": "Dourados News",
+    "country": "BR",
+    "url": "https://www.douradosnews.com.br",
+    "score": 93.64,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as Notícias de Dourados/MS e região no mais antigo e acessado site do interior de Mato Grosso do Sul",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-olhar-direto-137-57e484",
+    "rank": 137,
+    "name": "Olhar Direto",
+    "country": "BR",
+    "url": "https://www.olhardireto.com.br",
+    "score": 93.63,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias de Mato Grosso e Cuiabá: política, cidades, esportes e muito mais no Olhar Direto.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-rd-news-138-f5bd09",
+    "rank": 138,
+    "name": "RD News",
+    "country": "BR",
+    "url": "https://www.rdnews.com.br",
+    "score": 93.62,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "RDNEWS",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-midianews-139-b8dae3",
+    "rank": 139,
+    "name": "MidiaNews",
+    "country": "BR",
+    "url": "https://www.midianews.com.br",
+    "score": 93.61,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Credibilidade em tempo real. Notícias de Mato Grosso, Cuiabá, Várzea Grande e Interior.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-mais-goi-s-140-5c58e3",
+    "rank": 140,
+    "name": "Mais Goiás",
+    "country": "BR",
+    "url": "https://www.maisgoias.com.br",
+    "score": 93.6,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Mais Goiás.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-metr-poles-df-141-abe394",
+    "rank": 141,
+    "name": "Metrópoles DF",
+    "country": "BR",
+    "url": "https://www.metropoles.com/distrito-federal",
+    "score": 93.59,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "As principais e últimas notícias sobre o Distrito Federal e suas 33 regiões administrativas, como o Plano Piloto, Ceilândia, Samambaia, Águas Claras, Taguatinga, Gama, Guará, Paranoá e todas as outras",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-banda-b-142-0759fc",
+    "rank": 142,
+    "name": "Banda B",
+    "country": "BR",
+    "url": "https://www.bandab.com.br",
+    "score": 93.58,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Confira as últimas notícias de Curitiba em Tempo Real, Horóscopo por signo e tudo sobre ✓Região Metropolitana ✓Brasil ✓Policiais ✓Internacionais ✓Política ✓Economia ✓Saúde ✓Esportes.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ric-mais-143-a1df57",
+    "rank": 143,
+    "name": "RIC Mais",
+    "country": "BR",
+    "url": "https://ricmais.com.br",
+    "score": 93.57,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acesse o portal RIC e fique por dentro das últimas notícias do Paraná, Brasil e do mundo sobre política, economia, esportes, opinião e mais!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-gzh-144-d82fcf",
+    "rank": 144,
+    "name": "GZH",
+    "country": "BR",
+    "url": "https://gauchazh.clicrbs.com.br",
+    "score": 93.56,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O jornal digital que te conecta com as notícias do RS, do mundo e do seu time. Tudo aqui, em GZH.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-sul21-145-8132be",
+    "rank": 145,
+    "name": "Sul21",
+    "country": "BR",
+    "url": "https://sul21.com.br",
+    "score": 93.55,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Sul21.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-bairrista-146-6d3409",
+    "rank": 146,
+    "name": "O Bairrista",
+    "country": "BR",
+    "url": "https://obairrista.com",
+    "score": 93.54,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias do Rio Grande do Sul, Brasil e mundo com o olhar gaúcho. Regiões, Grêmio, Inter, concursos, agenda, clima e loterias. De graça, como tem que ser.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-nsc-total-147-05ea3e",
+    "rank": 147,
+    "name": "NSC Total",
+    "country": "BR",
+    "url": "https://www.nsctotal.com.br",
+    "score": 93.53,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal NSC Total.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-nd-mais-148-a0e7ab",
+    "rank": 148,
+    "name": "ND Mais",
+    "country": "BR",
+    "url": "https://ndmais.com.br",
+    "score": 93.52,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Confira as principais notícias do Brasil e de Santa Catarina em tempo real. Política, tempo, segurança, economia e mais! ND Mais, um portal do Grupo ND.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-scc10-149-2b3369",
+    "rank": 149,
+    "name": "SCC10",
+    "country": "BR",
+    "url": "https://scc10.com.br",
+    "score": 93.51,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal SCC10.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-itatiaia-150-61de4c",
+    "rank": 150,
+    "name": "Itatiaia",
+    "country": "BR",
+    "url": "https://www.itatiaia.com.br",
+    "score": 93.5,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "A Rádio de Minas. Tudo sobre o futebol, política, economia e informações de todo o Estado. A Itatiaia dá notícia de tudo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-bhaz-151-e6118c",
+    "rank": 151,
+    "name": "BHAZ",
+    "country": "BR",
+    "url": "https://bhaz.com.br",
+    "score": 93.49,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal BHAZ.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-poti-152-a5dab5",
+    "rank": 152,
+    "name": "O Poti",
+    "country": "BR",
+    "url": "https://opoti.com.br",
+    "score": 93.48,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "NOTÍCIAS SOBRE O RIO GRANDE DO NORTE - O POTI",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-vit-ria-153-0aee82",
+    "rank": 153,
+    "name": "Folha Vitória",
+    "country": "BR",
+    "url": "https://www.folhavitoria.com.br",
+    "score": 93.47,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Folha Vitória.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-s-culo-di-rio-154-446c0f",
+    "rank": 154,
+    "name": "Século Diário",
+    "country": "BR",
+    "url": "https://www.seculodiario.com.br",
+    "score": 93.46,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Século Diário.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-neofeed-155-7ac3fb",
+    "rank": 155,
+    "name": "NeoFeed",
+    "country": "BR",
+    "url": "https://neofeed.com.br",
+    "score": 93.45,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Fique por dentro das principais notícias com o NeoFeed, uma plataforma especializada em negócios, finanças, economia, startups e inovação",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-brazil-journal-156-c5e79c",
+    "rank": 156,
+    "name": "Brazil Journal",
+    "country": "BR",
+    "url": "https://braziljournal.com",
+    "score": 93.44,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Brazil Journal.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-poca-neg-cios-157-253ef4",
+    "rank": 157,
+    "name": "Época Negócios",
+    "country": "BR",
+    "url": "https://epocanegocios.globo.com",
+    "score": 93.43,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Home | Época Negócios",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-startse-158-e51137",
+    "rank": 158,
+    "name": "StartSe",
+    "country": "BR",
+    "url": "https://www.startse.com",
+    "score": 93.42,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Aqui você encontra a melhor curadoria de conteúdos, aulas, cursos e eventos para quem busca constante aprendizado e desenvolvimento na nova economia. Seja para sua carreira ou sua empresa, na StartSe você aprende mais!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tudocelular-159-c114f0",
+    "rank": 159,
+    "name": "TudoCelular",
+    "country": "BR",
+    "url": "https://www.tudocelular.com",
+    "score": 93.41,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Notícias sobre o mundo móvel, celulares, vídeos, fotos, reviews e os melhores preços da internet. Busque seu celular por funções como Wi-Fi, GPS, TV, câmera e outros.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-showmetech-160-ff71f0",
+    "rank": 160,
+    "name": "Showmetech",
+    "country": "BR",
+    "url": "https://www.showmetech.com.br",
+    "score": 93.4,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Um dos maiores e mais premiados sites de tecnologia do país, o Showmetech é campeão em explicar tecnologia e ciência de forma descomplicada.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-gizmodo-brasil-161-e2692a",
+    "rank": 161,
+    "name": "Gizmodo Brasil",
+    "country": "BR",
+    "url": "https://gizmodo.uol.com.br",
+    "score": 93.39,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Gizmodo Brasil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-hardware-com-br-162-ac9f81",
+    "rank": 162,
+    "name": "Hardware.com.br",
+    "country": "BR",
+    "url": "https://www.hardware.com.br",
+    "score": 93.38,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Descubra novidades sobre tecnologia, games, celulares e mais, com anÃ¡lises e dicas imperdÃ­veis sobre hardware.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-meu-playstation-163-22b462",
+    "rank": 163,
+    "name": "Meu PlayStation",
+    "country": "BR",
+    "url": "https://meups.com.br",
+    "score": 93.37,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Meu PlayStation.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-voxel-164-4d6ca5",
+    "rank": 164,
+    "name": "Voxel",
+    "country": "BR",
+    "url": "https://www.tecmundo.com.br/voxel",
+    "score": 93.36,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Veja notícias, análises, lançamentos e coberturas sobre games, consoles, eSports e o mercado de videogames.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jovem-nerd-165-681ebc",
+    "rank": 165,
+    "name": "Jovem Nerd",
+    "country": "BR",
+    "url": "https://jovemnerd.com.br",
+    "score": 93.35,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "No Jovem Nerd você encontra podcasts, filmes, séries, HQs, games, animes, ciência, tecnologia e humor. Porque rir não faz mal a ninguém!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-omelete-166-f050db",
+    "rank": 166,
+    "name": "Omelete",
+    "country": "BR",
+    "url": "https://www.omelete.com.br",
+    "score": 93.34,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Saiba tudo sobre o universo geek, cinema, séries, games, quadrinhos e música no maior site de entretenimento e cultura pop. Entretenimento levado a sério!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-trivela-167-3550a4",
+    "rank": 167,
+    "name": "Trivela",
+    "country": "BR",
+    "url": "https://trivela.com.br",
+    "score": 93.33,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Análises, notícias, programação e mais: a cobertura da Trivela sobre o noticiário do futebol nacional e internacional",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-m-quina-do-esporte-168-74af46",
+    "rank": 168,
+    "name": "Máquina do Esporte",
+    "country": "BR",
+    "url": "https://maquinadoesporte.com.br",
+    "score": 93.32,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "A Máquina do Esporte é a principal plataforma de negócios do esporte do Brasil. Oferecemos conteúdos, estudos, eventos e serviços. Saiba mais!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-netvasco-169-e1a3e5",
+    "rank": 169,
+    "name": "NetVasco",
+    "country": "BR",
+    "url": "https://www.netvasco.com.br",
+    "score": 93.31,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Ãltimas notÃ­cias sobre os esportes e o futebol do Vasco da Gama, especulaÃ§Ãµes de reforÃ§os e informaÃ§Ãµes histÃ³ricas",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-coluna-do-fla-170-26e636",
+    "rank": 170,
+    "name": "Coluna do Fla",
+    "country": "BR",
+    "url": "https://colunadofla.com",
+    "score": 93.3,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Coluna do Fla.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-meu-tim-o-171-baf644",
+    "rank": 171,
+    "name": "Meu Timão",
+    "country": "BR",
+    "url": "https://www.meutimao.com.br",
+    "score": 93.29,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Meu Timão.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-da-usp-172-881585",
+    "rank": 172,
+    "name": "Jornal da USP",
+    "country": "BR",
+    "url": "https://jornal.usp.br",
+    "score": 93.28,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "O Jornal da USP traz notícias diárias sobre a Universidade de São Paulo, com conteúdos de todas as áreas do conhecimento. Além de agregar a programação da Rádio USP e da TV USP, conta áudios, podcasts, vídeos, imagens, entrevistas, fotos, etc.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-pesquisa-fapesp-173-d5d212",
+    "rank": 173,
+    "name": "Pesquisa FAPESP",
+    "country": "BR",
+    "url": "https://revistapesquisa.fapesp.br",
+    "score": 93.27,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Pesquisa FAPESP.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-olhar-digital-ci-ncia-174-226613",
+    "rank": 174,
+    "name": "Olhar Digital Ciência",
+    "country": "BR",
+    "url": "https://olhardigital.com.br/ciencia-e-espaco",
+    "score": 93.26,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "Notícias sobre o espaço: descobertas sobre planetas, novas tecnologias e lançamento de foguetes. Leia ainda sobre os avanços na ciência e pesquisas inovadoras",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tua-sa-de-175-623c1f",
+    "rank": 175,
+    "name": "Tua Saúde",
+    "country": "BR",
+    "url": "https://www.tuasaude.com",
+    "score": 93.25,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "Saúde, nutrição e bem-estar em linguagem simples e acessível. Remédios, doenças, exames e tratamentos da medicina tradicional e alternativa.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-minha-vida-176-634b1f",
+    "rank": 176,
+    "name": "Minha Vida",
+    "country": "BR",
+    "url": "https://www.minhavida.com.br",
+    "score": 93.24,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "O maior portal de saúde e bem-estar do Brasil. Cuide melhor da sua saúde: acesse o Minha Vida e melhore sua qualidade de vida.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-sanar-medicina-177-4abd1f",
+    "rank": 177,
+    "name": "Sanar Medicina",
+    "country": "BR",
+    "url": "https://www.sanarmed.com",
+    "score": 93.23,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Sanar Medicina.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-g1-sa-de-178-9bea93",
+    "rank": 178,
+    "name": "G1 Saúde",
+    "country": "BR",
+    "url": "https://g1.globo.com/saude",
+    "score": 93.22,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "As notícias sobre pesquisas e descobertas científicas, além de dicas de como viver bem e melhor.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-veja-sa-de-179-a6d0d4",
+    "rank": 179,
+    "name": "VEJA Saúde",
+    "country": "BR",
+    "url": "https://saude.abril.com.br",
+    "score": 93.21,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal VEJA Saúde.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tribuna-de-minas-180-653926",
+    "rank": 180,
+    "name": "Tribuna de Minas",
+    "country": "BR",
+    "url": "https://tribunademinas.com.br",
+    "score": 93.2,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Noticias sobre Juiz de Fora e região",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-a-o-181-e3eea3",
+    "rank": 181,
+    "name": "Diário do Aço",
+    "country": "BR",
+    "url": "https://www.diariodoaco.com.br",
+    "score": 93.19,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Diário do Aço o maior Jornal da Região Metropolitana do Vale do Aço",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-da-manh-182-66e007",
+    "rank": 182,
+    "name": "Jornal da Manhã",
+    "country": "BR",
+    "url": "https://jmonline.com.br",
+    "score": 93.18,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Jornal da Manhã - 50 anos",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-defato-online-183-e04941",
+    "rank": 183,
+    "name": "DeFato Online",
+    "country": "BR",
+    "url": "https://defatoonline.com.br",
+    "score": 93.17,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O maior portal de notícias de Itabira e região. DeFato Online é um dos maiores e mais influentes portais de notícias do interior de Minas Gerais.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-vetor-norte-not-cias-184-4db102",
+    "rank": 184,
+    "name": "Vetor Norte Notícias",
+    "country": "BR",
+    "url": "https://vetornortenoticias.com.br",
+    "score": 93.16,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Vetor Norte Notícias.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-correio-popular-185-67699c",
+    "rank": 185,
+    "name": "Correio Popular",
+    "country": "BR",
+    "url": "https://correio.rac.com.br",
+    "score": 93.15,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Correio Popular.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-grande-abc-186-26bf27",
+    "rank": 186,
+    "name": "Diário do Grande ABC",
+    "country": "BR",
+    "url": "https://www.dgabc.com.br",
+    "score": 93.14,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Diário do Grande ABC, o maior jornal regional do país. Notícias e informações das Setecidades do Grande ABC.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cruzeiro-do-sul-187-d0158c",
+    "rank": 187,
+    "name": "Cruzeiro do Sul",
+    "country": "BR",
+    "url": "https://www.jornalcruzeiro.com.br",
+    "score": 93.13,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Fique ligado com as últimas notícias de Sorocaba e região. Siga informações de esporte, a cobertura completa do São Bento, trânsito, previsão do tempo, eventos culturais e especiais de toda a região.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-acidade-on-188-e043e5",
+    "rank": 188,
+    "name": "ACidade ON",
+    "country": "BR",
+    "url": "https://www.acidadeon.com",
+    "score": 93.12,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "acidade on | Notícias, vídeos, política e mais. Vejas as notícias mais recentes de Araraquara, Campinas, Piracicaba, Ribeirão Preto e São Carlos. Jornal acidade on: vídeos, lazer, esporte, política; botafogo, comercial, barretos, franca.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-vale-189-1a27b8",
+    "rank": 189,
+    "name": "O Vale",
+    "country": "BR",
+    "url": "https://www.ovale.com.br",
+    "score": 93.11,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Cobertura completa do Vale do Paraíba no Portal Sampi. Notícias de São José, Taubaté e região.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-do-rio-190-fcfcdb",
+    "rank": 190,
+    "name": "Diário do Rio",
+    "country": "BR",
+    "url": "https://diariodorio.com",
+    "score": 93.1,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Diário do Rio.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-s-o-gon-alo-191-f4a87e",
+    "rank": 191,
+    "name": "O São Gonçalo",
+    "country": "BR",
+    "url": "https://www.osaogoncalo.com.br",
+    "score": 93.09,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O jornal de  São Gonçalo, Itaboraí, Niterói,  Maricá, Tanguá, Rio Bonito e Região",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-fluminense-192-159b94",
+    "rank": 192,
+    "name": "O Fluminense",
+    "country": "BR",
+    "url": "https://www.ofluminense.com.br",
+    "score": 93.08,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal O Fluminense.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-es360-193-8e56ca",
+    "rank": 193,
+    "name": "ES360",
+    "country": "BR",
+    "url": "https://es360.com.br",
+    "score": 93.07,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal ES360.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-aqui-not-cias-194-c75929",
+    "rank": 194,
+    "name": "Aqui Notícias",
+    "country": "BR",
+    "url": "https://www.aquinoticias.com",
+    "score": 93.06,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas atualizações sobre política, economia, clima, polícia, saúde e turismo, do Espírito Santo, Brasil e do mundo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-munic-pio-195-1628fe",
+    "rank": 195,
+    "name": "O Município",
+    "country": "BR",
+    "url": "https://omunicipio.com.br",
+    "score": 93.05,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O site do jornal O Município oferece as últimas notícias das cidades de Brusque, Guabiruba, Botuverá e Santa Catarina. Acesse agora e fique bem informado!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-catarinense-196-fda501",
+    "rank": 196,
+    "name": "Diário Catarinense",
+    "country": "BR",
+    "url": "https://www.nsctotal.com.br/dc",
+    "score": 93.04,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Diário Catarinense.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-pioneiro-197-ca2961",
+    "rank": 197,
+    "name": "Pioneiro",
+    "country": "BR",
+    "url": "https://gauchazh.clicrbs.com.br/pioneiro",
+    "score": 93.03,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Pioneiro.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-nh-198-b43645",
+    "rank": 198,
+    "name": "Jornal NH",
+    "country": "BR",
+    "url": "https://www.jornalnh.com.br",
+    "score": 93.02,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal NH.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-t5-199-51d1b7",
+    "rank": 199,
+    "name": "Portal T5",
+    "country": "BR",
+    "url": "https://www.portalt5.com.br",
+    "score": 93.01,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Portal T5.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ne10-200-c0a288",
+    "rank": 200,
+    "name": "NE10",
+    "country": "BR",
+    "url": "https://ne10.uol.com.br",
+    "score": 93.0,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O portal NE10 do Sistema Jornal do Commercio de Comunicação (SJCC) traz as principais notícias sobre política, economia, segurança, entretenimento, futebol, empregos e concursos",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-blog-do-magno-201-a281b5",
+    "rank": 201,
+    "name": "Blog do Magno",
+    "country": "BR",
+    "url": "https://www.blogdomagno.com.br",
+    "score": 92.99,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Os bastidores do poder e da política em primeira mão",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-da-cidade-202-4fd14c",
+    "rank": 202,
+    "name": "Jornal da Cidade",
+    "country": "BR",
+    "url": "https://www.jornaldacidade.net",
+    "score": 92.98,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal da Cidade.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-alagoas-24-horas-203-c0d924",
+    "rank": 203,
+    "name": "Alagoas 24 Horas",
+    "country": "BR",
+    "url": "https://www.alagoas24horas.com.br",
+    "score": 92.97,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Líder em Notícias On-line de Alagoas. Principal portal de notícias on-line de Alagoas atualizado a cada minuto. Jornalismo, informação, futebol Alagoano, empregos, classificados, notícias policiais, homicídios, blogs. Acompanhe tudo na hora do que acontece no estado de Alagoas.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-pequeno-204-97383d",
+    "rank": 204,
+    "name": "Jornal Pequeno",
+    "country": "BR",
+    "url": "https://jornalpequeno.com.br",
+    "score": 92.96,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Jornal que mostra com clareza e imparcialidade as notícias do Maranhão e do mundo",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-blog-do-bg-205-78b948",
+    "rank": 205,
+    "name": "Blog do BG",
+    "country": "BR",
+    "url": "https://blogdobg.com.br",
+    "score": 92.95,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "O blog mais acessado do RN",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-rondoniaovivo-206-1a1745",
+    "rank": 206,
+    "name": "Rondoniaovivo",
+    "country": "BR",
+    "url": "https://www.rondoniaovivo.com",
+    "score": 92.94,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias, Classificados e Banco de Empregos de Rondônia",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-capital-news-207-f357d1",
+    "rank": 207,
+    "name": "Capital News",
+    "country": "BR",
+    "url": "https://www.capitalnews.com.br",
+    "score": 92.93,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Tudo que acontece em Campo Grande e nas principais cidades de Mato Grosso do Sul com isenção e credibilidade. Clique e confira agora!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-s--not-cias-208-70286b",
+    "rank": 208,
+    "name": "Só Notícias",
+    "country": "BR",
+    "url": "https://www.sonoticias.com.br",
+    "score": 92.92,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Só Notícias.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-sagres-online-209-97ba62",
+    "rank": 209,
+    "name": "Sagres Online",
+    "country": "BR",
+    "url": "https://sagresonline.com.br",
+    "score": 92.91,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Sagres Online.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-do-bitcoin-210-e976e3",
+    "rank": 210,
+    "name": "Portal do Bitcoin",
+    "country": "BR",
+    "url": "https://portaldobitcoin.uol.com.br",
+    "score": 92.9,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Tudo sobre o universo das criptomoedas no Portal do Bitcoin. Cobertura diária de Bitcoin, blockchain, NFTs, Ethereum, cotações e análises do mercado.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cointelegraph-brasil-211-0f4eca",
+    "rank": 211,
+    "name": "CoinTelegraph Brasil",
+    "country": "BR",
+    "url": "https://br.cointelegraph.com",
+    "score": 92.89,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal CoinTelegraph Brasil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-criptof-cil-212-9cc954",
+    "rank": 212,
+    "name": "CriptoFácil",
+    "country": "BR",
+    "url": "https://www.criptofacil.com",
+    "score": 92.88,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal CriptoFácil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-livecoins-213-845f51",
+    "rank": 213,
+    "name": "Livecoins",
+    "country": "BR",
+    "url": "https://livecoins.com.br",
+    "score": 92.87,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Últimas notícias sobre Bitcoin, criptomoedas e blockchain! Acompanhe o mercado de criptomoedas, cotações, análises e tudo sobre o futuro do dinheiro.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ign-brasil-214-7e1a43",
+    "rank": 214,
+    "name": "IGN Brasil",
+    "country": "BR",
+    "url": "https://br.ign.com",
+    "score": 92.86,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "IGN Brasil é o maior site de games para Xbox, PS3, PS4, PC, Wii U, Nintendo 3DS, PS Vita, iPhone e Android, com reviews, notícias, previews e vídeos.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-mais-esports-215-b21b38",
+    "rank": 215,
+    "name": "Mais Esports",
+    "country": "BR",
+    "url": "https://maisesports.com.br",
+    "score": 92.85,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Tudo sobre esports em um só lugar",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-v-cio-216-78b53d",
+    "rank": 216,
+    "name": "O Vício",
+    "country": "BR",
+    "url": "https://ovicio.com.br",
+    "score": 92.84,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "O Vício é seu portal definitivo de cultura pop! Notícias, guias, curiosidades e reviews sobre animes, HQs, filmes, games e séries.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-diolinux-217-fbd8a5",
+    "rank": 217,
+    "name": "Diolinux",
+    "country": "BR",
+    "url": "https://diolinux.com.br",
+    "score": 92.83,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Os melhor do mundo da tecnologia, Open source e Linux",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-adrenaline-218-357f92",
+    "rank": 218,
+    "name": "Adrenaline",
+    "country": "BR",
+    "url": "https://www.adrenaline.com.br",
+    "score": 92.82,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Fonte de informação sobre Tecnologia e Jogos, com notícias e análises de eletrônicos de consumo, gadgets, hardwares para computador e games.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-clube-do-hardware-219-c015dd",
+    "rank": 219,
+    "name": "Clube do Hardware",
+    "country": "BR",
+    "url": "https://www.clubedohardware.com.br",
+    "score": 92.81,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "No ar desde 1996, o Clube do Hardware é um dos maiores, mais antigos e mais respeitados sites sobre tecnologia do Brasil.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-autoesporte-220-f649fb",
+    "rank": 220,
+    "name": "Autoesporte",
+    "country": "BR",
+    "url": "https://autoesporte.globo.com",
+    "score": 92.8,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Fique por dentro das últimas notícias sobre lançamentos de carros, avaliações, comparativos, melhores compras e muito mais!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-quatro-rodas-221-23b213",
+    "rank": 221,
+    "name": "Quatro Rodas",
+    "country": "BR",
+    "url": "https://quatrorodas.abril.com.br",
+    "score": 92.79,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Saiba tudo sobre o mercado de automóveis: últimas notícias, testes e comparativos, modelos, serviços, guia de compras e tabela FIPE.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-duas-rodas-222-669370",
+    "rank": 222,
+    "name": "Duas Rodas",
+    "country": "BR",
+    "url": "https://www.revistaduasrodas.com.br",
+    "score": 92.78,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Duas Rodas.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-motomotor-223-c4db5a",
+    "rank": 223,
+    "name": "MotoMotor",
+    "country": "BR",
+    "url": "https://motomotor.com.br",
+    "score": 92.77,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal MotoMotor.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-olimp-ada-todo-dia-224-d3c3ed",
+    "rank": 224,
+    "name": "Olimpíada Todo Dia",
+    "country": "BR",
+    "url": "https://www.olimpiadatododia.com.br",
+    "score": 92.76,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "esportes"
+    ],
+    "description": "A Olimpíada não acontece só a cada quatro anos, ela acontece todo dia! Saiba tudo sobre os atletas brasileiros e sua caminhada rumo a Paris",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ag-ncia-senado-225-3c2cd4",
+    "rank": 225,
+    "name": "Agência Senado",
+    "country": "BR",
+    "url": "https://www12.senado.leg.br/noticias",
+    "score": 92.75,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Portal de Notícias do Senado Federal: matérias, entrevistas e informações oficiais sobre a atividade legislativa.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-ag-ncia-c-mara-226-e15210",
+    "rank": 226,
+    "name": "Agência Câmara",
+    "country": "BR",
+    "url": "https://www.camara.leg.br/noticias",
+    "score": 92.74,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Saiba tudo que acontece no Plenário e nas comissões",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jota-227-42afaf",
+    "rank": 227,
+    "name": "Jota",
+    "country": "BR",
+    "url": "https://www.jota.info",
+    "score": 92.73,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Informação, notícias e análises sobre Judiciário, política, projetos de lei, direito tributário, regulação. Bastidores e previsibilidade para tomadores de decisão",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-migalhas-228-ee65a7",
+    "rank": 228,
+    "name": "Migalhas",
+    "country": "BR",
+    "url": "https://www.migalhas.com.br",
+    "score": 92.72,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "Portal de notícias e artigos jurídicos. Conteúdo exclusivo do mundo do Direito. Pauta online dos tribunais, tendências, autores, colunistas e escritórios renomados.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-consultor-jur-dico-229-4b65a3",
+    "rank": 229,
+    "name": "Consultor Jurídico",
+    "country": "BR",
+    "url": "https://www.conjur.com.br",
+    "score": 92.71,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "O mais completo veículo independente sobre Direito e Justiça em língua portuguesa. Dezenas de notícias, artigos e entrevistas diariamente.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-veja-230-fa5f7a",
+    "rank": 230,
+    "name": "Veja",
+    "country": "BR",
+    "url": "https://veja.abril.com.br",
+    "score": 92.7,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Principais informações sobre política, eleições, economia, internacional, saúde, tecnologia, esporte e cultura",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-isto-231-b8faf9",
+    "rank": 231,
+    "name": "IstoÉ",
+    "country": "BR",
+    "url": "https://istoe.com.br",
+    "score": 92.69,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "A ISTOÉ PUBLICAÇÕES LTDA é um portal digital independente e sem vinculação editorial e societária com a EDITORA TRES COMÉRCIO DE PUBLICACÕES LTDA (recuperação judicial).",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-isto--dinheiro-232-5323d8",
+    "rank": 232,
+    "name": "IstoÉ Dinheiro",
+    "country": "BR",
+    "url": "https://www.istoedinheiro.com.br",
+    "score": 92.68,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal IstoÉ Dinheiro.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-revista-piau-233-98b66d",
+    "rank": 233,
+    "name": "Revista Piauí",
+    "country": "BR",
+    "url": "https://piaui.folha.uol.com.br",
+    "score": 92.67,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "politica"
+    ],
+    "description": "A piauí é uma revista mensal criada em 2006 com o objetivo de contar histórias – apuradas com tempo largo, escritas com zelo e destinadas a quem gosta de ler.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-canal-rural-234-eaae0b",
+    "rank": 234,
+    "name": "Canal Rural",
+    "country": "BR",
+    "url": "https://www.canalrural.com.br",
+    "score": 92.66,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Canal Rural.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-globo-rural-235-858475",
+    "rank": 235,
+    "name": "Globo Rural",
+    "country": "BR",
+    "url": "https://globorural.globo.com",
+    "score": 92.65,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Notícias sobre agronegócio, agricultura, pecuária, cotações, sustentabilidade, previsão do tempo, como plantar, criar e fazer e o mundo do campo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-compre-rural-236-dd6d53",
+    "rank": 236,
+    "name": "Compre Rural",
+    "country": "BR",
+    "url": "https://www.comprerural.com",
+    "score": 92.64,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "O portal de conteúdo CompreRural oferece notícias e artigos de todas as áreas do agronegócio brasileiro e mundial, falamos sobre o mundo rural: pecuária, pecuária leiteira, pecuária de corte, agricultura, cavalos, confinamento bovino.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-not-cias-agr-colas-237-b2c71a",
+    "rank": 237,
+    "name": "Notícias Agrícolas",
+    "country": "BR",
+    "url": "https://www.noticiasagricolas.com.br",
+    "score": 92.63,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "O Notícias Agrícolas é uma das mais importantes fontes de informação do agronegócio brasileiro e fornece seu conteúdo para os meios de comunicação mais...",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-forbes-brasil-238-d9378d",
+    "rank": 238,
+    "name": "Forbes Brasil",
+    "country": "BR",
+    "url": "https://forbes.com.br",
+    "score": 92.62,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Acesse a Forbes, a mais conceituada revista de negócios e economia do mundo. Notícias em primeira mão, artigos e conteúdos relevantes.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-pequenas-empresas---grandes-neg-cios-239-889b16",
+    "rank": 239,
+    "name": "Pequenas Empresas & Grandes Negócios",
+    "country": "BR",
+    "url": "https://revistapegn.globo.com",
+    "score": 92.61,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Pequenas Empresas & Grandes Negócios",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-voc--s-a-240-6463d7",
+    "rank": 240,
+    "name": "Você S/A",
+    "country": "BR",
+    "url": "https://vocesa.abril.com.br",
+    "score": 92.6,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "economia"
+    ],
+    "description": "Tenha uma variedade de revistas online e impressas da Editora Abril e aproveite conteúdos de qualidade e exclusivos.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-guia-do-estudante-241-d3a34d",
+    "rank": 241,
+    "name": "Guia do Estudante",
+    "country": "BR",
+    "url": "https://guiadoestudante.abril.com.br",
+    "score": 92.59,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "Descubra sua profissão, escolha sua faculdade, entenda os acontecimentos do dia e fique por dentro do Enem e dos vestibulares do Brasil",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-nova-escola-242-dedc31",
+    "rank": 242,
+    "name": "Nova Escola",
+    "country": "BR",
+    "url": "https://novaescola.org.br",
+    "score": 92.58,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "Nova Escola é uma plataforma digital que apoia educadores em todo o país com reportagens, planos de aula, cursos e uma comunidade de educadores. Todos os conteúdos são gratuitos, personalizados e alinhados à BNCC, disponibilizados em seu site, redes sociais e WhatsApp.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-porvir-243-4ebb8e",
+    "rank": 243,
+    "name": "Porvir",
+    "country": "BR",
+    "url": "https://porvir.org",
+    "score": 92.57,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "ciencia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Porvir.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-rolling-stone-brasil-244-24dec0",
+    "rank": 244,
+    "name": "Rolling Stone Brasil",
+    "country": "BR",
+    "url": "https://rollingstone.uol.com.br",
+    "score": 92.56,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Rolling Stone Brasil: música, cultura pop, cinema, entretenimento e entrevistas exclusivas. As últimas notícias, críticas e tendências que marcam o mundo da arte e da cultura.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-omelete-245-f050db",
+    "rank": 245,
+    "name": "Omelete",
+    "country": "BR",
+    "url": "https://www.omelete.com.br",
+    "score": 92.55,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Saiba tudo sobre o universo geek, cinema, séries, games, quadrinhos e música no maior site de entretenimento e cultura pop. Entretenimento levado a sério!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-legi-o-dos-her-is-246-a90cb0",
+    "rank": 246,
+    "name": "Legião dos Heróis",
+    "country": "BR",
+    "url": "https://www.legiaodosherois.com.br",
+    "score": 92.54,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Legião dos Heróis.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-drops-de-jogos-247-60d9d1",
+    "rank": 247,
+    "name": "Drops de Jogos",
+    "country": "BR",
+    "url": "https://dropsdejogos.uai.com.br",
+    "score": 92.53,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Drops de Jogos traz informações de videogames, jogos, produções independentes (indies), realidade virtual e tudo o que se conecta com inovação, tecnologia, sociedade e diversidade.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-oficina-da-net-248-e0bae6",
+    "rank": 248,
+    "name": "Oficina da Net",
+    "country": "BR",
+    "url": "https://www.oficinadanet.com.br",
+    "score": 92.52,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Desde 2005 no ar, o Oficina da Net tem o compromisso em informar as novidades do mundo de tecnologia, além de artigos, dicas, tutoriais e reviews especializados que você encontra aqui.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-motor1-brasil-249-5f8b1b",
+    "rank": 249,
+    "name": "Motor1 Brasil",
+    "country": "BR",
+    "url": "https://motor1.uol.com.br",
+    "score": 92.51,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Motor1.com Brasil traz notícias de carros, segredos, avaliações, testes de desempenho e fotos exclusivas das últimas novidades do mundo automotivo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-autos-segredos-250-b06c7d",
+    "rank": 250,
+    "name": "Autos Segredos",
+    "country": "BR",
+    "url": "https://www.autossegredos.com.br",
+    "score": 92.5,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "O jornalista Marlos Ney Vidal comanda o Autos Segredos. Somos referência na antecipação de novidades do mundo automotivo.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-do-carro-251-2af059",
+    "rank": 251,
+    "name": "Jornal do Carro",
+    "country": "BR",
+    "url": "https://jornaldocarro.estadao.com.br",
+    "score": 92.49,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "tecnologia"
+    ],
+    "description": "Confira as últimas notícias sobre carros, testes, lançamentos, comparativos e tendências do setor automotivo no Jornal do Carro.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-drauzio-varella-252-afd056",
+    "rank": 252,
+    "name": "Portal Drauzio Varella",
+    "country": "BR",
+    "url": "https://drauziovarella.uol.com.br",
+    "score": 92.48,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "Informação Sobre Saúde para Todos",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-pebmed-253-f40443",
+    "rank": 253,
+    "name": "PEBMED",
+    "country": "BR",
+    "url": "https://pebmed.com.br",
+    "score": 92.47,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "Informação atualizada e conteúdo presente em toda a sua jornada evolução. Afya, o melhor da medicina",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-vivabem-254-12c64d",
+    "rank": 254,
+    "name": "VivaBem",
+    "country": "BR",
+    "url": "https://www.uol.com.br/vivabem",
+    "score": 92.46,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "saude"
+    ],
+    "description": "VivaBem, o novo canal de saúde e bem-estar do UOL com informações confiáveis e embasadas cientificamente, dicas testadas e orientações de especialistas",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-gazeta-de-alagoas-255-d49102",
+    "rank": 255,
+    "name": "Gazeta de Alagoas",
+    "country": "BR",
+    "url": "https://www.gazetadealagoas.com.br",
+    "score": 92.45,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O portal pioneiro em Alagoas, que traz as últimas notícias de Maceió e do interior: política, economia, esportes e diversão você vê primeiro na Gazetaweb.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-extra-de-alagoas-256-0ee354",
+    "rank": 256,
+    "name": "Jornal Extra de Alagoas",
+    "country": "BR",
+    "url": "https://novoextra.com.br",
+    "score": 92.44,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Principais notícias de Alagoas com o melhor do jornalismo investigativo sobre política, economia, polícia, esportes e concursos em Maceió e no interior",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-estado-do-maranh-o-257-5a9ddc",
+    "rank": 257,
+    "name": "O Estado do Maranhão",
+    "country": "BR",
+    "url": "https://oestadoma.com",
+    "score": 92.43,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal O Estado do Maranhão.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-correio-258-8ed1ae",
+    "rank": 258,
+    "name": "Portal Correio",
+    "country": "BR",
+    "url": "https://portalcorreio.com.br",
+    "score": 92.42,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Portal Correio.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-wscom-259-980e38",
+    "rank": 259,
+    "name": "WSCOM",
+    "country": "BR",
+    "url": "https://wscom.com.br",
+    "score": 92.41,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Leia as últimas postagens sobre Home no WSCOM - Quem sabe, faz conteúdo. Fique informado com atualizações relevantes.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-roraima-em-foco-260-3944c2",
+    "rank": 260,
+    "name": "Roraima em Foco",
+    "country": "BR",
+    "url": "https://roraimaemfoco.com",
+    "score": 92.4,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Roraima em Foco.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-do-sul-online-261-fd11de",
+    "rank": 261,
+    "name": "Folha do Sul Online",
+    "country": "BR",
+    "url": "https://www.folhadosulonline.com.br",
+    "score": 92.39,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Folha do Sul, seu portal de notícias da região.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-da-manh-262-b07224",
+    "rank": 262,
+    "name": "Diário da Manhã",
+    "country": "BR",
+    "url": "https://dm.com.br",
+    "score": 92.38,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Descubra as últimas notícias e atualizações no Diário da Manhã, seu guia diário para informações relevantes.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-de-santa-catarina-263-9c7f07",
+    "rank": 263,
+    "name": "Jornal de Santa Catarina",
+    "country": "BR",
+    "url": "https://www.nsctotal.com.br/jsc",
+    "score": 92.37,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal de Santa Catarina.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-a-not-cia-264-910206",
+    "rank": 264,
+    "name": "A Notícia",
+    "country": "BR",
+    "url": "https://www.nsctotal.com.br/an",
+    "score": 92.36,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal A Notícia.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-di-rio-popular-265-4d3590",
+    "rank": 265,
+    "name": "Diário Popular",
+    "country": "BR",
+    "url": "https://www.diariopopular.com.br",
+    "score": 92.35,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Diário Popular.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-folha-de-londrina-266-f0d86c",
+    "rank": 266,
+    "name": "Folha de Londrina",
+    "country": "BR",
+    "url": "https://www.folhadelondrina.com.br",
+    "score": 92.34,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Leia as últimas notícias de Londrina e do Paraná no Jornal Folha de Londrina que desde 1948 informa com ética, qualidade e independência editorial",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-bemdito-267-3960d3",
+    "rank": 267,
+    "name": "O Bemdito",
+    "country": "BR",
+    "url": "https://obemdito.com.br",
+    "score": 92.33,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias atualizadas de Umuarama e região: cidades, política, empreendedorismo, economia e eventos.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-cgn-268-fdf6bf",
+    "rank": 268,
+    "name": "CGN",
+    "country": "BR",
+    "url": "https://cgn.inf.br",
+    "score": 92.32,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Fundada em 2006, a CGN é líder em notícias no Paraná, com destaque em Cascavel e região, oferecendo cobertura 24 horas por dia.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-da-manh---ponta-grossa-269-79b638",
+    "rank": 269,
+    "name": "Jornal da Manhã (Ponta Grossa)",
+    "country": "BR",
+    "url": "https://arede.info/jornaldamanha",
+    "score": 92.31,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal da Manhã (Ponta Grossa).",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-vipsocial-270-3fba72",
+    "rank": 270,
+    "name": "VipSocial",
+    "country": "BR",
+    "url": "https://vipsocial.com.br",
+    "score": 92.3,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "O VipSocial é um portal de informação e entretenimento, que conseguiu unir as três principais e tradicionais mídias em um único canal, jornal, rádio e TVs.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-terra-da-saudade-271-9e3b7f",
+    "rank": 271,
+    "name": "Portal Terra da Saudade",
+    "country": "BR",
+    "url": "https://www.portalterradasaudade.com.br",
+    "score": 92.29,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Portal Terra da Saudade.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-s-o-carlos-em-rede-272-bdee04",
+    "rank": 272,
+    "name": "São Carlos em Rede",
+    "country": "BR",
+    "url": "https://saocarlosemrede.com.br",
+    "score": 92.28,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal São Carlos em Rede.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-jornal-primeira-p-gina-273-66eba2",
+    "rank": 273,
+    "name": "Jornal Primeira Página",
+    "country": "BR",
+    "url": "https://jornalpp.com.br",
+    "score": 92.27,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Jornal Primeira Página.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-tribuna-de-ribeir-o-274-03a57a",
+    "rank": 274,
+    "name": "Tribuna de Ribeirão",
+    "country": "BR",
+    "url": "https://www.tribunaderibeirao.com.br",
+    "score": 92.26,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Acompanhe as últimas notícias e informações no portal Tribuna de Ribeirão.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-revista-revide-275-ada69e",
+    "rank": 275,
+    "name": "Revista Revide",
+    "country": "BR",
+    "url": "https://www.revide.com.br",
+    "score": 92.25,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "As últimas notícias de economia, política, comportamento, cultura, emprego, educação e saúde da região de Ribeirão Preto.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-guia-muria-276-14741c",
+    "rank": 276,
+    "name": "Guia Muriaé",
+    "country": "BR",
+    "url": "https://www.guiamuriae.com.br",
+    "score": 92.24,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Últimas notícias de Muriaé e região, guia comercial e turístico completo, além de classificados, história da cidade, serviços de utilidade pública e muito mais!",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-o-popular-net-277-5e8580",
+    "rank": 277,
+    "name": "O Popular Net",
+    "country": "BR",
+    "url": "https://www.opopular.net",
+    "score": 92.23,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Data HK & Live Draw HK tercepat dari MKTOTO. Dapatkan info Keluaran HK, Paito HK terbaik dan Result Togel Hongkong Pools terlengkap setiap hari.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  },
+  {
+    "id": "br-portal-capara-278-d31aea",
+    "rank": 278,
+    "name": "Portal Caparaó",
+    "country": "BR",
+    "url": "https://www.portalcaparao.com.br",
+    "score": 92.22,
+    "source": "Curadoria Especializada Brasil",
+    "active": true,
+    "categories": [
+      "brasil"
+    ],
+    "description": "Notícias de Manhuaçu e região do Caparaó: política, polícia, esportes, economia e cultura atualizadas todo dia.",
+    "language": "pt-BR",
+    "type": "portal",
+    "lastVerified": "2026-10-20",
+    "isInternational": false
+  }
+]
