@@ -1,8 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SourceCard from '../components/SourceCard.astro';
-import { sources } from '../data/sources';
 import { getFaviconUrl, getCountryFlag, getCategoryIcon } from '../lib/utils';
+
+import { sources as fontesOriginais } from '../data/sources';
+import fontesBrasil from '../data/brazil-sources.json';
+import type { NewsSource } from '../types';
+
+// 1. Junta todas as fontes brutas
+const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
+
+// 2. Remove duplicadas usando o NOME como identificador único para calcular o total exato
+const sources = Array.from(new Map(rawSources.map(source => [source.name.toLowerCase().trim(), source])).values());
 
 const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
 const nationalSources = sources.filter(s => s.country === 'BR').slice(0, 6);
@@ -138,7 +147,7 @@ const categoriesList = [
             </p>
 
             <div id="featured-categories" class="flex flex-wrap items-center gap-2 pt-1">
-              {(featuredSource.categories || ['geral']).map(cat => (
+              {(featuredSource.categories || ['geral']).map((cat: string) => (
                 <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-100/80 text-slate-700 border border-slate-200/80 shadow-2xs flex items-center gap-1 font-black">
                   <span>{getCategoryIcon(cat)}</span>
                   <span class="capitalize">{cat}</span>
@@ -184,7 +193,7 @@ const categoriesList = [
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {nationalSources.map(source => (
+        {nationalSources.map((source: NewsSource) => (
           <SourceCard source={source} />
         ))}
       </div>

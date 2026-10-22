@@ -3,57 +3,141 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout 
-  title="Fale Conosco" 
+  title="Fale Conosco | OMundoEmUmCLICK" 
   description="Entre em contato para sugerir novos veículos de notícias, comunicar correções ou enviar mensagens."
 >
-  <div class="container content-page">
-    <header class="page-header">
-      <h1>Fale Conosco</h1>
-      <p class="lead">Envie sugestões de veículos, correções de links ou dúvidas gerais.</p>
-    </header>
+  <!-- CABEÇALHO CLARO (FUNDO BRANCO) -->
+  <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
+    <div class="max-w-3xl mx-auto text-center space-y-4">
+      <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 pb-2">
+        Fale Conosco
+      </h1>
+      <p class="text-slate-600 font-bold text-lg">
+        Envie sugestões de veículos, correções de links ou dúvidas gerais.
+      </p>
+    </div>
+  </header>
 
-    <div class="contact-grid">
-      <form id="contact-form" class="contact-form" novalidate>
-        <div id="form-feedback" class="feedback-msg" hidden></div>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-[60vh]">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      
+      <!-- COLUNA ESQUERDA: FORMULÁRIO -->
+      <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
+        <form id="contact-form" class="space-y-6" novalidate>
+          
+          <!-- Mensagem de Sucesso -->
+          <div id="form-feedback" hidden></div>
 
-        <div class="form-group">
-          <label for="name">Seu Nome *</label>
-          <input type="text" id="name" name="name" required placeholder="Digite seu nome completo" />
-          <span class="field-error" id="error-name"></span>
-        </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Nome -->
+            <div class="space-y-2">
+              <label for="name" class="block text-sm font-black text-slate-700">Seu Nome *</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                required 
+                placeholder="Digite seu nome completo" 
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all font-bold text-sm" 
+              />
+              <span class="field-error text-xs text-red-500 font-bold block mt-1" id="error-name"></span>
+            </div>
 
-        <div class="form-group">
-          <label for="email">Endereço de E-mail *</label>
-          <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com" />
-          <span class="field-error" id="error-email"></span>
-        </div>
+            <!-- E-mail -->
+            <div class="space-y-2">
+              <label for="email" class="block text-sm font-black text-slate-700">Endereço de E-mail *</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required 
+                placeholder="seuemail@exemplo.com" 
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all font-bold text-sm" 
+              />
+              <span class="field-error text-xs text-red-500 font-bold block mt-1" id="error-email"></span>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="subject">Assunto *</label>
-          <input type="text" id="subject" name="subject" required placeholder="Ex: Sugestão de novo veículo" />
-          <span class="field-error" id="error-subject"></span>
-        </div>
+          <!-- Assunto -->
+          <div class="space-y-2">
+            <label for="subject" class="block text-sm font-black text-slate-700">Assunto *</label>
+            <input 
+              type="text" 
+              id="subject" 
+              name="subject" 
+              required 
+              placeholder="Ex: Sugestão de novo veículo" 
+              class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all font-bold text-sm" 
+            />
+            <span class="field-error text-xs text-red-500 font-bold block mt-1" id="error-subject"></span>
+          </div>
 
-        <div class="form-group">
-          <label for="message">Sua Mensagem *</label>
-          <textarea id="message" name="message" rows="5" required placeholder="Escreva os detalhes da sua mensagem..."></textarea>
-          <span class="field-error" id="error-message"></span>
-        </div>
+          <!-- Mensagem -->
+          <div class="space-y-2">
+            <label for="message" class="block text-sm font-black text-slate-700">Sua Mensagem *</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              rows="6" 
+              required 
+              placeholder="Escreva os detalhes da sua mensagem..." 
+              class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all font-bold text-sm resize-y"
+            ></textarea>
+            <span class="field-error text-xs text-red-500 font-bold block mt-1" id="error-message"></span>
+          </div>
 
-        <button type="submit" class="submit-btn">Enviar Mensagem</button>
-      </form>
+          <!-- Botão Enviar -->
+          <div class="pt-2">
+            <button 
+              type="submit" 
+              class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-sm uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
+            >
+              Enviar Mensagem
+            </button>
+          </div>
 
-      <aside class="contact-info">
-        <h3>Informações de Atendimento</h3>
-        <p>Prezamos pela precisão dos dados do nosso diretório. Caso note um veículo inativo ou URL incorreta, informe-nos.</p>
-        
-        <div class="info-box">
-          <strong>Horário de Análise:</strong>
-          <p>Segunda a Sexta, das 09h às 18h.</p>
+        </form>
+      </div>
+
+      <!-- COLUNA DIREITA: INFORMAÇÕES -->
+      <aside class="space-y-6">
+        <div class="bg-slate-50 rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+          <h3 class="text-xl font-black text-slate-900 mb-4 flex items-center gap-2">
+            <span class="text-cyan-600 text-2xl">ℹ️</span> Atendimento
+          </h3>
+          
+          <p class="text-slate-600 font-bold text-sm leading-relaxed mb-8 pb-6 border-b border-slate-200">
+            Prezamos pela precisão dos dados do nosso diretório. Caso note um veículo inativo ou URL incorreta, informe-nos.
+          </p>
+          
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-cyan-600 text-xl">
+                🕒
+              </div>
+              <div>
+                <h4 class="font-black text-slate-900 text-sm">Horário de Análise</h4>
+                <p class="text-slate-600 font-bold text-sm mt-1">Segunda a Sexta<br/>09h às 18h</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-cyan-600 text-xl">
+                ✉️
+              </div>
+              <div>
+                <h4 class="font-black text-slate-900 text-sm">E-mail Direto</h4>
+                <a href="mailto:contato@omundoemumclick.com" class="text-cyan-600 hover:text-cyan-700 font-bold text-sm mt-1 inline-block transition-colors">
+                  contato@omundoemumclick.com
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </aside>
+
     </div>
-  </div>
+  </main>
 </BaseLayout>
 
 <script>
@@ -65,6 +149,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    // Limpar erros anteriores
     document.querySelectorAll('.field-error').forEach((el) => el.textContent = '');
 
     const formData = {
@@ -79,152 +164,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     if (!validation.isValid) {
       Object.entries(validation.errors).forEach(([field, msg]) => {
         const errorEl = document.getElementById(`error-${field}`);
-        if (errorEl) errorEl.textContent = msg;
+        if (errorEl) errorEl.textContent = msg as string;
       });
       return;
     }
 
+    // Mostrar feedback de sucesso usando as classes do Tailwind
     if (feedback) {
       feedback.textContent = 'Mensagem enviada com sucesso! Agradecemos o seu contato.';
-      feedback.className = 'feedback-msg success';
+      feedback.className = 'p-4 rounded-xl mb-6 text-sm font-bold bg-green-100 text-green-800 border border-green-200';
       feedback.removeAttribute('hidden');
     }
     form.reset();
   });
 </script>
-
-<style>
-  .content-page {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .page-header {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .page-header h1 {
-    font-size: 2.25rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-  }
-
-  .lead {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .contact-grid {
-      grid-template-columns: 2fr 1fr;
-    }
-  }
-
-  .contact-form {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 1.75rem;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .form-group {
-    margin-bottom: 1.25rem;
-  }
-
-  .form-group label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-    color: var(--text-primary);
-  }
-
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: 0.65rem;
-    background-color: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-  }
-
-  .form-group input:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--accent-blue);
-  }
-
-  .field-error {
-    font-size: 0.775rem;
-    color: #ef4444;
-    display: block;
-    margin-top: 0.25rem;
-  }
-
-  .submit-btn {
-    background-color: var(--accent-blue);
-    color: #ffffff;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-md);
-    font-weight: 700;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  .submit-btn:hover {
-    background-color: var(--accent-blue-hover);
-  }
-
-  .feedback-msg {
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius-md);
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-  }
-
-  .feedback-msg.success {
-    background-color: #dcfce7;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
-  }
-
-  .contact-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .contact-info p {
-    font-size: 0.925rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
-  }
-
-  .info-box {
-    background-color: var(--bg-secondary);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-  }
-
-  .info-box strong {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-  }
-
-  .info-box p {
-    margin-bottom: 0;
-    font-weight: 600;
-  }
-</style>

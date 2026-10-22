@@ -5,9 +5,22 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
 }
 
-const { title, description = "O mundo inteiro em um só lugar - Diretório Global de Fontes de Informação" } = Astro.props;
+const { 
+  title, 
+  description = "O mundo inteiro em um só lugar - Diretório Global de Fontes de Informação",
+  image = "/og-default.jpg" 
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url);
+const socialImageURL = new URL(image, Astro.site || Astro.url);
+
+// ⚙️ CONFIGURAÇÃO DE ANALYTICS: 
+// Insira o seu ID do GA4 aqui (ex: 'G-XXXXXXXXXX')
+// Dica: Deixe vazio ('') enquanto desenvolve localmente para não poluir as suas métricas.
+const GA_TRACKING_ID = '';
 ---
 
 <!doctype html>
@@ -17,23 +30,48 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    
+    <!-- SEO Básico -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
+
+    <!-- Google Analytics (Carregamento Assíncrono via Partytown / Web Worker) -->
+    {GA_TRACKING_ID && (
+      <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}></script>
+      <script type="text/partytown" define:vars={{ id: GA_TRACKING_ID }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', id);
+      </script>
+    )}
   </head>
   <body class="min-h-full flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-cyan-500 selection:text-slate-950 relative">
     
-    <!-- Topo -->
     <Header />
 
-    <!-- Conteúdo principal -->
     <main class="flex-1 w-full">
       <slot />
     </main>
 
-    <!-- Rodapé -->
     <Footer />
 
-    <!-- Botão Voltar ao Topo (Flutuante de Alto Contraste) -->
+    <!-- Botão Voltar ao Topo -->
     <button
       id="back-to-top-btn"
       type="button"
@@ -50,7 +88,6 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
     >
       <div class="relative w-full max-w-2xl rounded-3xl bg-white border border-slate-200 p-6 sm:p-10 shadow-2xl space-y-6">
         
-        <!-- Botão Fechar (X) -->
         <button 
           id="close-modal-btn" 
           type="button" 
@@ -60,19 +97,16 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
           ✕
         </button>
 
-        <!-- Cabeçalho de Metadados -->
         <div class="flex flex-wrap items-center gap-3 text-xs font-black text-slate-800 uppercase tracking-wider">
           <span id="modal-source-type-badge" class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">PORTAL</span>
           <span>PAÍS: <strong id="modal-source-country">BR</strong></span>
           <span>IDIOMA: <strong id="modal-source-language">PT-BR</strong></span>
         </div>
 
-        <!-- Título do Veículo -->
         <h2 id="modal-source-name" class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
           Nome do Veículo
         </h2>
 
-        <!-- Seção: Sobre o Veículo -->
         <div class="space-y-2">
           <h3 class="text-lg font-extrabold text-slate-900">Sobre o Veículo</h3>
           <p id="modal-source-desc" class="text-slate-800 text-base font-bold leading-relaxed">
@@ -80,7 +114,6 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
           </p>
         </div>
 
-        <!-- Grade com Informações Técnicas -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
           <div>
             <span class="block text-xs font-black text-slate-800 mb-1">Tipo de Mídia:</span>
@@ -96,20 +129,16 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
           </div>
         </div>
 
-        <!-- Seção: Categorias Cobertas -->
         <div class="space-y-2 pt-2">
           <h3 class="text-lg font-extrabold text-slate-900">Categorias Cobertas</h3>
           <div id="modal-source-categories" class="flex flex-wrap gap-3 font-black text-slate-900 text-sm">
-            <!-- Injetado via JS -->
           </div>
         </div>
 
-        <!-- Rodapé e Redirecionamento -->
         <div class="pt-6 border-t border-slate-100 text-center space-y-4">
           <p class="text-sm font-extrabold text-slate-800">
             Você será redirecionado para o site oficial e independente de <span id="modal-source-footer-name">Fonte</span>.
           </p>
-          
           <a 
             id="modal-source-link" 
             href="#" 
@@ -125,11 +154,9 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
     </div>
 
     <script>
-      // Lógica do Botão Voltar ao Topo
       function setupBackToTop() {
         const backToTopBtn = document.getElementById('back-to-top-btn');
         if (!backToTopBtn) return;
-
         const toggleVisibility = () => {
           if (window.scrollY > 300) {
             backToTopBtn.classList.remove('hidden');
@@ -139,21 +166,13 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
             backToTopBtn.classList.remove('flex');
           }
         };
-
         window.addEventListener('scroll', toggleVisibility, { passive: true });
-        
         backToTopBtn.addEventListener('click', () => {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-
-        // Checagem inicial
         toggleVisibility();
       }
 
-      // Lógica do Modal Popup
       function setupSourcePopup() {
         if ((window as any).__POPUP_EVENT_BOUND__) return;
         (window as any).__POPUP_EVENT_BOUND__ = true;
@@ -165,45 +184,46 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
           if (modalBtn) {
             const rawData = modalBtn.getAttribute('data-source');
             if (!rawData) return;
-
             try {
               const source = JSON.parse(rawData);
               const modal = document.getElementById('source-detail-modal');
               if (!modal) return;
 
-              const nameEl = document.getElementById('modal-source-name');
-              const footerNameEl = document.getElementById('modal-source-footer-name');
-              const descEl = document.getElementById('modal-source-desc');
-              const countryEl = document.getElementById('modal-source-country');
-              const langEl = document.getElementById('modal-source-language');
-              const badgeTypeEl = document.getElementById('modal-source-type-badge');
-              const gridTypeEl = document.getElementById('modal-grid-type');
-              const verifiedEl = document.getElementById('modal-source-verified');
-              const categoriesContainer = document.getElementById('modal-source-categories');
-              const linkEl = document.getElementById('modal-source-link') as HTMLAnchorElement | null;
+              const els = {
+                name: document.getElementById('modal-source-name'),
+                footerName: document.getElementById('modal-source-footer-name'),
+                desc: document.getElementById('modal-source-desc'),
+                country: document.getElementById('modal-source-country'),
+                lang: document.getElementById('modal-source-language'),
+                badgeType: document.getElementById('modal-source-type-badge'),
+                gridType: document.getElementById('modal-grid-type'),
+                verified: document.getElementById('modal-source-verified'),
+                cats: document.getElementById('modal-source-categories'),
+                link: document.getElementById('modal-source-link') as HTMLAnchorElement | null
+              };
 
-              if (nameEl) nameEl.textContent = source.name;
-              if (footerNameEl) footerNameEl.textContent = source.name;
-              if (descEl) descEl.textContent = source.description || 'Descrição não informada.';
-              if (countryEl) countryEl.textContent = source.country || 'BR';
-              if (langEl) langEl.textContent = source.language || 'PT-BR';
-              if (badgeTypeEl) badgeTypeEl.textContent = (source.type || 'PORTAL').toUpperCase();
-              if (gridTypeEl) gridTypeEl.textContent = source.type || 'Portal';
-              if (verifiedEl) verifiedEl.textContent = source.lastVerified || '2026-10-20';
+              if (els.name) els.name.textContent = source.name;
+              if (els.footerName) els.footerName.textContent = source.name;
+              if (els.desc) els.desc.textContent = source.description || 'Descrição não informada.';
+              if (els.country) els.country.textContent = source.country || 'BR';
+              if (els.lang) els.lang.textContent = source.language || 'PT-BR';
+              if (els.badgeType) els.badgeType.textContent = (source.type || 'PORTAL').toUpperCase();
+              if (els.gridType) els.gridType.textContent = source.type || 'Portal';
+              if (els.verified) els.verified.textContent = source.lastVerified || '2026-10-20';
 
-              if (linkEl) {
-                linkEl.href = source.url || '#';
-                linkEl.setAttribute('data-track-source', source.id || '');
+              if (els.link) {
+                els.link.href = source.url || '#';
+                els.link.setAttribute('data-track-source', source.id || '');
               }
 
-              if (categoriesContainer) {
-                categoriesContainer.innerHTML = '';
+              if (els.cats) {
+                els.cats.innerHTML = '';
                 const cats = source.categories || ['Geral'];
                 cats.forEach((cat: string) => {
                   const span = document.createElement('span');
                   span.className = 'px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-slate-900 text-sm font-black capitalize';
                   span.textContent = cat;
-                  categoriesContainer.appendChild(span);
+                  els.cats?.appendChild(span); // <-- CORREÇÃO APLICADA AQUI
                 });
               }
 
@@ -230,10 +250,8 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
         });
       }
 
-      // Executa as inicializações
       setupBackToTop();
       setupSourcePopup();
-
       document.addEventListener('astro:page-load', () => {
         setupBackToTop();
         setupSourcePopup();
@@ -243,23 +261,12 @@ const { title, description = "O mundo inteiro em um só lugar - Diretório Globa
 </html>
 
 <style is:global>
-  * {
-    font-weight: 900 !important;
-  }
-
+  * { font-weight: 900 !important; }
   html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-
-  h1, h2, h3, h4, h5, h6 {
-    line-height: 1.15 !important;
-    letter-spacing: -0.015em !important;
-  }
-
-  p, li, article {
-    line-height: 1.6 !important;
-    letter-spacing: 0.015em !important;
-  }
+  h1, h2, h3, h4, h5, h6 { line-height: 1.15 !important; letter-spacing: -0.015em !important; }
+  p, li, article { line-height: 1.6 !important; letter-spacing: 0.015em !important; }
 </style>
