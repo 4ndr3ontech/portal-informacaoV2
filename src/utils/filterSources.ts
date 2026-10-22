@@ -1,21 +1,38 @@
 import type { NewsSource, Category } from '../types';
 import brazilSources from '../data/brazil-sources.json';
+import { sources as fontesOriginais } from '../data/sources';
 
-// Forçamos a tipagem dos dados importados do JSON
-const catalog = brazilSources as NewsSource[];
+// Une e deduplica o catálogo completo de fontes baseado no nome em minúsculas
+const rawSources: NewsSource[] = [...fontesOriginais, ...(brazilSources as NewsSource[])];
+const seenNames = new Set<string>();
+
+const catalog: NewsSource[] = rawSources.filter(source => {
+  if (!source || !source.name) return false;
+  const key = source.name.toLowerCase().trim();
+  if (seenNames.has(key)) return false;
+  seenNames.add(key);
+  return true;
+});
 
 /**
- * Filtra o catálogo por um nicho específico, retornando apenas fontes ativas.
+ * Retorna todas as fontes unificadas e ativas do diretório.
+ */
+export function getAllSources(): NewsSource[] {
+  return catalog.filter(source => source.active !== false);
+}
+
+/**
+ * Filtra o catálogo unificado por um nicho específico, retornando apenas fontes ativas.
  * Adicionado fallback `|| 999` para evitar erro de null/undefined no rank.
  */
 export function getSourcesByCategory(category: string | Category): NewsSource[] {
   return catalog
-    .filter(source => source.active && source.categories && source.categories.includes(category as any))
+    .filter(source => source.active !== false && source.categories && source.categories.includes(category as any))
     .sort((a, b) => (a.rank || 999) - (b.rank || 999));
 }
 
 /**
- * Varre o JSON inteiro e extrai dinamicamente todas as categorias únicas 
+ * Varre o catálogo unificado e extrai dinamicamente todas as categorias únicas 
  * para gerar as rotas estáticas do Astro.
  */
 export function getAllNiches(): string[] {

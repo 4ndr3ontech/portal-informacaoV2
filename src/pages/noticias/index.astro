@@ -83,6 +83,7 @@ const totalSources = allSources.length;
         <span id="active-category-badge" class="hidden items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-cyan-100 text-cyan-900 border border-cyan-200 capitalize">
           <span id="category-name">Todas</span>
         </span>
+
       </div>
 
       <!-- MICRO-SCRIPT 2: Revela o badge instantaneamente -->
@@ -152,7 +153,7 @@ const totalSources = allSources.length;
   </main>
 </BaseLayout>
 
-<!-- Script Intacto: Alta Performance na Filtragem Local -->
+<!-- Script Inteligente de Alta Performance na Filtragem -->
 <script is:inline>
   (function() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -167,6 +168,9 @@ const totalSources = allSources.length;
     const queryParam = normalizeStr(rawQ);
     const categoryParam = normalizeStr(rawCategory);
     const countryParam = normalizeStr(rawCountry);
+
+    // Quebra a busca em múltiplos termos individuais para busca inteligente multi-palavra
+    const searchTerms = queryParam ? queryParam.split(/\s+/) : [];
 
     const searchInput = document.getElementById('search-input');
     if (searchInput && rawQ) searchInput.value = rawQ;
@@ -204,9 +208,16 @@ const totalSources = allSources.length;
         const categories = card.getAttribute('data-categories');
         const country = card.getAttribute('data-country');
 
-        let matchQuery = true, matchCategory = true, matchCountry = true;
+        let matchQuery = true;
+        let matchCategory = true;
+        let matchCountry = true;
 
-        if (queryParam) matchQuery = name.includes(queryParam) || desc.includes(queryParam) || categories.includes(queryParam) || country.includes(queryParam);
+        // Busca inteligente multi-termo (todos os termos digitados devem aparecer em algum campo)
+        if (searchTerms.length > 0) {
+          const combinedText = `${name} ${desc} ${categories} ${country}`;
+          matchQuery = searchTerms.every(term => combinedText.includes(term));
+        }
+
         if (categoryParam) matchCategory = categories.split(',').includes(categoryParam);
         if (countryParam) matchCountry = country === countryParam;
 
