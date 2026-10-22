@@ -3,24 +3,29 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="w-full bg-black border-t border-neutral-900 transition-colors duration-200 mt-auto">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
     
     <!-- Grid de 12 colunas para controlo preciso do alinhamento -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
       
-      <!-- Coluna 1: Marca, Descrição e Redes Sociais -->
-      <div class="md:col-span-12 lg:col-span-5 space-y-4 lg:pr-12">
-        <a href="/" class="inline-block group focus:outline-none">
-          <span class="text-2xl font-black text-white tracking-tight transition-all duration-300 group-hover:opacity-90">
-            OMundoEmUm<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">CLICK</span>
-          </span>
+      <!-- Coluna 1: Marca padronizada, Frase Curta e Redes Sociais -->
+      <div class="md:col-span-12 lg:col-span-5 lg:pr-8 flex flex-col">
+        
+        <a href="/" class="inline-block transition-transform hover:opacity-90 active:scale-95 self-start" aria-label="Página inicial OMundoEmUmCLICK">
+          <img 
+            src="/images/logo.png" 
+            alt="Logótipo OMundoEmUmCLICK" 
+            class="w-[180px] sm:w-[240px] lg:w-[280px] h-auto object-contain"
+          />
         </a>
-        <p class="text-sm font-bold text-slate-400 leading-relaxed max-w-sm">
-          O seu diretório global de fontes de informação confiáveis e ofertas rigorosamente curadas. Acesso direto às principais manchetes.
+
+        <!-- Frase curta integrada -->
+        <p class="text-sm font-bold text-slate-400 leading-relaxed max-w-sm mt-2">
+          As principais manchetes globais e ofertas selecionadas em um só clique.
         </p>
         
         <!-- Ícones de Redes Sociais -->
-        <div class="flex items-center gap-4 pt-2">
+        <div class="flex items-center gap-4 pt-3">
           <!-- X (Twitter) -->
           <a href="#" aria-label="Siga-nos no X (Twitter)" class="text-slate-500 hover:text-cyan-400 transition-colors">
             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -44,10 +49,10 @@ const currentYear = new Date().getFullYear();
 
       <!-- Coluna 2: Navegação Principal -->
       <div class="md:col-span-4 lg:col-span-2">
-        <h3 class="text-sm font-black text-white uppercase tracking-wider mb-4">
+        <h3 class="text-xs font-black text-white uppercase tracking-wider mb-3">
           Navegação
         </h3>
-        <ul class="space-y-3 text-sm font-bold">
+        <ul class="space-y-2.5 text-sm font-bold">
           <li><a href="/noticias" class="text-slate-400 hover:text-cyan-400 transition-colors">Últimas Notícias</a></li>
           <li><a href="/ofertas" class="text-slate-400 hover:text-cyan-400 transition-colors">Ofertas em Destaque</a></li>
           <li><a href="/categorias/brasil" class="text-slate-400 hover:text-cyan-400 transition-colors">Notícias do Brasil</a></li>
@@ -57,10 +62,10 @@ const currentYear = new Date().getFullYear();
 
       <!-- Coluna 3: Institucional -->
       <div class="md:col-span-4 lg:col-span-2">
-        <h3 class="text-sm font-black text-white uppercase tracking-wider mb-4">
+        <h3 class="text-xs font-black text-white uppercase tracking-wider mb-3">
           Institucional
         </h3>
-        <ul class="space-y-3 text-sm font-bold">
+        <ul class="space-y-2.5 text-sm font-bold">
           <li><a href="/sobre" class="text-slate-400 hover:text-cyan-400 transition-colors">Sobre Nós</a></li>
           <li><a href="/contato" class="text-slate-400 hover:text-cyan-400 transition-colors">Entrar em Contato</a></li>
           <li><a href="/privacidade" class="text-slate-400 hover:text-cyan-400 transition-colors">Política de Privacidade</a></li>
@@ -70,17 +75,17 @@ const currentYear = new Date().getFullYear();
 
       <!-- Coluna 4: Newsletter -->
       <div class="md:col-span-4 lg:col-span-3">
-        <h3 class="text-sm font-black text-white uppercase tracking-wider mb-4">
+        <h3 class="text-xs font-black text-white uppercase tracking-wider mb-3">
           Boletim Informativo
         </h3>
-        <p class="text-sm font-bold text-slate-400 mb-4 leading-relaxed">
+        <p class="text-sm font-bold text-slate-400 mb-3 leading-relaxed">
           Inscreva-se para receber novidades e as melhores ofertas diretamente no seu e-mail.
         </p>
-        <form action="#" class="flex flex-col gap-3">
+        <form action="#" class="flex flex-col gap-2.5">
           <input 
             type="email" 
             placeholder="Seu melhor e-mail" 
-            class="w-full px-4 py-2.5 text-sm font-bold rounded-xl border border-neutral-800 bg-neutral-900 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-inner"
+            class="w-full px-4 py-2 text-sm font-bold rounded-xl border border-neutral-800 bg-neutral-900 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-inner"
             required
           />
           <button 
@@ -95,14 +100,14 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <!-- Linha Divisória Inferior -->
-    <hr class="my-8 border-neutral-900" />
+    <hr class="my-6 border-neutral-900" />
 
     <!-- Direitos de Autor e Avisos Legais -->
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-bold text-slate-500">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3 text-xs font-bold text-slate-500">
       <p class="text-center md:text-left">
         &copy; {currentYear} OMundoEmUmCLICK. Todos os direitos reservados.
       </p>
-      <p class="text-center md:text-right max-w-lg">
+      <p class="text-center md:text-right max-w-lg leading-relaxed">
         Os links de afiliados encontram-se devidamente identificados em conformidade com as nossas diretrizes de transparência comercial.
       </p>
     </div>

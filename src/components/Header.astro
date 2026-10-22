@@ -27,11 +27,11 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
 });
 ---
 
-<header class="sticky top-0 z-50 w-full border-b border-neutral-900 bg-black transition-all">
+<header class="sticky top-0 z-50 w-full border-b border-neutral-900 bg-black transition-all shadow-xl shadow-black/50">
   
   <!-- Topbar Informativa -->
-  <div class="hidden sm:block border-b border-neutral-900 bg-black py-1.5 px-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] text-slate-400 font-medium">
+  <div class="hidden sm:block border-b border-neutral-900/50 bg-black py-1.5 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] text-slate-400 font-medium tracking-wide">
       <div class="flex items-center gap-3">
         <span class="inline-flex items-center gap-1.5 text-emerald-400">
           <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -47,40 +47,22 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
     </div>
   </div>
 
-  <!-- Main Header Navigation -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-24 flex items-center justify-between gap-4">
+  <!-- Main Header Navigation (Altura padronizada para h-20 sm:h-24) -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between">
     
-    <!-- Logo Modernizado Premium (Esquerda) -->
-    <a href="/" class="flex items-center gap-3.5 sm:gap-4 group focus:outline-none flex-shrink-0 transition-transform hover:scale-[1.02]">
-      <!-- Ícone 'M' aumentado -->
-      <div class="relative flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all duration-300">
-        <div class="w-full h-full bg-black rounded-[14px] flex items-center justify-center">
-          <span class="font-black text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-            M
-          </span>
-        </div>
-      </div>
-      
-      <div class="flex flex-col justify-center">
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Novo Título: OMundoEmUmCLICK -->
-          <span class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight transition-all duration-300 group-hover:opacity-90">
-            OMundoEmUm<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">CLICK</span>
-          </span>
-          
-          <span class="hidden sm:inline-flex px-2 py-0.5 rounded-lg text-[10px] font-black bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 uppercase tracking-widest mt-1">
-            PRO
-          </span>
-        </div>
-        <!-- Subtítulo mais elegante e espaçado -->
-        <span class="text-[10px] sm:text-xs text-slate-400 tracking-[0.25em] uppercase font-bold mt-0.5 hidden sm:block">
-          Diretório de Mídia
-        </span>
-      </div>
-    </a>
+    <!-- Esquerda: Logo Alinhado e com Tamanho Padronizado -->
+    <div class="flex-1 flex justify-start items-center">
+      <a href="/" class="flex items-center transition-transform hover:opacity-90 active:scale-95" aria-label="Página inicial OMundoEmUmCLICK">
+        <img 
+          src="/images/logo.png" 
+          alt="Logótipo OMundoEmUmCLICK" 
+          class="w-[180px] sm:w-[240px] md:w-[280px] h-auto object-contain"
+        />
+      </a>
+    </div>
 
-    <!-- Nav Links Centralizados (Centro) -->
-    <nav class="hidden md:flex items-center justify-center flex-1 max-w-sm mx-auto">
+    <!-- Centro: Nav Links Perfeitamente Centralizados -->
+    <nav class="hidden md:flex items-center justify-center flex-shrink-0">
       <div id="nav-container" class="flex items-center gap-1 bg-neutral-900/80 p-1.5 rounded-2xl border border-neutral-800 shadow-inner">
         {navLinks.map((link) => {
           const isOfertas = link.href === '/ofertas';
@@ -90,7 +72,7 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
             <a
               href={link.href}
               class:list={[
-                "nav-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200",
+                "nav-pill px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 tracking-wide",
                 isActive
                   ? "bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20 font-bold"
                   : "text-slate-300 hover:text-white hover:bg-neutral-800"
@@ -103,15 +85,14 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
       </div>
     </nav>
 
-    <!-- Ações e Login Admin (Direita) -->
-    <div class="flex items-center gap-2.5 flex-shrink-0">
-      <!-- Botão Entrar (Área Admin / Restrita) -->
+    <!-- Direita: Ações e Login -->
+    <div class="flex-1 flex justify-end items-center gap-2.5">
       <a
         href="/admin/login"
-        class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-cyan-500/50 text-slate-200 hover:text-cyan-400 font-semibold text-xs transition-all shadow-sm"
+        class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-cyan-500/50 text-slate-200 hover:text-cyan-400 font-semibold text-xs transition-all shadow-sm tracking-wide"
         title="Acesso restrito para administradores"
       >
-        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
         <span>Entrar</span>
@@ -119,14 +100,14 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
     </div>
   </div>
 
-  <!-- Sub-barra com Pills de Categorias Centralizadas -->
-  <div class="border-t border-neutral-900 bg-black py-2.5 overflow-x-auto scrollbar-none">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center flex-wrap gap-2 text-xs font-medium">
-      <span class="text-slate-500 text-[11px] font-mono uppercase tracking-wider pr-1 hidden sm:inline-block">Categorias:</span>
+  <!-- Sub-barra com Pills de Categorias -->
+  <div class="border-t border-neutral-900 bg-black py-3 overflow-x-auto scrollbar-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center flex-wrap gap-2.5 text-xs font-medium">
+      <span class="text-slate-500 text-[11px] font-mono uppercase tracking-widest pr-2 hidden sm:inline-block">Categorias:</span>
       {categories.map((cat) => (
         <a
           href={`/noticias?category=${encodeURIComponent(cat.slug)}`}
-          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-neutral-900/80 border border-neutral-800 text-slate-300 hover:text-white hover:border-cyan-500/40 hover:bg-neutral-800 transition-all duration-200 whitespace-nowrap"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-neutral-900/80 border border-neutral-800 text-slate-300 hover:text-white hover:border-cyan-500/40 hover:bg-neutral-800 transition-all duration-200 whitespace-nowrap shadow-sm"
         >
           <span>{getCategoryIcon(cat.slug)}</span>
           <span>{cat.label}</span>
@@ -138,19 +119,16 @@ const currentDate = new Date().toLocaleDateString('pt-BR', {
 </header>
 
 <script>
-  // Move a pílula de destaque azul ao clicar nas opções do menu
   document.addEventListener('DOMContentLoaded', () => {
     const pills = document.querySelectorAll('.nav-pill');
     
     pills.forEach(pill => {
       pill.addEventListener('click', (e) => {
-        // Remove o destaque de todos
         pills.forEach(p => {
           p.classList.remove('bg-cyan-500', 'text-slate-950', 'shadow-md', 'shadow-cyan-500/20', 'font-bold');
           p.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-neutral-800');
         });
         
-        // Aplica o destaque azul padrão no botão clicado
         const target = e.currentTarget as HTMLElement;
         target.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-neutral-800');
         target.classList.add('bg-cyan-500', 'text-slate-950', 'shadow-md', 'shadow-cyan-500/20', 'font-bold');
