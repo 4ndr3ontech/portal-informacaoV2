@@ -8,8 +8,8 @@ interface Props {
   image?: string;
 }
 
-const { 
-  title, 
+const {  
+  title,  
   description = "O mundo inteiro em um só lugar - Diretório Global de Fontes de Informação",
   image = "/og-default.jpg" 
 } = Astro.props;
@@ -31,6 +31,9 @@ const GA_TRACKING_ID = '';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2726453991272476" crossorigin="anonymous"></script>
+
     <!-- SEO Básico -->
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -223,7 +226,7 @@ const GA_TRACKING_ID = '';
                   const span = document.createElement('span');
                   span.className = 'px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-slate-900 text-sm font-black capitalize';
                   span.textContent = cat;
-                  els.cats?.appendChild(span); // <-- CORREÇÃO APLICADA AQUI
+                  els.cats?.appendChild(span);
                 });
               }
 
