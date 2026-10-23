@@ -30,7 +30,7 @@ const totalSources = allSources.length;
         </p>
       </div>
 
-      <!-- MICRO-SCRIPT 1: Títulos Dinâmicos -->
+      <!-- MICRO-SCRIPT 1: Títulos Dinâmicos Iniciais -->
       <script is:inline>
         (function() {
           const p = new URLSearchParams(window.location.search);
@@ -165,18 +165,17 @@ const totalSources = allSources.length;
 
     const normalizeStr = (str) => str ? str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim() : '';
 
-    const queryParam = normalizeStr(rawQ);
     const categoryParam = normalizeStr(rawCategory);
     const countryParam = normalizeStr(rawCountry);
 
-    // Quebra a busca em múltiplos termos individuais para busca inteligente multi-palavra
-    const searchTerms = queryParam ? queryParam.split(/\s+/) : [];
+    // Transformado num 'let' para podermos atualizar a cada clique na pesquisa em tempo real
+    let searchTerms = rawQ ? normalizeStr(rawQ).split(/\s+/) : [];
 
     const searchInput = document.getElementById('search-input');
     if (searchInput && rawQ) searchInput.value = rawQ;
 
+    const clearBtn = document.getElementById('clear-filters');
     if (rawCategory || rawQ || rawCountry) {
-      const clearBtn = document.getElementById('clear-filters');
       if (clearBtn) {
         clearBtn.classList.remove('hidden');
         clearBtn.classList.add('inline-block');
@@ -199,6 +198,7 @@ const totalSources = allSources.length;
     let currentPage = parseInt(urlParams.get('page')) || 1;
     let matchedCards = [];
 
+    // Função central que processa os filtros e organiza a página atual
     function filterAndPaginate() {
       matchedCards = [];
 
@@ -212,7 +212,7 @@ const totalSources = allSources.length;
         let matchCategory = true;
         let matchCountry = true;
 
-        // Busca inteligente multi-termo (todos os termos digitados devem aparecer em algum campo)
+        // Busca inteligente multi-termo
         if (searchTerms.length > 0) {
           const combinedText = `${name} ${desc} ${categories} ${country}`;
           matchQuery = searchTerms.every(term => combinedText.includes(term));
@@ -297,18 +297,58 @@ const totalSources = allSources.length;
       if (currentPage < Math.ceil(matchedCards.length / itemsPerPage)) updatePageUrl(currentPage + 1);
     });
 
+    // 1. Inicia o primeiro filtro ao carregar a página
     filterAndPaginate();
 
-    const searchForm = document.getElementById('search-form');
-    if (searchForm) {
-      searchForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const newQ = searchInput ? searchInput.value.trim() : '';
+    // 2. BUSCA EM TEMPO REAL: Filtra assim que o utilizador digita
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const newQ = e.target.value.trim();
+        const normalizedQ = normalizeStr(newQ);
+        
+        // Atualiza a variável de busca para a função de filtragem
+        searchTerms = normalizedQ ? normalizedQ.split(/\s+/) : [];
+        currentPage = 1; // Volta à página 1 após uma nova pesquisa
+        
+        // Recalcula o grid instantaneamente
+        filterAndPaginate();
+
+        // Atualiza a URL no navegador de forma invisível
         const currentUrl = new URL(window.location.href);
         if (newQ) currentUrl.searchParams.set('q', newQ);
         else currentUrl.searchParams.delete('q');
         currentUrl.searchParams.delete('page');
-        window.location.href = currentUrl.toString();
+        window.history.replaceState({}, '', currentUrl.toString());
+
+        // Atualiza os Textos de Título e Botão Limpar dinamicamente
+        const pageTitle = document.getElementById('page-title');
+        if (pageTitle) {
+          if (newQ) {
+            pageTitle.textContent = 'Busca: "' + newQ + '"';
+          } else if (rawCategory) {
+            pageTitle.textContent = rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
+          } else {
+            pageTitle.textContent = 'Diretório de Fontes';
+          }
+        }
+        
+        if (clearBtn) {
+          if (newQ || rawCategory || rawCountry) {
+            clearBtn.classList.remove('hidden');
+            clearBtn.classList.add('inline-block');
+          } else {
+            clearBtn.classList.add('hidden');
+            clearBtn.classList.remove('inline-block');
+          }
+        }
+      });
+    }
+
+    // 3. EVITA RECARREGAR A PÁGINA COM O ENTER: O JavaScript agora toma o controlo total
+    const searchForm = document.getElementById('search-form');
+    if (searchForm) {
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Apenas impede o reload, porque a busca já foi feita no 'input' acima
       });
     }
   })();

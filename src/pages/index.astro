@@ -14,7 +14,6 @@ const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
 const sources = Array.from(new Map(rawSources.map(source => [source.name.toLowerCase().trim(), source])).values());
 
 const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
-const nationalSources = sources.filter(s => s.country === 'BR').slice(0, 6);
 const totalSources = sources.length;
 
 const categoriesList = [
@@ -32,7 +31,7 @@ const categoriesList = [
 <BaseLayout title="Início | O mundo em um click">
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 w-full">
     
-    <!-- Hero Section -->
+    <!-- Hero Section com Pesquisa Inteligente em Tempo Real -->
     <section class="relative text-center py-12 px-4 rounded-3xl bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 overflow-hidden">
       <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none"></div>
 
@@ -44,27 +43,22 @@ const categoriesList = [
         Acesse os principais jornais online e portais de notícias do Brasil e do mundo. Encontre fontes de informação sobre política, economia, tecnologia, esportes e atualidades em uma única plataforma.
       </p>
 
-      <form action="/noticias" method="GET" class="max-w-2xl mx-auto relative group">
+      <!-- Input de Pesquisa Interativa -->
+      <div class="max-w-2xl mx-auto relative group">
         <div class="flex items-center rounded-2xl bg-white border border-slate-300 p-2 shadow-lg shadow-slate-200/50 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
           <span class="pl-3 text-slate-400 text-lg">🔍</span>
           <input
+            id="search-input"
             type="text"
-            name="q"
-            aria-label="Buscar por veículo, país, idioma ou palavra-chave"
-            placeholder="Buscar por veículo, país, idioma ou palavra-chave..."
+            aria-label="Pesquise por portais, temas ou palavras-chave (ex: Economia, G1, Inteligência Artificial...)"
+            placeholder="Pesquise por portais, temas ou palavras-chave (ex: Economia, G1, Inteligência Artificial...)"
             class="w-full bg-transparent px-3 py-2 text-slate-900 placeholder-slate-400 focus:outline-none text-sm font-bold"
           />
-          <button
-            type="submit"
-            class="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-cyan-500/20 active:scale-95 cursor-pointer"
-          >
-            Buscar
-          </button>
         </div>
-      </form>
+      </div>
 
-      <!-- Contador de fontes visível e legível -->
-      <div class="mt-6 text-slate-600 font-extrabold text-sm tracking-wide">
+      <!-- Contador de fontes dinâmico -->
+      <div id="results-count" class="mt-6 text-slate-600 font-extrabold text-sm tracking-wide">
         Exibindo <span class="text-cyan-600 font-black text-base">{totalSources}</span> fontes de informação ativas
       </div>
     </section>
@@ -180,22 +174,37 @@ const categoriesList = [
       </section>
     )}
 
-    <!-- Principais Veículos Nacionais -->
+    <!-- Principais Veículos Nacionais (Listagem Filtrável por Busca) -->
     <section class="space-y-6">
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Principais Veículos Nacionais</h2>
-          <p class="text-sm font-bold text-slate-500 mt-1">Fontes brasileiras com alta cobertura e relevância</p>
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Todos os Veículos</h2>
+          <p class="text-sm font-bold text-slate-500 mt-1">Pesquise para encontrar fontes por assunto</p>
         </div>
         <a href="/noticias?country=BR" class="text-xs font-black uppercase tracking-wider text-cyan-600 hover:text-cyan-700 flex items-center gap-1 transition-colors">
-          Ver todas as fontes ➔
+          Ver lista completa ➔
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {nationalSources.map((source: NewsSource) => (
-          <SourceCard source={source} />
+      <!-- Grelha de Cards com TODAS as fontes (ocultadas inicialmente após a 6ª) -->
+      <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {sources.map((source: NewsSource, index: number) => (
+          <div 
+            class={`source-card-wrapper w-full ${index < 6 ? 'flex' : 'hidden'}`}
+            data-original-index={index}
+            data-name={source.name.toLowerCase()}
+            data-desc={(source.description || '').toLowerCase()}
+            data-categories={JSON.stringify(source.categories || []).toLowerCase()}
+          >
+            <SourceCard source={source} />
+          </div>
         ))}
+      </div>
+
+      <!-- Mensagem de Nenhum Resultado Encontrado -->
+      <div id="no-results" class="hidden text-center py-16 space-y-3">
+        <p class="text-2xl font-black text-slate-700">Nenhum portal encontrado para esta pesquisa.</p>
+        <p class="text-sm font-bold text-slate-500">Tente pesquisar por outros termos (ex: tecnologia, jogos, economia, notícias).</p>
       </div>
     </section>
 
@@ -212,6 +221,11 @@ const categoriesList = [
     const featuredDesc = document.getElementById('featured-desc');
     const featuredCategories = document.getElementById('featured-categories');
     const featuredUrl = document.getElementById('featured-url');
+    
+    const searchInput = document.getElementById('search-input');
+    const sourceCardWrappers = document.querySelectorAll('.source-card-wrapper');
+    const noResultsMsg = document.getElementById('no-results');
+    const resultsCount = document.getElementById('results-count');
 
     const countryFlags = {
       BR: '🇧🇷', US: '🇺🇸', GB: '🇬🇧', AR: '🇦🇷', MX: '🇲🇽',
@@ -227,6 +241,63 @@ const categoriesList = [
 
     const getClicks = (id) => parseInt(localStorage.getItem(`clicks_${id}`) || '0', 10);
     const setClicks = (id, count) => localStorage.setItem(`clicks_${id}`, count.toString());
+
+    // Lógica de Pesquisa Inteligente em Tempo Real (Atualizada para varrer todas as fontes)
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        let matchCount = 0;
+
+        if (query === '') {
+          // Se a barra estiver vazia, volta a mostrar apenas os 6 primeiros
+          sourceCardWrappers.forEach((wrapper) => {
+            const index = parseInt(wrapper.getAttribute('data-original-index') || '0', 10);
+            if (index < 6) {
+              wrapper.classList.remove('hidden');
+              wrapper.classList.add('flex');
+            } else {
+              wrapper.classList.add('hidden');
+              wrapper.classList.remove('flex');
+            }
+          });
+          if (resultsCount) {
+            resultsCount.innerHTML = `Exibindo <span class="text-cyan-600 font-black text-base">${allSources.length}</span> fontes de informação ativas`;
+          }
+          if (noResultsMsg) noResultsMsg.classList.add('hidden');
+          return;
+        }
+
+        // Se houver texto, procura em TODAS as fontes invisíveis e visíveis
+        sourceCardWrappers.forEach((wrapper) => {
+          const name = wrapper.getAttribute('data-name') || '';
+          const desc = wrapper.getAttribute('data-desc') || '';
+          const categories = wrapper.getAttribute('data-categories') || '';
+
+          const isMatch = name.includes(query) || desc.includes(query) || categories.includes(query);
+
+          if (isMatch) {
+            wrapper.classList.remove('hidden');
+            wrapper.classList.add('flex');
+            matchCount++;
+          } else {
+            wrapper.classList.add('hidden');
+            wrapper.classList.remove('flex');
+          }
+        });
+
+        if (resultsCount) {
+          resultsCount.innerHTML = `Encontradas <span class="text-cyan-600 font-black text-base">${matchCount}</span> fontes correspondentes a "${query}"`;
+        }
+
+        if (noResultsMsg) {
+          if (matchCount === 0) {
+            noResultsMsg.classList.remove('hidden');
+          } else {
+            noResultsMsg.classList.add('hidden');
+          }
+        }
+      });
+    }
 
     function updateFeaturedCard() {
       if (!allSources || allSources.length === 0) return;
