@@ -1,5 +1,8 @@
 import type { APIRoute } from 'astro';
 
+// Informa ao Astro para não tentar pré-renderizar esta rota na build estática
+export const prerender = false;
+
 // Exemplo simples em memória ou integração com seu DB (Prisma, KV, Supabase, PostgreSQL, etc.)
 // Substitua o objeto/banco de dados abaixo pela sua camada de persistência real.
 export const clickStore: Record<string, number> = {
