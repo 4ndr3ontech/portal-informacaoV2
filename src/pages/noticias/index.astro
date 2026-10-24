@@ -2,15 +2,47 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SourceCard from '../../components/SourceCard.astro';
 
-import { sources as fontesOriginais } from '../../data/sources';
-import fontesBrasil from '../../data/brazil-sources.json';
+import { sources as fontesGlobais } from '../../data/sources';
+import rawFontesBrasil from '../../data/brazil-sources.json';
 import type { NewsSource } from '../../types';
 
-// 1. Junta todas as fontes brutas
+// Garante que os dados sejam tratados como array com segurança
+const fontesOriginais: NewsSource[] = Array.isArray(fontesGlobais)
+  ? fontesGlobais
+  : ((fontesGlobais as any).default || []);
+
+const fontesBrasil: NewsSource[] = Array.isArray(rawFontesBrasil) 
+  ? rawFontesBrasil 
+  : ((rawFontesBrasil as any).default || []);
+
+// 1. Junta as fontes globais com o acervo do Brasil
 const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
 
-// 2. Remove duplicadas usando o NOME como identificador único (ignorando maiúsculas/minúsculas e espaços)
-const allSources = Array.from(new Map(rawSources.map(source => [source.name.toLowerCase().trim(), source])).values());
+// 2. MUDANÇA CRUCIAL: Remover duplicadas filtrando por URL, e não por NOME.
+const allSources: NewsSource[] = [];
+const seenUrls = new Set<string>();
+
+for (const source of rawSources) {
+  if (!source) continue;
+  
+  // A URL é única. Se o site não tiver URL cadastrada, usamos o nome como plano B.
+  const uniqueKey = source.url 
+    ? source.url.toLowerCase().trim() 
+    : (source.name ? source.name.toLowerCase().trim() : Math.random().toString());
+
+  if (!seenUrls.has(uniqueKey)) {
+    seenUrls.add(uniqueKey);
+    allSources.push(source);
+  }
+}
+
+// === PROVA REAL NO TERMINAL ===
+console.log("========================================");
+console.log("📊 QUANTIDADE DE FONTES CARREGADAS:");
+console.log("🌍 Total Fontes Globais importadas:", fontesOriginais.length);
+console.log("🇧🇷 Total Fontes Brasil importadas:", fontesBrasil.length);
+console.log("✨ Total Combinado Real (Sem Duplicadas):", allSources.length);
+console.log("========================================");
 
 const totalSources = allSources.length;
 ---
@@ -114,7 +146,7 @@ const totalSources = allSources.length;
           data-name={source.name.toLowerCase()} 
           data-desc={(source.description || '').toLowerCase()}
           data-country={(source.country || 'global').toLowerCase()}
-          data-categories={source.categories.join(',').toLowerCase()}
+          data-categories={(source.categories || []).join(',').toLowerCase()}
         >
           <SourceCard source={source} />
         </div>
@@ -154,7 +186,7 @@ const totalSources = allSources.length;
 </BaseLayout>
 
 <!-- Script Inteligente de Alta Performance na Filtragem -->
-<script is:inline>
+<script is:inline define:vars={{ serverTotalSources: totalSources }}>
   (function() {
     const urlParams = new URLSearchParams(window.location.search);
     const rawQ = urlParams.get('q') || '';
@@ -168,7 +200,6 @@ const totalSources = allSources.length;
     const categoryParam = normalizeStr(rawCategory);
     const countryParam = normalizeStr(rawCountry);
 
-    // Transformado num 'let' para podermos atualizar a cada clique na pesquisa em tempo real
     let searchTerms = rawQ ? normalizeStr(rawQ).split(/\s+/) : [];
 
     const searchInput = document.getElementById('search-input');
@@ -198,7 +229,6 @@ const totalSources = allSources.length;
     let currentPage = parseInt(urlParams.get('page')) || 1;
     let matchedCards = [];
 
-    // Função central que processa os filtros e organiza a página atual
     function filterAndPaginate() {
       matchedCards = [];
 
@@ -212,7 +242,6 @@ const totalSources = allSources.length;
         let matchCategory = true;
         let matchCountry = true;
 
-        // Busca inteligente multi-termo
         if (searchTerms.length > 0) {
           const combinedText = `${name} ${desc} ${categories} ${country}`;
           matchQuery = searchTerms.every(term => combinedText.includes(term));
@@ -229,7 +258,9 @@ const totalSources = allSources.length;
       });
 
       const totalVisible = matchedCards.length;
-      document.getElementById('results-count').textContent = totalVisible;
+      
+      const hasActiveFilters = categoryParam || countryParam || searchTerms.length > 0;
+      document.getElementById('results-count').textContent = hasActiveFilters ? totalVisible : serverTotalSources;
 
       const noResultsEl = document.getElementById('no-results');
       const gridEl = document.getElementById('sources-grid');
@@ -297,30 +328,24 @@ const totalSources = allSources.length;
       if (currentPage < Math.ceil(matchedCards.length / itemsPerPage)) updatePageUrl(currentPage + 1);
     });
 
-    // 1. Inicia o primeiro filtro ao carregar a página
     filterAndPaginate();
 
-    // 2. BUSCA EM TEMPO REAL: Filtra assim que o utilizador digita
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const newQ = e.target.value.trim();
         const normalizedQ = normalizeStr(newQ);
         
-        // Atualiza a variável de busca para a função de filtragem
         searchTerms = normalizedQ ? normalizedQ.split(/\s+/) : [];
-        currentPage = 1; // Volta à página 1 após uma nova pesquisa
+        currentPage = 1;
         
-        // Recalcula o grid instantaneamente
         filterAndPaginate();
 
-        // Atualiza a URL no navegador de forma invisível
         const currentUrl = new URL(window.location.href);
         if (newQ) currentUrl.searchParams.set('q', newQ);
         else currentUrl.searchParams.delete('q');
         currentUrl.searchParams.delete('page');
         window.history.replaceState({}, '', currentUrl.toString());
 
-        // Atualiza os Textos de Título e Botão Limpar dinamicamente
         const pageTitle = document.getElementById('page-title');
         if (pageTitle) {
           if (newQ) {
@@ -344,11 +369,10 @@ const totalSources = allSources.length;
       });
     }
 
-    // 3. EVITA RECARREGAR A PÁGINA COM O ENTER: O JavaScript agora toma o controlo total
     const searchForm = document.getElementById('search-form');
     if (searchForm) {
       searchForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Apenas impede o reload, porque a busca já foi feita no 'input' acima
+        e.preventDefault();
       });
     }
   })();

@@ -1,15 +1,30 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { sources } from '../../data/sources';
+import { sources as fontesOriginais } from '../../data/sources';
+import rawFontesBrasil from '../../data/brazil-sources.json';
 import { getFaviconUrl, getCountryFlag } from '../../lib/utils';
+import type { NewsSource } from '../../types';
 
 export async function getStaticPaths() {
-  // Se for modo DEV, carrega só 50 sites para não estourar a memória. 
-  // Se for Build final, carrega os 5000.
-  const limit = import.meta.env.DEV ? 50 : sources.length;
-  const sourcesToBuild = sources.slice(0, limit);
+  // Garante tratamento seguro do JSON do Brasil
+  const fontesBrasil: NewsSource[] = Array.isArray(rawFontesBrasil) 
+    ? rawFontesBrasil 
+    : ((rawFontesBrasil as any).default || []);
 
-  return sourcesToBuild.map((source) => ({
+  // 1. Junta as fontes globais com o acervo do Brasil
+  const rawSources: NewsSource[] = [...(fontesOriginais || []), ...fontesBrasil];
+
+  // 2. Remove duplicadas usando o nome normalizado (exatamente como na listagem principal)
+  const allSources = Array.from(
+    new Map(
+      rawSources
+        .filter(source => source && source.name && source.id)
+        .map(source => [source.name.toLowerCase().trim(), source])
+    ).values()
+  );
+
+  // Mapeia todas as fontes unificadas para geração estática
+  return allSources.map((source) => ({
     params: { id: source.id },
     props: { source },
   }));
@@ -19,6 +34,7 @@ const { source } = Astro.props;
 
 const flag = getCountryFlag(source.country || 'Global');
 const favicon = getFaviconUrl(source.url);
+---
 ---
 
 <BaseLayout 
