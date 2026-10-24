@@ -5002,5 +5002,15 @@
     "type": "portal",
     "lastVerified": "2026-10-20",
     "isInternational": false
+  },
+  {
+    "name": "Agência Pública",
+    "url": "https://apublica.org",
+    "description": "Primeira agência de jornalismo investigativo sem fins lucrativos do Brasil.",
+    "country": "br",
+    "categories": [
+      "geral",
+      "investigativo"
+    ]
   }
 ]

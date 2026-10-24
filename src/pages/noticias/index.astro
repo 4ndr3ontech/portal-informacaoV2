@@ -18,17 +18,30 @@ const fontesBrasil: NewsSource[] = Array.isArray(rawFontesBrasil)
 // 1. Junta as fontes globais com o acervo do Brasil
 const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
 
-// 2. MUDANÇA CRUCIAL: Remover duplicadas filtrando por URL, e não por NOME.
+// 2. DEDUPLICAÇÃO RIGOROSA E REMOÇÃO DE SEO LIXO ("Sim" genéricos)
 const allSources: NewsSource[] = [];
 const seenUrls = new Set<string>();
 
 for (const source of rawSources) {
   if (!source) continue;
   
-  // A URL é única. Se o site não tiver URL cadastrada, usamos o nome como plano B.
-  const uniqueKey = source.url 
-    ? source.url.toLowerCase().trim() 
-    : (source.name ? source.name.toLowerCase().trim() : Math.random().toString());
+  // Remove registros genéricos de SEO em massa (ex: cartões chamados "Sim" com alternativas)
+  if (source.name && source.name.trim() === 'Sim' && source.description && source.description.toLowerCase().includes('best alternative sites')) {
+    continue;
+  }
+  
+  // Normaliza a URL removendo protocolos, www e barras finais para evitar duplicatas falsas
+  let cleanUrl = '';
+  if (source.url) {
+    cleanUrl = source.url
+      .toLowerCase()
+      .trim()
+      .replace(/^https?:\/\//, '')
+      .replace(/^www\./, '')
+      .replace(/\/+$/, '');
+  }
+
+  const uniqueKey = cleanUrl || (source.name ? source.name.toLowerCase().trim() : Math.random().toString());
 
   if (!seenUrls.has(uniqueKey)) {
     seenUrls.add(uniqueKey);

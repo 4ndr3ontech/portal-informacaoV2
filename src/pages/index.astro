@@ -3,11 +3,50 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SourceCard from '../components/SourceCard.astro';
 import { getFaviconUrl, getCountryFlag, getCategoryIcon } from '../lib/utils';
 
-import { sources as fontesOriginais } from '../data/sources';
+import { sources as fontesGlobais } from '../data/sources';
+import rawFontesBrasil from '../data/brazil-sources.json';
 import type { NewsSource } from '../types';
 
-// Usa diretamente as 5000 fontes do sources.ts geradas pelo script
-const sources: NewsSource[] = fontesOriginais;
+// Garante segurança nos arrays
+const fontesOriginais: NewsSource[] = Array.isArray(fontesGlobais)
+  ? fontesGlobais
+  : ((fontesGlobais as any).default || []);
+
+const fontesBrasil: NewsSource[] = Array.isArray(rawFontesBrasil) 
+  ? rawFontesBrasil 
+  : ((rawFontesBrasil as any).default || []);
+
+// Junta as fontes globais com as do Brasil
+const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
+const sources: NewsSource[] = [];
+const seenUrls = new Set<string>();
+
+for (const source of rawSources) {
+  if (!source) continue;
+  
+  // Remove os registros genéricos de SEO (igual ao diretório de notícias)
+  if (source.name && source.name.trim() === 'Sim' && source.description && source.description.toLowerCase().includes('best alternative sites')) {
+    continue;
+  }
+
+  // Normaliza a URL rigorosamente
+  let cleanUrl = '';
+  if (source.url) {
+    cleanUrl = source.url
+      .toLowerCase()
+      .trim()
+      .replace(/^https?:\/\//, '')
+      .replace(/^www\./, '')
+      .replace(/\/+$/, '');
+  }
+
+  const uniqueKey = cleanUrl || (source.name ? source.name.toLowerCase().trim() : Math.random().toString());
+
+  if (!seenUrls.has(uniqueKey)) {
+    seenUrls.add(uniqueKey);
+    sources.push(source);
+  }
+}
 
 const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
 const totalSources = sources.length;
@@ -178,7 +217,7 @@ const categoriesList = [
       </section>
     )}
 
-    <!-- Principais Veículos Nacionais (Listagem Filtrável por Busca) -->
+    <!-- Todos os Veículos (Listagem Filtrável por Busca) -->
     <section class="space-y-6">
       <div class="flex items-center justify-between">
         <div>
@@ -190,11 +229,11 @@ const categoriesList = [
         </a>
       </div>
 
-      <!-- Grelha de Cards com TODAS as fontes (ocultadas inicialmente após a 6ª) -->
-      <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Grelha de Cards com items-stretch e wrappers h-full flex para padronizar o tamanho -->
+      <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
         {sources.map((source: NewsSource, index: number) => (
           <div 
-            class={`source-card-wrapper w-full ${index < 6 ? 'flex' : 'hidden'}`}
+            class={`source-card-wrapper w-full h-full flex ${index < 6 ? 'flex' : 'hidden'}`}
             data-original-index={index}
             data-name={source.name.toLowerCase()}
             data-desc={(source.description || '').toLowerCase()}
