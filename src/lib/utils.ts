@@ -1,5 +1,5 @@
 /**
- * Obtém a URL do Favicon oficial do veículo através da API pública do Google.
+- Obtém a URL do Favicon oficial do veículo através da API pública do Google.
  */
 export function getFaviconUrl(websiteUrl: string, size: number = 64): string {
   try {
@@ -11,7 +11,7 @@ export function getFaviconUrl(websiteUrl: string, size: number = 64): string {
 }
 
 /**
- * Converte o código ISO Alpha-2 do país (ex: 'BR', 'US') em Emoji de bandeira.
+- Converte o código ISO Alpha-2 do país (ex: 'BR', 'US') em Emoji de bandeira.
  */
 export function getCountryFlag(countryCode: string): string {
   if (!countryCode || countryCode.length !== 2) return '🌐';
@@ -23,7 +23,7 @@ export function getCountryFlag(countryCode: string): string {
 }
 
 /**
- * Retorna o ícone em emoji correspondente a cada categoria.
+- Retorna o ícone em emoji correspondente a cada categoria.
  */
 export function getCategoryIcon(category: string): string {
   const icons: Record<string, string> = {
@@ -38,6 +38,10 @@ export function getCategoryIcon(category: string): string {
     cultura: '🎭',
     negocios: '💼',
     'meio-ambiente': '🌿',
+    games: '🎮',
+    entretenimento: '🎬',
+    educacao: '📚',
+    investimentos: '💰',
   };
   return icons[category.toLowerCase()] || '📰';
 }

@@ -1,7 +1,7 @@
-# Relatório de Importação — Top 1000 News & Media Platforms
+# Relatório de Importação — 5000Best Websites
 
-- **Data da execução:** 20/10/2026
-- **Fonte original:** `https://top1000.com/top-1000-news-and-media-platforms/`
+- **Data da execução:** 23/10/2026
+- **Fonte original:** `http://5000best.com/websites/`
 - **Total de registros coletados:** 1000
 - **IDs únicos:** 1000
 - **URLs únicas e sanitizadas:** 1000
@@ -16,6 +16,5 @@
 
 ## Procedimento para Reexecução
 ```bash
-source .venv/bin/activate
 python3 scripts/import-news-sources.py
 python3 scripts/validate-news-sources.py

@@ -15,7 +15,8 @@ describe('Integridade das Rotas, Dados e Links', () => {
       expect(source.name.trim().length).toBeGreaterThan(0);
       expect(source.url).toMatch(/^https?:\/\//);
 
-      source.categories.forEach((catSlug) => {
+      // CORREÇÃO AQUI: Adicionado o tipo ': string' no parâmetro catSlug
+      source.categories.forEach((catSlug: string) => {
         expect(categorySlugs.has(catSlug)).toBe(true);
       });
     });

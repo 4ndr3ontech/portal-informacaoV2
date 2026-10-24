@@ -4,14 +4,10 @@ import SourceCard from '../components/SourceCard.astro';
 import { getFaviconUrl, getCountryFlag, getCategoryIcon } from '../lib/utils';
 
 import { sources as fontesOriginais } from '../data/sources';
-import fontesBrasil from '../data/brazil-sources.json';
 import type { NewsSource } from '../types';
 
-// 1. Junta todas as fontes brutas
-const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
-
-// 2. Remove duplicadas usando o NOME como identificador único para calcular o total exato
-const sources = Array.from(new Map(rawSources.map(source => [source.name.toLowerCase().trim(), source])).values());
+// Usa diretamente as 5000 fontes do sources.ts geradas pelo script
+const sources: NewsSource[] = fontesOriginais;
 
 const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
 const totalSources = sources.length;
@@ -25,10 +21,17 @@ const categoriesList = [
   { slug: 'ciencia', label: 'Ciência', desc: 'Pesquisas, astronomia e descobertas' },
   { slug: 'saude', label: 'Saúde', desc: 'Avanços médicos e políticas públicas' },
   { slug: 'esportes', label: 'Esportes', desc: 'Futebol, ligas mundiais e modalidades' },
+  { slug: 'games', label: 'Games', desc: 'Lançamentos, eSports e cultura gamer' },
+  { slug: 'entretenimento', label: 'Entretenimento', desc: 'Filmes, séries, música e cultura' },
+  { slug: 'educacao', label: 'Educação', desc: 'Enem, vestibulares, concursos e carreiras' },
+  { slug: 'investimentos', label: 'Investimentos', desc: 'FIIs, ações, criptomoedas e finanças' }
 ];
 ---
 
-<BaseLayout title="Início | O mundo em um click">
+<BaseLayout 
+  title="Início | O mundo em um click"
+  description="Acesse os principais jornais online e portais de notícias do Brasil e do mundo. Encontre fontes de informação sobre política, economia, tecnologia, esportes e atualidades em uma única plataforma."
+>
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 w-full">
     
     <!-- Hero Section com Pesquisa Inteligente em Tempo Real -->
@@ -72,6 +75,7 @@ const categoriesList = [
         </div>
       </div>
 
+      <!-- Grelha atualizada para acomodar as 12 categorias perfeitamente -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {categoriesList.map(cat => (
           <a
@@ -236,7 +240,8 @@ const categoriesList = [
 
     const categoryIcons = {
       brasil: '🇧🇷', mundo: '🌐', politica: '⚖️', economia: '📈',
-      tecnologia: '💻', ciencia: '🔬', saude: '🏥', esportes: '⚽', geral: '📌'
+      tecnologia: '💻', ciencia: '🔬', saude: '🏥', esportes: '⚽', geral: '📌',
+      games: '🎮', entretenimento: '🎬', educacao: '📚', investimentos: '💰'
     };
 
     const getClicks = (id) => parseInt(localStorage.getItem(`clicks_${id}`) || '0', 10);

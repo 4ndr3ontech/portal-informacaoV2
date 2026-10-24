@@ -4,7 +4,12 @@ import { sources } from '../../data/sources';
 import { getFaviconUrl, getCountryFlag } from '../../lib/utils';
 
 export async function getStaticPaths() {
-  return sources.map((source) => ({
+  // Se for modo DEV, carrega só 50 sites para não estourar a memória. 
+  // Se for Build final, carrega os 5000.
+  const limit = import.meta.env.DEV ? 50 : sources.length;
+  const sourcesToBuild = sources.slice(0, limit);
+
+  return sourcesToBuild.map((source) => ({
     params: { id: source.id },
     props: { source },
   }));
@@ -91,7 +96,7 @@ const favicon = getFaviconUrl(source.url);
       <div class="space-y-3">
         <h2 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Categorias Cobertas</h2>
         <div class="flex flex-wrap gap-2">
-          {source.categories.map((cat) => (
+          {source.categories.map((cat: string) => (
             <a 
               href={`/categorias/${cat.toLowerCase()}`}
               class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/50 transition-all"

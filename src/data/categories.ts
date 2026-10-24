@@ -13,4 +13,5 @@ export const categories: Category[] = [
   { id: 'cultura', name: 'Cultura e Entretenimento', slug: 'cultura', description: 'Cinema, literatura, música, artes visuais e cultura popular.' },
   { id: 'negocios', name: 'Negócios', slug: 'negocios', description: 'Empreendedorismo, startups, gestão e ambiente corporativo.' },
   { id: 'meio-ambiente', name: 'Meio Ambiente', slug: 'meio-ambiente', description: 'Sustentabilidade, mudanças climáticas, biodiversidade e transição energética.' },
+  { id: 'games', name: 'Games', slug: 'games', description: 'Cobertura de videogames, lançamentos, eSports, consoles e cultura gamer.' }
 ];
