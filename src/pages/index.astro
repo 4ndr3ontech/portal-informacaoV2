@@ -24,7 +24,7 @@ const seenUrls = new Set<string>();
 for (const source of rawSources) {
   if (!source) continue;
   
-  // Remove os registros genéricos de SEO (igual ao diretório de notícias)
+  // Remove os registros genéricos de SEO
   if (source.name && source.name.trim() === 'Sim' && source.description && source.description.toLowerCase().includes('best alternative sites')) {
     continue;
   }
@@ -50,6 +50,10 @@ for (const source of rawSources) {
 
 const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
 const totalSources = sources.length;
+
+// Limita a renderização inicial no servidor para evitar o Erro 1102 da Cloudflare (renderiza apenas os primeiros 12 no DOM SSR)
+const INITIAL_RENDER_LIMIT = 12;
+const initialSources = sources.slice(0, INITIAL_RENDER_LIMIT);
 
 const categoriesList = [
   { slug: 'brasil', label: 'Brasil', desc: 'Principais veículos de notícias nacionais' },
@@ -114,7 +118,6 @@ const categoriesList = [
         </div>
       </div>
 
-      <!-- Grelha atualizada para acomodar as 12 categorias perfeitamente -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {categoriesList.map(cat => (
           <a
@@ -217,7 +220,7 @@ const categoriesList = [
       </section>
     )}
 
-    <!-- Todos os Veículos (Listagem Filtrável por Busca) -->
+    <!-- Todos os Veículos (Renderiza apenas os primeiros de forma segura no SSR) -->
     <section class="space-y-6">
       <div class="flex items-center justify-between">
         <div>
@@ -229,11 +232,10 @@ const categoriesList = [
         </a>
       </div>
 
-      <!-- Grelha de Cards com items-stretch e wrappers h-full flex para padronizar o tamanho -->
       <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
-        {sources.map((source: NewsSource, index: number) => (
+        {initialSources.map((source: NewsSource, index: number) => (
           <div 
-            class={`source-card-wrapper w-full h-full flex ${index < 6 ? 'flex' : 'hidden'}`}
+            class="source-card-wrapper w-full h-full flex flex"
             data-original-index={index}
             data-name={source.name.toLowerCase()}
             data-desc={(source.description || '').toLowerCase()}
@@ -266,7 +268,7 @@ const categoriesList = [
     const featuredUrl = document.getElementById('featured-url');
     
     const searchInput = document.getElementById('search-input');
-    const sourceCardWrappers = document.querySelectorAll('.source-card-wrapper');
+    const sourcesGrid = document.getElementById('sources-grid');
     const noResultsMsg = document.getElementById('no-results');
     const resultsCount = document.getElementById('results-count');
 
@@ -286,24 +288,32 @@ const categoriesList = [
     const getClicks = (id) => parseInt(localStorage.getItem(`clicks_${id}`) || '0', 10);
     const setClicks = (id, count) => localStorage.setItem(`clicks_${id}`, count.toString());
 
-    // Lógica de Pesquisa Inteligente em Tempo Real (Atualizada para varrer todas as fontes)
-    if (searchInput) {
+    // Pesquisa interativa que varre todo o array global passado via define:vars de forma segura no cliente
+    if (searchInput && sourcesGrid) {
       searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
-        let matchCount = 0;
 
         if (query === '') {
-          // Se a barra estiver vazia, volta a mostrar apenas os 6 primeiros
-          sourceCardWrappers.forEach((wrapper) => {
-            const index = parseInt(wrapper.getAttribute('data-original-index') || '0', 10);
-            if (index < 6) {
-              wrapper.classList.remove('hidden');
-              wrapper.classList.add('flex');
-            } else {
-              wrapper.classList.add('hidden');
-              wrapper.classList.remove('flex');
-            }
-          });
+          // Restaura os itens iniciais
+          const initialSlice = allSources.slice(0, 12);
+          sourcesGrid.innerHTML = initialSlice.map((source, index) => `
+            <div class="source-card-wrapper w-full h-full flex flex" data-name="${source.name.toLowerCase()}" data-desc="${(source.description || '').toLowerCase()}" data-categories="${JSON.stringify(source.categories || []).toLowerCase()}">
+              <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between w-full">
+                <div>
+                  <div class="flex items-center justify-between mb-4">
+                    <img src="https://www.google.com/s2/favicons?domain=${source.url}&sz=64" alt="Logo" class="h-10 w-10 rounded-xl bg-slate-50 p-2 object-contain border border-slate-200" />
+                    <span class="text-xs font-black px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">${source.country || 'Global'}</span>
+                  </div>
+                  <h3 class="text-lg font-black text-slate-900 mb-2">${source.name}</h3>
+                  <p class="text-slate-600 text-xs font-bold line-clamp-2">${source.description || ''}</p>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                  <a href="${source.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-black text-cyan-600 hover:text-cyan-700 uppercase tracking-wider">Acessar portal ↗</a>
+                </div>
+              </div>
+            </div>
+          `).join('');
+
           if (resultsCount) {
             resultsCount.innerHTML = `Exibindo <span class="text-cyan-600 font-black text-base">${allSources.length}</span> fontes de informação ativas`;
           }
@@ -311,34 +321,40 @@ const categoriesList = [
           return;
         }
 
-        // Se houver texto, procura em TODAS as fontes invisíveis e visíveis
-        sourceCardWrappers.forEach((wrapper) => {
-          const name = wrapper.getAttribute('data-name') || '';
-          const desc = wrapper.getAttribute('data-desc') || '';
-          const categories = wrapper.getAttribute('data-categories') || '';
-
-          const isMatch = name.includes(query) || desc.includes(query) || categories.includes(query);
-
-          if (isMatch) {
-            wrapper.classList.remove('hidden');
-            wrapper.classList.add('flex');
-            matchCount++;
-          } else {
-            wrapper.classList.add('hidden');
-            wrapper.classList.remove('flex');
-          }
+        // Filtra em todas as fontes disponíveis na memória do cliente
+        const matched = allSources.filter(source => {
+          const name = (source.name || '').toLowerCase();
+          const desc = (source.description || '').toLowerCase();
+          const cats = JSON.stringify(source.categories || []).toLowerCase();
+          return name.includes(query) || desc.includes(query) || cats.includes(query);
         });
 
-        if (resultsCount) {
-          resultsCount.innerHTML = `Encontradas <span class="text-cyan-600 font-black text-base">${matchCount}</span> fontes correspondentes a "${query}"`;
+        if (matched.length > 0) {
+          sourcesGrid.innerHTML = matched.map((source) => `
+            <div class="source-card-wrapper w-full h-full flex flex">
+              <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between w-full">
+                <div>
+                  <div class="flex items-center justify-between mb-4">
+                    <img src="https://www.google.com/s2/favicons?domain=${source.url}&sz=64" alt="Logo" class="h-10 w-10 rounded-xl bg-slate-50 p-2 object-contain border border-slate-200" />
+                    <span class="text-xs font-black px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">${source.country || 'Global'}</span>
+                  </div>
+                  <h3 class="text-lg font-black text-slate-900 mb-2">${source.name}</h3>
+                  <p class="text-slate-600 text-xs font-bold line-clamp-2">${source.description || ''}</p>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                  <a href="${source.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-black text-cyan-600 hover:text-cyan-700 uppercase tracking-wider">Acessar portal ↗</a>
+                </div>
+              </div>
+            </div>
+          `).join('');
+          if (noResultsMsg) noResultsMsg.classList.add('hidden');
+        } else {
+          sourcesGrid.innerHTML = '';
+          if (noResultsMsg) noResultsMsg.classList.remove('hidden');
         }
 
-        if (noResultsMsg) {
-          if (matchCount === 0) {
-            noResultsMsg.classList.remove('hidden');
-          } else {
-            noResultsMsg.classList.add('hidden');
-          }
+        if (resultsCount) {
+          resultsCount.innerHTML = `Encontradas <span class="text-cyan-600 font-black text-base">${matched.length}</span> fontes correspondentes a "${query}"`;
         }
       });
     }
