@@ -1,7 +1,8 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SourceCard from '../../components/SourceCard.astro';
-
 import { sources as fontesGlobais } from '../../data/sources';
 import rawFontesBrasil from '../../data/brazil-sources.json';
 import type { NewsSource } from '../../types';
@@ -49,18 +50,61 @@ for (const source of rawSources) {
   }
 }
 
-// === PROVA REAL NO TERMINAL ===
-console.log("========================================");
-console.log("📊 QUANTIDADE DE FONTES CARREGADAS:");
-console.log("🌍 Total Fontes Globais importadas:", fontesOriginais.length);
-console.log("🇧🇷 Total Fontes Brasil importadas:", fontesBrasil.length);
-console.log("✨ Total Combinado Real (Sem Duplicadas):", allSources.length);
-console.log("========================================");
-
 const totalSources = allSources.length;
+
+// === CAPTURA DE PARÂMETROS DA URL (SSR Otimizado para Cloudflare) ===
+const url = Astro.url;
+const q = (url.searchParams.get('q') || '').toLowerCase().trim();
+const category = (url.searchParams.get('category') || '').toLowerCase().trim();
+const country = (url.searchParams.get('country') || '').toLowerCase().trim();
+const page = parseInt(url.searchParams.get('page') || '1', 10);
+const limit = parseInt(url.searchParams.get('limit') || '24', 10);
+const itemsPerPage = [24, 48, 96, 150].includes(limit) ? limit : 24;
+
+// Função utilitária para normalizar strings (acentos e maiúsculas)
+const normalizeStr = (str: string) => str ? str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim() : '';
+
+// Filtragem server-side para evitar estourar o limite de recursos do Worker (Erro 1102)
+const filteredSources = allSources.filter(source => {
+  const name = normalizeStr(source.name);
+  const desc = normalizeStr(source.description);
+  const categories = (source.categories || []).map(c => normalizeStr(c));
+  const srcCountry = normalizeStr(source.country || 'global');
+
+  let matchQuery = true;
+  if (q) {
+    const terms = q.split(/\s+/);
+    const combined = `${name} ${desc} ${categories.join(' ')} ${srcCountry}`;
+    matchQuery = terms.every(term => combined.includes(term));
+  }
+
+  let matchCategory = true;
+  if (category) {
+    matchCategory = categories.includes(category);
+  }
+
+  let matchCountry = true;
+  if (country) {
+    matchCountry = srcCountry === country;
+  }
+
+  return matchQuery && matchCategory && matchCountry;
+});
+
+const totalFiltered = filteredSources.length;
+const totalPages = Math.ceil(totalFiltered / itemsPerPage) || 1;
+const currentPage = page > totalPages ? 1 : (page < 1 ? 1 : page);
+
+// Paginação em memória (apenas a fatia atual é renderizada, evitando consumo excessivo de memória)
+const startIndex = (currentPage - 1) * itemsPerPage;
+const paginatedSources = filteredSources.slice(startIndex, startIndex + itemsPerPage);
+
+const capitalizedCategory = category ? category.charAt(0).toUpperCase() + category.slice(1) : '';
+const pageTitleText = q ? `Busca: "${q}"` : (capitalizedCategory || 'Diretório de Fontes');
+const pageDescText = category ? `Exibindo veículos especializados na editoria de ${capitalizedCategory}.` : 'Pesquise veículos de comunicação, filtre por palavra-chave ou explore o nosso catálogo completo.';
 ---
 
-<BaseLayout title="Diretório Global de Notícias | OMundoEmUmCLICK">
+<BaseLayout title={`${pageTitleText} | OMundoEmUmCLICK`}>
   
   <!-- CABEÇALHO CLARO (FUNDO BRANCO) -->
   <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
@@ -68,39 +112,24 @@ const totalSources = allSources.length;
       
       <div>
         <h1 id="page-title" class="text-4xl sm:text-5xl font-bold tracking-tight capitalize text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 pb-2">
-          Diretório de Fontes
+          {pageTitleText}
         </h1>
         <p id="page-desc" class="text-slate-600 font-bold text-lg">
-          Pesquise veículos de comunicação, filtre por palavra-chave ou explore o nosso catálogo completo.
+          {pageDescText}
         </p>
       </div>
 
-      <!-- MICRO-SCRIPT 1: Títulos Dinâmicos Iniciais -->
-      <script is:inline>
-        (function() {
-          const p = new URLSearchParams(window.location.search);
-          const c = p.get('category');
-          const q = p.get('q');
-          if (c) {
-            const cap = c.charAt(0).toUpperCase() + c.slice(1);
-            document.getElementById('page-title').textContent = cap;
-            document.getElementById('page-desc').textContent = 'Exibindo veículos especializados na editoria de ' + cap + '.';
-            document.title = cap + ' | OMundoEmUmCLICK';
-          } else if (q) {
-            document.getElementById('page-title').textContent = 'Busca: "' + q + '"';
-            document.title = 'Busca: "' + q + '" | OMundoEmUmCLICK';
-          }
-        })();
-      </script>
-
       <!-- Formulário de Busca -->
-      <form id="search-form" class="pt-2">
+      <form method="GET" action="/noticias" id="search-form" class="pt-2">
+        {category && <input type="hidden" name="category" value={category} />}
+        {country && <input type="hidden" name="country" value={country} />}
         <div class="flex items-center rounded-2xl bg-white border border-slate-300 p-2 shadow-sm focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
           <span class="pl-3 text-slate-400 text-lg">🔍</span>
           <input
             id="search-input"
             type="text"
             name="q"
+            value={q}
             aria-label="Buscar por veículo, país ou palavra-chave"
             placeholder="Buscar veículos, países ou palavras-chave..."
             class="w-full bg-transparent px-3 py-2 text-slate-900 placeholder-slate-400 focus:outline-none text-sm font-bold"
@@ -122,271 +151,79 @@ const totalSources = allSources.length;
         
         <!-- Contador com texto escuro focado na legibilidade -->
         <p class="text-sm font-extrabold text-slate-700">
-          Exibindo <span id="results-count" class="font-black text-slate-900">{totalSources}</span> fontes
+          Exibindo <span id="results-count" class="font-black text-slate-900">{totalFiltered}</span> fontes {q || category || country ? `(filtradas de ${totalSources})` : ''}
         </p>
 
-        <span id="active-category-badge" class="hidden items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-cyan-100 text-cyan-900 border border-cyan-200 capitalize">
-          <span id="category-name">Todas</span>
-        </span>
+        {category && (
+          <span id="active-category-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-cyan-100 text-cyan-900 border border-cyan-200 capitalize">
+            <span id="category-name">{capitalizedCategory}</span>
+          </span>
+        )}
 
       </div>
-
-      <!-- MICRO-SCRIPT 2: Revela o badge instantaneamente -->
-      <script is:inline>
-        (function() {
-          const p = new URLSearchParams(window.location.search);
-          if (p.get('category')) {
-            document.getElementById('active-category-badge').classList.remove('hidden');
-            document.getElementById('active-category-badge').classList.add('inline-flex');
-            document.getElementById('category-name').textContent = p.get('category').charAt(0).toUpperCase() + p.get('category').slice(1);
-          }
-        })();
-      </script>
 
       <div class="flex items-center gap-4 flex-wrap">
-        <a href="/noticias" id="clear-filters" class="hidden text-xs font-black uppercase tracking-wider text-cyan-600 hover:text-cyan-500 transition-colors">
-          ✕ Limpar Filtros
-        </a>
+        {(q || category || country) && (
+          <a href="/noticias" id="clear-filters" class="text-xs font-black uppercase tracking-wider text-cyan-600 hover:text-cyan-500 transition-colors">
+            ✕ Limpar Filtros
+          </a>
+        )}
       </div>
     </div>
 
-    <!-- Grid de Fontes Renderizadas -->
-    <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {allSources.map((source: NewsSource, index: number) => (
-        <div 
-          class="source-card-wrapper hidden" 
-          data-index={index}
-          data-name={source.name.toLowerCase()} 
-          data-desc={(source.description || '').toLowerCase()}
-          data-country={(source.country || 'global').toLowerCase()}
-          data-categories={(source.categories || []).join(',').toLowerCase()}
-        >
+    <!-- Grid de Fontes Renderizadas (Apenas os itens da página atual) -->
+    {paginatedSources.length > 0 ? (
+      <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {paginatedSources.map((source: NewsSource) => (
           <SourceCard source={source} />
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    ) : (
+      <!-- Mensagem de Nenhuma Fonte Encontrada -->
+      <div id="no-results" class="text-center py-20 space-y-4 bg-white rounded-3xl border border-slate-200 p-8 shadow-sm mt-8">
+        <span class="text-5xl">🔍</span>
+        <h3 class="text-2xl font-black text-slate-900">Nenhum veículo encontrado</h3>
+        <p class="text-slate-600 text-base font-bold">Tente buscar por outros termos ou selecione uma categoria diferente.</p>
+        <a href="/noticias" class="inline-block mt-4 px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md">Ver catálogo completo</a>
+      </div>
+    )}
 
     <!-- Controles de Paginação -->
-    <nav id="pagination-nav" class="hidden flex flex-col sm:flex-row items-center justify-center gap-4 pt-12" aria-label="Paginação">
-      <div class="flex items-center gap-3">
-        <button id="prev-page-btn" type="button" class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">← Anterior</button>
-        <span class="text-sm font-mono text-slate-600 px-3 font-bold">
-          Página <strong id="current-page-num" class="text-slate-900 font-black">1</strong> de <strong id="total-pages-num" class="text-slate-900 font-black">1</strong>
-        </span>
-        <button id="next-page-btn" type="button" class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">Próxima →</button>
-      </div>
+    {totalPages > 1 && (
+      <nav id="pagination-nav" class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-12" aria-label="Paginação">
+        <div class="flex items-center gap-3">
+          {currentPage > 1 ? (
+            <a href={`/noticias?${new URLSearchParams({ ...(q && { q }), ...(category && { category }), ...(country && { country }), limit: itemsPerPage.toString(), page: (currentPage - 1).toString() }).toString()}`} class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">← Anterior</a>
+          ) : (
+            <button disabled class="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-400 font-bold text-sm opacity-50 cursor-not-allowed">← Anterior</button>
+          )}
 
-      <div class="flex items-center gap-2 text-xs text-slate-600 sm:ml-4 sm:pl-4 sm:border-l border-slate-200 font-bold">
-        <label for="limit-select" class="font-bold">Exibir por página:</label>
-        <select id="limit-select" class="bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-slate-900 font-bold focus:outline-none focus:border-cyan-500 cursor-pointer shadow-sm">
-          <option value="24">24</option>
-          <option value="48">48</option>
-          <option value="96">96</option>
-          <option value="150">150</option>
-        </select>
-      </div>
-    </nav>
+          <span class="text-sm font-mono text-slate-600 px-3 font-bold">
+            Página <strong id="current-page-num" class="text-slate-900 font-black">{currentPage}</strong> de <strong id="total-pages-num" class="text-slate-900 font-black">{totalPages}</strong>
+          </span>
 
-    <!-- Mensagem de Nenhuma Fonte Encontrada -->
-    <div id="no-results" class="hidden text-center py-20 space-y-4 bg-white rounded-3xl border border-slate-200 p-8 shadow-sm mt-8">
-      <span class="text-5xl">🔍</span>
-      <h3 class="text-2xl font-black text-slate-900">Nenhum veículo encontrado</h3>
-      <p class="text-slate-600 text-base font-bold">Tente buscar por outros termos ou selecione uma categoria diferente.</p>
-      <a href="/noticias" class="inline-block mt-4 px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md">Ver catálogo completo</a>
-    </div>
+          {currentPage < totalPages ? (
+            <a href={`/noticias?${new URLSearchParams({ ...(q && { q }), ...(category && { category }), ...(country && { country }), limit: itemsPerPage.toString(), page: (currentPage + 1).toString() }).toString()}`} class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">Próxima →</a>
+          ) : (
+            <button disabled class="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-400 font-bold text-sm opacity-50 cursor-not-allowed">Próxima →</button>
+          )}
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-600 sm:ml-4 sm:pl-4 sm:border-l border-slate-200 font-bold">
+          <label for="limit-select" class="font-bold">Exibir por página:</label>
+          <select 
+            id="limit-select" 
+            onchange={`const url = new URL(window.location.href); url.searchParams.set('limit', this.value); url.searchParams.delete('page'); window.location.href = url.toString();`}
+            class="bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-slate-900 font-bold focus:outline-none focus:border-cyan-500 cursor-pointer shadow-sm"
+          >
+            <option value="24" selected={itemsPerPage === 24}>24</option>
+            <option value="48" selected={itemsPerPage === 48}>48</option>
+            <option value="96" selected={itemsPerPage === 96}>96</option>
+            <option value="150" selected={itemsPerPage === 150}>150</option>
+          </select>
+        </div>
+      </nav>
+    )}
 
   </main>
 </BaseLayout>
-
-<!-- Script Inteligente de Alta Performance na Filtragem -->
-<script is:inline define:vars={{ serverTotalSources: totalSources }}>
-  (function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const rawQ = urlParams.get('q') || '';
-    const rawCategory = urlParams.get('category') || '';
-    const rawCountry = urlParams.get('country') || '';
-    const rawLimit = parseInt(urlParams.get('limit')) || 24;
-    const itemsPerPage = [24, 48, 96, 150].includes(rawLimit) ? rawLimit : 24;
-
-    const normalizeStr = (str) => str ? str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim() : '';
-
-    const categoryParam = normalizeStr(rawCategory);
-    const countryParam = normalizeStr(rawCountry);
-
-    let searchTerms = rawQ ? normalizeStr(rawQ).split(/\s+/) : [];
-
-    const searchInput = document.getElementById('search-input');
-    if (searchInput && rawQ) searchInput.value = rawQ;
-
-    const clearBtn = document.getElementById('clear-filters');
-    if (rawCategory || rawQ || rawCountry) {
-      if (clearBtn) {
-        clearBtn.classList.remove('hidden');
-        clearBtn.classList.add('inline-block');
-      }
-    }
-
-    const limitSelect = document.getElementById('limit-select');
-    if (limitSelect) {
-      limitSelect.value = itemsPerPage.toString();
-      limitSelect.addEventListener('change', (e) => {
-        const newLimit = e.target.value;
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set('limit', newLimit);
-        currentUrl.searchParams.delete('page');
-        window.location.href = currentUrl.toString();
-      });
-    }
-
-    const cards = document.querySelectorAll('.source-card-wrapper');
-    let currentPage = parseInt(urlParams.get('page')) || 1;
-    let matchedCards = [];
-
-    function filterAndPaginate() {
-      matchedCards = [];
-
-      cards.forEach(card => {
-        const name = card.getAttribute('data-name');
-        const desc = card.getAttribute('data-desc');
-        const categories = card.getAttribute('data-categories');
-        const country = card.getAttribute('data-country');
-
-        let matchQuery = true;
-        let matchCategory = true;
-        let matchCountry = true;
-
-        if (searchTerms.length > 0) {
-          const combinedText = `${name} ${desc} ${categories} ${country}`;
-          matchQuery = searchTerms.every(term => combinedText.includes(term));
-        }
-
-        if (categoryParam) matchCategory = categories.split(',').includes(categoryParam);
-        if (countryParam) matchCountry = country === countryParam;
-
-        if (matchQuery && matchCategory && matchCountry) {
-          matchedCards.push(card);
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-
-      const totalVisible = matchedCards.length;
-      
-      const hasActiveFilters = categoryParam || countryParam || searchTerms.length > 0;
-      document.getElementById('results-count').textContent = hasActiveFilters ? totalVisible : serverTotalSources;
-
-      const noResultsEl = document.getElementById('no-results');
-      const gridEl = document.getElementById('sources-grid');
-      const navEl = document.getElementById('pagination-nav');
-
-      if (totalVisible === 0) {
-        if(noResultsEl) noResultsEl.classList.remove('hidden');
-        if(gridEl) gridEl.classList.add('hidden');
-        if(navEl) navEl.classList.add('hidden');
-        return;
-      } else {
-        if(noResultsEl) noResultsEl.classList.add('hidden');
-        if(gridEl) gridEl.classList.remove('hidden');
-      }
-
-      const totalPages = Math.ceil(totalVisible / itemsPerPage);
-      if (currentPage > totalPages) currentPage = 1;
-
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-
-      matchedCards.forEach((card, index) => {
-        if (index >= startIndex && index < endIndex) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-
-      if (totalPages > 1 && navEl) {
-        navEl.classList.remove('hidden');
-        navEl.classList.add('flex');
-        document.getElementById('current-page-num').textContent = currentPage;
-        document.getElementById('total-pages-num').textContent = totalPages;
-
-        const prevBtn = document.getElementById('prev-page-btn');
-        const nextBtn = document.getElementById('next-page-btn');
-        if(prevBtn) {
-          prevBtn.disabled = currentPage === 1;
-          prevBtn.style.opacity = currentPage === 1 ? '0.5' : '1';
-        }
-        if(nextBtn) {
-          nextBtn.disabled = currentPage === totalPages;
-          nextBtn.style.opacity = currentPage === totalPages ? '0.5' : '1';
-        }
-      } else if (navEl) {
-        navEl.classList.add('hidden');
-      }
-    }
-
-    function updatePageUrl(newPage) {
-      const currentUrl = new URL(window.location.href);
-      currentUrl.searchParams.set('page', newPage);
-      window.history.pushState({}, '', currentUrl);
-      currentPage = newPage;
-      filterAndPaginate();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    const prevBtn = document.getElementById('prev-page-btn');
-    if(prevBtn) prevBtn.addEventListener('click', () => { if (currentPage > 1) updatePageUrl(currentPage - 1); });
-
-    const nextBtn = document.getElementById('next-page-btn');
-    if(nextBtn) nextBtn.addEventListener('click', () => {
-      if (currentPage < Math.ceil(matchedCards.length / itemsPerPage)) updatePageUrl(currentPage + 1);
-    });
-
-    filterAndPaginate();
-
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        const newQ = e.target.value.trim();
-        const normalizedQ = normalizeStr(newQ);
-        
-        searchTerms = normalizedQ ? normalizedQ.split(/\s+/) : [];
-        currentPage = 1;
-        
-        filterAndPaginate();
-
-        const currentUrl = new URL(window.location.href);
-        if (newQ) currentUrl.searchParams.set('q', newQ);
-        else currentUrl.searchParams.delete('q');
-        currentUrl.searchParams.delete('page');
-        window.history.replaceState({}, '', currentUrl.toString());
-
-        const pageTitle = document.getElementById('page-title');
-        if (pageTitle) {
-          if (newQ) {
-            pageTitle.textContent = 'Busca: "' + newQ + '"';
-          } else if (rawCategory) {
-            pageTitle.textContent = rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
-          } else {
-            pageTitle.textContent = 'Diretório de Fontes';
-          }
-        }
-        
-        if (clearBtn) {
-          if (newQ || rawCategory || rawCountry) {
-            clearBtn.classList.remove('hidden');
-            clearBtn.classList.add('inline-block');
-          } else {
-            clearBtn.classList.add('hidden');
-            clearBtn.classList.remove('inline-block');
-          }
-        }
-      });
-    }
-
-    const searchForm = document.getElementById('search-form');
-    if (searchForm) {
-      searchForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-      });
-    }
-  })();
-</script>
