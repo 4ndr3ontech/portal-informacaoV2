@@ -1,42 +1,18 @@
 ---
-import '../../styles/global.css';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+export const prerender = false; // Permite a busca em tempo real no banco de dados
 
-// Lista de ofertas recomendadas
-const offers = [
-  {
-    category: "Tecnologia & Leitura",
-    title: "Amazon Kindle 11ª Geração - Tela de 6\" alta resolução (300 ppi)",
-    description: "Leitor de livros digitais com tela antirreflexo, bateria de longa duração e modo noturno embutido.",
-    price: "R$ 499,00",
-    date: "Verificado em 2026-10-19",
-    url: "#"
-  },
-  {
-    category: "Escritório & Home Office",
-    title: "Cadeira de Escritório Ergonômica Presidente com Apoio de Cabeça",
-    description: "Cadeira com ajuste de altura a gás, apoio lombar ajustável e malha mesh respirável para uso prolongado.",
-    price: "R$ 650,00",
-    date: "Verificado em 2026-10-19",
-    url: "#"
-  },
-  {
-    category: "Eletrônicos",
-    title: "Fone de Ouvido Bluetooth com Cancelamento de Ruído Ativo (ANC)",
-    description: "Fone supra-auricular com bateria de até 30 horas de autonomia, microfone integrado e graves encorpados.",
-    price: "R$ 299,90",
-    date: "Verificado em 2026-10-19",
-    url: "#"
-  },
-  {
-    category: "Acessórios",
-    title: "Suporte Ergonômico de Alumínio Dobrável para Notebook",
-    description: "Estrutura leve e portátil de alumínio com 6 níveis de elevação para melhorar a postura de trabalho.",
-    price: "R$ 79,90",
-    date: "Verificado em 2026-10-19",
-    url: "#"
-  }
-];
+import '../../styles/global.css'; // Corrigido: volta dois níveis (../../)
+import BaseLayout from '../../layouts/BaseLayout.astro'; // Corrigido: volta dois níveis (../../)
+
+// Conexão com o banco D1 para buscar as ofertas dinâmicas
+let offers: any[] = [];
+try {
+  const db = Astro.locals.runtime.env.DB;
+  const result = await db.prepare('SELECT * FROM offers WHERE is_active = 1 ORDER BY created_at DESC').all();
+  offers = result.results || [];
+} catch (error) {
+  console.error('Erro ao carregar as ofertas:', error);
+}
 ---
 
 <BaseLayout 
@@ -77,7 +53,7 @@ const offers = [
             <!-- Badge de Categoria/Destaque -->
             <div class="flex items-center justify-between mb-4">
               <span class="bg-slate-100 text-slate-700 text-[10px] px-2.5 py-1 rounded-lg font-black uppercase tracking-wider border border-slate-200">
-                {offer.category}
+                Destaque
               </span>
               <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                 ⭐ Recomendado
@@ -85,30 +61,35 @@ const offers = [
             </div>
 
             <!-- Imagem Ilustrativa / Espaço de Preview -->
-            <div class="w-full h-40 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center mb-5 text-slate-400">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
+            <div class="w-full h-40 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center mb-5 text-slate-400 overflow-hidden">
+              {offer.image_url ? (
+                <img src={offer.image_url} alt={offer.title} class="w-full h-full object-cover mix-blend-multiply" />
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              )}
             </div>
 
             <!-- Título e Descrição -->
             <h3 class="text-base font-black text-slate-900 mb-2 leading-snug line-clamp-2">
               {offer.title}
             </h3>
-            <p class="text-slate-600 font-bold text-xs mb-6 line-clamp-3 leading-relaxed">
-              {offer.description}
-            </p>
+            {offer.description && (
+              <p class="text-slate-600 font-bold text-xs mb-6 line-clamp-3 leading-relaxed">
+                {offer.description}
+              </p>
+            )}
           </div>
 
           <!-- Preço e Botão de Ação -->
           <div class="pt-4 border-t border-slate-100 mt-auto space-y-4">
             <div class="flex items-baseline justify-between">
-              <span class="text-2xl font-black text-slate-900">{offer.price}</span>
-              <span class="text-[10px] font-bold text-slate-400">{offer.date}</span>
+              <span class="text-2xl font-black text-slate-900">{offer.price || 'Ver Preço'}</span>
             </div>
 
             <a 
-              href={offer.url} 
+              href={offer.affiliate_link} 
               target="_blank" 
               rel="noopener noreferrer" 
               class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-95"
@@ -122,6 +103,13 @@ const offers = [
 
         </article>
       ))}
+      
+      {/* Mensagem caso não tenha nenhuma oferta no banco */}
+      {offers.length === 0 && (
+        <div class="col-span-full py-12 text-center">
+          <p class="text-slate-500 font-bold">Nenhuma oferta disponível no momento. Volte em breve!</p>
+        </div>
+      )}
     </div>
 
   </main>

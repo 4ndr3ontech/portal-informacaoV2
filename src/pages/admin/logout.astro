@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+
+// Apaga o cookie de autenticação em todo o portal
+Astro.cookies.delete('admin_session', { path: '/' });
+
+// Redireciona o utilizador de volta para a página inicial (ou para o login, se preferir)
+return Astro.redirect('/');
+---

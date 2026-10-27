@@ -1,19 +1,54 @@
 ---
+export const prerender = false; // Garante que a página processe o login via SSR em tempo de execução
+
 import '../../styles/global.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Se o utilizador já tiver um cookie de sessão válido, redireciona direto para o painel
+const existingSession = Astro.cookies.get('admin_session');
+if (existingSession && existingSession.value === 'authenticated') {
+  return Astro.redirect('/admin/dashboard');
+}
+
+let errorMessage = '';
+
+// Processa o envio do formulário diretamente na página (SSR)
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+    const username = data.get('username')?.toString().trim();
+    const password = data.get('password')?.toString().trim();
+
+    // CREDENCIAIS DE ADMINISTRADOR:
+    const ADMIN_USER = 'admin';
+    const ADMIN_PASS = 'admin123';
+
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
+      // Cria o cookie de sessão válido por 1 dia
+      Astro.cookies.set('admin_session', 'authenticated', {
+        path: '/',
+        httpOnly: true,
+        secure: false, // mude para true se estiver em produção com HTTPS ativado
+        maxAge: 60 * 60 * 24
+      });
+
+      return Astro.redirect('/admin/dashboard');
+    } else {
+      errorMessage = 'Usuário ou palavra-passe incorretos.';
+    }
+  } catch (err) {
+    errorMessage = 'Ocorreu um erro ao processar o login.';
+  }
+}
 ---
 
 <BaseLayout 
   title="Acesso Administrativo | OMundoEmUmCLICK" 
   description="Área restrita para a gestão e administração de fontes de mídia do portal."
 >
-  <!-- Main Container com Fundo Totalmente Branco e Limpo -->
   <main class="min-h-[calc(100vh-140px)] bg-white flex items-center justify-center px-4 py-16 relative">
-    
-    <!-- Caixa Principal de Login Estilizada para Fundo Claro -->
     <div class="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-8 sm:p-10 shadow-lg shadow-slate-100 relative z-10">
       
-      <!-- Cabeçalho do Card -->
       <div class="text-center space-y-3 mb-8">
         <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-cyan-50 border border-cyan-200 text-cyan-600 mb-1 shadow-xs">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -28,9 +63,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </p>
       </div>
 
-      <!-- Formulário de Autenticação -->
+      {errorMessage && (
+        <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-2xl text-xs font-black text-center">
+          {errorMessage}
+        </div>
+      )}
+
+      <!-- Formulário enviando POST para a mesma página -->
       <form class="space-y-6" method="POST">
-        
         <div class="space-y-2">
           <label for="username" class="block text-xs font-black text-slate-700 uppercase tracking-wider">
             Usuário ou E-mail
@@ -41,7 +81,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               id="username" 
               name="username" 
               required
-              placeholder="admin@portalinfo.com" 
+              placeholder="admin" 
               class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 font-bold text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all shadow-xs"
             />
           </div>
@@ -72,10 +112,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </button>
-
       </form>
 
-      <!-- Rodapé do Card / Voltar -->
       <div class="mt-8 pt-6 border-t border-slate-100 text-center">
         <a 
           href="/" 

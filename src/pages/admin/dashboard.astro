@@ -1,0 +1,80 @@
+---
+export const prerender = false; // Garante que a página valide os cookies em tempo real (SSR)
+
+import '../../styles/global.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Valida obrigatoriamente se o cookie de sessão existe
+const session = Astro.cookies.get('admin_session');
+
+if (!session || session.value !== 'authenticated') {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<BaseLayout 
+  title="Painel Administrativo | OMundoEmUmCLICK" 
+  description="Painel de controlo do administrador."
+>
+  <main class="min-h-[calc(100vh-140px)] bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Cabeçalho do Dashboard -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm mb-8">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full border border-cyan-100">Área Segura</span>
+          <h1 class="text-3xl font-black text-slate-900 mt-2">Painel de Controlo</h1>
+        </div>
+        
+        <!-- Botões de Ação do Cabeçalho -->
+        <div class="flex items-center gap-3">
+          <a href="/" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-wider rounded-2xl border border-slate-200 transition-colors cursor-pointer">
+            Ver Site
+          </a>
+          <a href="/admin/logout" class="px-5 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 font-black text-xs uppercase tracking-wider rounded-2xl border border-red-200 transition-colors cursor-pointer flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+            Sair
+          </a>
+        </div>
+      </div>
+
+      <!-- Cards de Estatísticas/Status -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400">Estado do Sistema</h3>
+          <p class="text-2xl font-black text-emerald-600 mt-2">Online & SSR Ativo</p>
+          <span class="text-xs text-slate-500 font-bold mt-1 block">Acesso restrito verificado</span>
+        </div>
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400">Autenticação</h3>
+          <p class="text-2xl font-black text-cyan-600 mt-2">Sessão Ativa</p>
+          <span class="text-xs text-slate-500 font-bold mt-1 block">Protegido por Cookies</span>
+        </div>
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400">Permissões</h3>
+          <p class="text-2xl font-black text-slate-900 mt-2">Administrador</p>
+          <span class="text-xs text-slate-500 font-bold mt-1 block">Acesso total ao portal</span>
+        </div>
+      </div>
+
+      <!-- Ações Rápidas -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+        <h2 class="text-lg font-black text-slate-900 mb-4">Ações Rápidas</h2>
+        <div class="flex flex-wrap gap-4">
+          <a href="/admin/ofertas" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+            Gerir Ofertas
+          </a>
+          <a href="/admin/boletim" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            Mensagens / Boletim
+          </a>
+          <a href="/" target="_blank" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-2xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-2">
+            Ver Portal ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</BaseLayout>

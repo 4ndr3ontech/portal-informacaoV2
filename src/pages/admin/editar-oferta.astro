@@ -1,0 +1,124 @@
+---
+export const prerender = false;
+
+import '../../styles/global.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Validação de segurança
+const session = Astro.cookies.get('admin_session');
+if (!session || session.value !== 'authenticated') {
+  return Astro.redirect('/admin/login');
+}
+
+const db = Astro.locals.runtime.env.DB;
+const ofertaId = Astro.url.searchParams.get('id');
+
+// Se não houver ID na URL, volta para a página de ofertas
+if (!ofertaId) {
+  return Astro.redirect('/admin/ofertas');
+}
+
+let message = '';
+let success = false;
+
+// Processar a atualização (POST)
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+    const title = data.get('title')?.toString().trim();
+    const description = data.get('description')?.toString().trim();
+    const image_url = data.get('image_url')?.toString().trim();
+    const affiliate_link = data.get('affiliate_link')?.toString().trim();
+    const price = data.get('price')?.toString().trim();
+
+    if (title && affiliate_link) {
+      await db.prepare(
+        'UPDATE offers SET title = ?, description = ?, image_url = ?, affiliate_link = ?, price = ? WHERE id = ?'
+      ).bind(title, description, image_url, affiliate_link, price, ofertaId).run();
+      
+      message = 'Oferta atualizada com sucesso!';
+      success = true;
+    }
+  } catch (error) {
+    message = 'Erro ao atualizar a oferta.';
+  }
+}
+
+// Buscar os dados atuais da oferta para preencher o formulário
+let oferta = null;
+try {
+  oferta = await db.prepare('SELECT * FROM offers WHERE id = ?').bind(ofertaId).first();
+} catch (e) {
+  console.error(e);
+}
+
+// Se o ID for inválido ou não existir no banco, redireciona de volta
+if (!oferta) {
+  return Astro.redirect('/admin/ofertas');
+}
+---
+
+<BaseLayout title="Editar Oferta | Admin" description="Editar os detalhes de uma oferta afiliada.">
+  <main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto space-y-8">
+      
+      <!-- Cabeçalho -->
+      <div class="flex justify-between items-center bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+        <div>
+          <h1 class="text-2xl font-black text-slate-900">Editar Oferta</h1>
+          <p class="text-sm text-slate-500 font-bold mt-1">ID do Produto: {oferta.id}</p>
+        </div>
+        <a href="/admin/ofertas" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-wider rounded-2xl border border-slate-200 transition-colors">
+          &larr; Voltar
+        </a>
+      </div>
+
+      <!-- Alertas -->
+      {message && (
+        <div class={`p-4 rounded-2xl text-sm font-black border ${success ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-red-50 text-red-700 border-red-200'}`}>
+          {message}
+        </div>
+      )}
+
+      <!-- Formulário de Edição -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+        <form method="POST" class="space-y-5">
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase mb-1">Título do Produto *</label>
+            <input type="text" name="title" required value={oferta.title} class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20" />
+          </div>
+          
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase mb-1">Preço (Opcional)</label>
+            <input type="text" name="price" value={oferta.price} class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20" />
+          </div>
+          
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase mb-1">URL da Imagem</label>
+            <input type="url" name="image_url" value={oferta.image_url} class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20" />
+            {oferta.image_url && (
+              <img src={oferta.image_url} alt="Preview" class="mt-3 h-24 rounded-xl border border-slate-200 object-contain p-2 bg-white" />
+            )}
+          </div>
+          
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase mb-1">Link de Afiliado *</label>
+            <input type="url" name="affiliate_link" required value={oferta.affiliate_link} class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20" />
+          </div>
+          
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase mb-1">Descrição Curta</label>
+            <textarea name="description" rows="4" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20">{oferta.description}</textarea>
+          </div>
+          
+          <div class="pt-4 border-t border-slate-100">
+            <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-white rounded-xl text-xs font-black uppercase transition-colors shadow-md">
+              Guardar Alterações
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </main>
+</BaseLayout>
