@@ -24,12 +24,24 @@ const seenUrls = new Set<string>();
 for (const source of rawSources) {
   if (!source) continue;
   
-  // Remove os registros genéricos de SEO
-  if (source.name && source.name.trim() === 'Sim' && source.description && source.description.toLowerCase().includes('best alternative sites')) {
+  const nameTrimmed = source.name ? source.name.trim() : '';
+
+  // 1. Remove lixo de SEO, nomes vazios ou com 1/2 letras (ex: "A", "Q", "S")
+  if (!nameTrimmed || nameTrimmed.length <= 2) {
     continue;
   }
 
-  // Normaliza a URL rigorosamente
+  // 2. Remove registos genéricos específicos de SEO alternativo
+  if (nameTrimmed === 'Sim' && source.description && source.description.toLowerCase().includes('best alternative sites')) {
+    continue;
+  }
+
+  // 3. Exige que o registo tenha descrição ou URL válida
+  if (!source.description && !source.url) {
+    continue;
+  }
+
+  // 4. Normaliza a URL rigorosamente para evitar duplicatas falsas
   let cleanUrl = '';
   if (source.url) {
     cleanUrl = source.url
@@ -40,7 +52,7 @@ for (const source of rawSources) {
       .replace(/\/+$/, '');
   }
 
-  const uniqueKey = cleanUrl || (source.name ? source.name.toLowerCase().trim() : Math.random().toString());
+  const uniqueKey = cleanUrl || nameTrimmed.toLowerCase();
 
   if (!seenUrls.has(uniqueKey)) {
     seenUrls.add(uniqueKey);
@@ -51,7 +63,7 @@ for (const source of rawSources) {
 const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
 const totalSources = sources.length;
 
-// Limita a renderização inicial no servidor para evitar o Erro 1102 da Cloudflare (renderiza apenas os primeiros 12 no DOM SSR)
+// Limita a renderização inicial no servidor para evitar o Erro 1102 da Cloudflare
 const INITIAL_RENDER_LIMIT = 12;
 const initialSources = sources.slice(0, INITIAL_RENDER_LIMIT);
 
@@ -61,10 +73,10 @@ const categoriesList = [
   { slug: 'politica', label: 'Política', desc: 'Bastidores dos poderes executivo e legislativo' },
   { slug: 'economia', label: 'Economia', desc: 'Mercado financeiro, negócios e finanças' },
   { slug: 'tecnologia', label: 'Tecnologia', desc: 'IA, software, inovação e cultura digital' },
+  { slug: 'games', label: 'Games', desc: 'Lançamentos, eSports e cultura gamer' },
+  { slug: 'esportes', label: 'Esportes', desc: 'Futebol, ligas mundiais e modalidades' },
   { slug: 'ciencia', label: 'Ciência', desc: 'Pesquisas, astronomia e descobertas' },
   { slug: 'saude', label: 'Saúde', desc: 'Avanços médicos e políticas públicas' },
-  { slug: 'esportes', label: 'Esportes', desc: 'Futebol, ligas mundiais e modalidades' },
-  { slug: 'games', label: 'Games', desc: 'Lançamentos, eSports e cultura gamer' },
   { slug: 'entretenimento', label: 'Entretenimento', desc: 'Filmes, séries, música e cultura' },
   { slug: 'educacao', label: 'Educação', desc: 'Enem, vestibulares, concursos e carreiras' },
   { slug: 'investimentos', label: 'Investimentos', desc: 'FIIs, ações, criptomoedas e finanças' }
@@ -220,7 +232,7 @@ const categoriesList = [
       </section>
     )}
 
-    <!-- Todos os Veículos (Renderiza apenas os primeiros de forma segura no SSR) -->
+    <!-- Todos os Veículos -->
     <section class="space-y-6">
       <div class="flex items-center justify-between">
         <div>
@@ -246,7 +258,6 @@ const categoriesList = [
         ))}
       </div>
 
-      <!-- Mensagem de Nenhum Resultado Encontrado -->
       <div id="no-results" class="hidden text-center py-16 space-y-3">
         <p class="text-2xl font-black text-slate-700">Nenhum portal encontrado para esta pesquisa.</p>
         <p class="text-sm font-bold text-slate-500">Tente pesquisar por outros termos (ex: tecnologia, jogos, economia, notícias).</p>
@@ -288,13 +299,11 @@ const categoriesList = [
     const getClicks = (id) => parseInt(localStorage.getItem(`clicks_${id}`) || '0', 10);
     const setClicks = (id, count) => localStorage.setItem(`clicks_${id}`, count.toString());
 
-    // Pesquisa interativa que varre todo o array global passado via define:vars de forma segura no cliente
     if (searchInput && sourcesGrid) {
       searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
 
         if (query === '') {
-          // Restaura os itens iniciais
           const initialSlice = allSources.slice(0, 12);
           sourcesGrid.innerHTML = initialSlice.map((source, index) => `
             <div class="source-card-wrapper w-full h-full flex flex" data-name="${source.name.toLowerCase()}" data-desc="${(source.description || '').toLowerCase()}" data-categories="${JSON.stringify(source.categories || []).toLowerCase()}">
@@ -321,7 +330,6 @@ const categoriesList = [
           return;
         }
 
-        // Filtra em todas as fontes disponíveis na memória do cliente
         const matched = allSources.filter(source => {
           const name = (source.name || '').toLowerCase();
           const desc = (source.description || '').toLowerCase();
