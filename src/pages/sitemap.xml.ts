@@ -1,9 +1,8 @@
 import type { APIRoute } from 'astro';
-import { categories } from '../data/categories';
 import { sources } from '../data/sources';
 
 export const GET: APIRoute = async () => {
-  const baseUrl = 'https://seusite.com.br';
+  const baseUrl = 'https://omundoemumclick.com.br';
 
   const staticPages = [
     '',
@@ -15,7 +14,22 @@ export const GET: APIRoute = async () => {
     '/termos'
   ];
 
-  const categoryPages = categories.map((cat) => `/categorias/${cat.slug}`);
+  const categoriesList = [
+    'brasil',
+    'mundo',
+    'politica',
+    'economia',
+    'tecnologia',
+    'ciencia',
+    'saude',
+    'esportes',
+    'games',
+    'entretenimento',
+    'educacao',
+    'investimentos'
+  ];
+
+  const categoryPages = categoriesList.map((slug) => `/categorias/${slug}`);
   const sourcePages = sources.map((source) => `/fontes/${source.id}`);
 
   const allRoutes = [...staticPages, ...categoryPages, ...sourcePages];
