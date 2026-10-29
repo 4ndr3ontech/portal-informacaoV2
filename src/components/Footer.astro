@@ -81,15 +81,19 @@ const currentYear = new Date().getFullYear();
         <p class="text-sm font-bold text-slate-400 mb-3 leading-relaxed">
           Inscreva-se para receber novidades e as melhores ofertas diretamente no seu e-mail.
         </p>
-        <form action="#" class="flex flex-col gap-2.5">
+        
+        <form id="newsletter-form" class="flex flex-col gap-2.5">
+          <div id="newsletter-feedback" class="text-xs font-bold" hidden></div>
           <input 
             type="email" 
+            id="newsletter-email"
             placeholder="Seu melhor e-mail" 
             class="w-full px-4 py-2 text-sm font-bold rounded-xl border border-neutral-800 bg-neutral-900 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-inner"
             required
           />
           <button 
             type="submit" 
+            id="newsletter-btn"
             class="w-full px-4 py-2.5 text-sm font-black uppercase tracking-wider text-slate-950 bg-cyan-500 hover:bg-cyan-400 rounded-xl transition-all cursor-pointer shadow-md shadow-cyan-500/20 active:scale-95"
           >
             Inscrever-se
@@ -113,3 +117,52 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  const newsletterForm = document.getElementById('newsletter-form') as HTMLFormElement;
+  const newsletterEmail = document.getElementById('newsletter-email') as HTMLInputElement;
+  const newsletterFeedback = document.getElementById('newsletter-feedback');
+  const newsletterBtn = document.getElementById('newsletter-btn') as HTMLButtonElement;
+
+  newsletterForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = newsletterEmail?.value.trim();
+
+    if (!email) return;
+
+    if (newsletterBtn) {
+      newsletterBtn.disabled = true;
+      newsletterBtn.textContent = 'A inscrever...';
+    }
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const result = await response.json();
+
+      if (newsletterFeedback) {
+        newsletterFeedback.textContent = result.message;
+        newsletterFeedback.className = `text-xs font-bold ${response.ok && result.success ? 'text-green-400' : 'text-red-400'}`;
+        newsletterFeedback.removeAttribute('hidden');
+        if (response.ok && result.success) {
+          newsletterForm.reset();
+        }
+      }
+    } catch (err) {
+      if (newsletterFeedback) {
+        newsletterFeedback.textContent = 'Erro de conexão. Tente novamente.';
+        newsletterFeedback.className = 'text-xs font-bold text-red-400';
+        newsletterFeedback.removeAttribute('hidden');
+      }
+    } finally {
+      if (newsletterBtn) {
+        newsletterBtn.disabled = false;
+        newsletterBtn.textContent = 'Inscrever-se';
+      }
+    }
+  });
+</script>

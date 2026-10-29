@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SourceCard from '../components/SourceCard.astro';
 import { getFaviconUrl, getCountryFlag, getCategoryIcon } from '../lib/utils';
 
-import { sources as fontesGlobais } from '../data/sources';
+import fontesGlobais from '../data/clean-news-sources.json';
 import rawFontesBrasil from '../data/brazil-sources.json';
 import type { NewsSource } from '../types';
 
@@ -16,49 +16,8 @@ const fontesBrasil: NewsSource[] = Array.isArray(rawFontesBrasil)
   ? rawFontesBrasil 
   : ((rawFontesBrasil as any).default || []);
 
-// Junta as fontes globais com as do Brasil
-const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
-const sources: NewsSource[] = [];
-const seenUrls = new Set<string>();
-
-for (const source of rawSources) {
-  if (!source) continue;
-  
-  const nameTrimmed = source.name ? source.name.trim() : '';
-
-  // 1. Remove lixo de SEO, nomes vazios ou com 1/2 letras (ex: "A", "Q", "S")
-  if (!nameTrimmed || nameTrimmed.length <= 2) {
-    continue;
-  }
-
-  // 2. Remove registos genéricos específicos de SEO alternativo
-  if (nameTrimmed === 'Sim' && source.description && source.description.toLowerCase().includes('best alternative sites')) {
-    continue;
-  }
-
-  // 3. Exige que o registo tenha descrição ou URL válida
-  if (!source.description && !source.url) {
-    continue;
-  }
-
-  // 4. Normaliza a URL rigorosamente para evitar duplicatas falsas
-  let cleanUrl = '';
-  if (source.url) {
-    cleanUrl = source.url
-      .toLowerCase()
-      .trim()
-      .replace(/^https?:\/\//, '')
-      .replace(/^www\./, '')
-      .replace(/\/+$/, '');
-  }
-
-  const uniqueKey = cleanUrl || nameTrimmed.toLowerCase();
-
-  if (!seenUrls.has(uniqueKey)) {
-    seenUrls.add(uniqueKey);
-    sources.push(source);
-  }
-}
+// Como o clean-news-sources.json já está totalmente limpo, juntamos diretamente ao acervo do Brasil
+const sources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
 
 const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
 const totalSources = sources.length;
@@ -115,7 +74,7 @@ const categoriesList = [
         </div>
       </div>
 
-      <!-- Contador de fontes dinâmico -->
+      <!-- Contador de fontes dinâmico atualizado -->
       <div id="results-count" class="mt-6 text-slate-600 font-extrabold text-sm tracking-wide">
         Exibindo <span class="text-cyan-600 font-black text-base">{totalSources}</span> fontes de informação ativas
       </div>

@@ -25,7 +25,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
         <form id="contact-form" class="space-y-6" novalidate>
           
-          <!-- Mensagem de Sucesso -->
+          <!-- Mensagem de Feedback -->
           <div id="form-feedback" hidden></div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -90,6 +90,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="pt-2">
             <button 
               type="submit" 
+              id="submit-btn"
               class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-sm uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
             >
               Enviar Mensagem
@@ -145,8 +146,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const feedback = document.getElementById('form-feedback');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
 
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // Limpar erros anteriores
@@ -169,12 +171,44 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       return;
     }
 
-    // Mostrar feedback de sucesso usando as classes do Tailwind
-    if (feedback) {
-      feedback.textContent = 'Mensagem enviada com sucesso! Agradecemos o seu contato.';
-      feedback.className = 'p-4 rounded-xl mb-6 text-sm font-bold bg-green-100 text-green-800 border border-green-200';
-      feedback.removeAttribute('hidden');
+    // Desativa o botão temporariamente durante o envio
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'A enviar...';
     }
-    form.reset();
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+
+      if (feedback) {
+        if (response.ok && result.success) {
+          feedback.textContent = 'Mensagem enviada com sucesso! Agradecemos o seu contato.';
+          feedback.className = 'p-4 rounded-xl mb-6 text-sm font-bold bg-green-100 text-green-800 border border-green-200';
+          feedback.removeAttribute('hidden');
+          form.reset();
+        } else {
+          feedback.textContent = result.message || 'Ocorreu um erro ao enviar. Tente novamente.';
+          feedback.className = 'p-4 rounded-xl mb-6 text-sm font-bold bg-red-100 text-red-800 border border-red-200';
+          feedback.removeAttribute('hidden');
+        }
+      }
+    } catch (error) {
+      if (feedback) {
+        feedback.textContent = 'Erro de conexão com o servidor. Verifique sua rede.';
+        feedback.className = 'p-4 rounded-xl mb-6 text-sm font-bold bg-red-100 text-red-800 border border-red-200';
+        feedback.removeAttribute('hidden');
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar Mensagem';
+      }
+    }
   });
 </script>

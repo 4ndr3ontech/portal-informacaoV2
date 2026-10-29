@@ -1,0 +1,25 @@
+[
+  {
+    "id": "techcrunch-com",
+    "name": "TechCrunch",
+    "url": "https://techcrunch.com",
+    "description": "Technology media property",
+    "categories": [
+      "tecnologia"
+    ],
+    "country": "US",
+    "verified": true
+  },
+  {
+    "id": "folha-uol-com-br",
+    "name": "Folha de S.Paulo",
+    "url": "https://folha.uol.com.br",
+    "description": "Jornal de grande circulação no Brasil",
+    "categories": [
+      "brasil",
+      "politica"
+    ],
+    "country": "BR",
+    "verified": true
+  }
+]

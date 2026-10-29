@@ -3,7 +3,7 @@ export const prerender = false;
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SourceCard from '../../components/SourceCard.astro';
-import { sources as fontesGlobais } from '../../data/sources';
+import fontesGlobais from '../../data/clean-news-sources.json';
 import rawFontesBrasil from '../../data/brazil-sources.json';
 import type { NewsSource } from '../../types';
 
@@ -16,40 +16,7 @@ const fontesBrasil: NewsSource[] = Array.isArray(rawFontesBrasil)
   ? rawFontesBrasil 
   : ((rawFontesBrasil as any).default || []);
 
-// 1. Junta as fontes globais com o acervo do Brasil
-const rawSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
-
-// 2. DEDUPLICAÇÃO RIGOROSA E REMOÇÃO DE SEO LIXO ("Sim" genéricos)
-const allSources: NewsSource[] = [];
-const seenUrls = new Set<string>();
-
-for (const source of rawSources) {
-  if (!source) continue;
-  
-  // Remove registros genéricos de SEO em massa (ex: cartões chamados "Sim" com alternativas)
-  if (source.name && source.name.trim() === 'Sim' && source.description && source.description.toLowerCase().includes('best alternative sites')) {
-    continue;
-  }
-  
-  // Normaliza a URL removendo protocolos, www e barras finais para evitar duplicatas falsas
-  let cleanUrl = '';
-  if (source.url) {
-    cleanUrl = source.url
-      .toLowerCase()
-      .trim()
-      .replace(/^https?:\/\//, '')
-      .replace(/^www\./, '')
-      .replace(/\/+$/, '');
-  }
-
-  const uniqueKey = cleanUrl || (source.name ? source.name.toLowerCase().trim() : Math.random().toString());
-
-  if (!seenUrls.has(uniqueKey)) {
-    seenUrls.add(uniqueKey);
-    allSources.push(source);
-  }
-}
-
+const allSources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
 const totalSources = allSources.length;
 
 // === CAPTURA DE PARÂMETROS DA URL (SSR Otimizado para Cloudflare) ===
@@ -58,13 +25,12 @@ const q = (url.searchParams.get('q') || '').toLowerCase().trim();
 const category = (url.searchParams.get('category') || '').toLowerCase().trim();
 const country = (url.searchParams.get('country') || '').toLowerCase().trim();
 const page = parseInt(url.searchParams.get('page') || '1', 10);
-const limit = parseInt(url.searchParams.get('limit') || '24', 10);
-const itemsPerPage = [24, 48, 96, 150].includes(limit) ? limit : 24;
+const itemsPerPage = 24; // Valor fixo e limpo por página
 
 // Função utilitária para normalizar strings (acentos e maiúsculas)
 const normalizeStr = (str: string) => str ? str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim() : '';
 
-// Filtragem server-side para evitar estourar o limite de recursos do Worker (Erro 1102)
+// Filtragem server-side
 const filteredSources = allSources.filter(source => {
   const name = normalizeStr(source.name);
   const desc = normalizeStr(source.description);
@@ -95,7 +61,7 @@ const totalFiltered = filteredSources.length;
 const totalPages = Math.ceil(totalFiltered / itemsPerPage) || 1;
 const currentPage = page > totalPages ? 1 : (page < 1 ? 1 : page);
 
-// Paginação em memória (apenas a fatia atual é renderizada, evitando consumo excessivo de memória)
+// Paginação em memória
 const startIndex = (currentPage - 1) * itemsPerPage;
 const paginatedSources = filteredSources.slice(startIndex, startIndex + itemsPerPage);
 
@@ -109,7 +75,6 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
   <!-- CABEÇALHO CLARO (FUNDO BRANCO) -->
   <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
     <div class="max-w-3xl mx-auto text-center space-y-6">
-      
       <div>
         <h1 id="page-title" class="text-4xl sm:text-5xl font-bold tracking-tight capitalize text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 pb-2">
           {pageTitleText}
@@ -139,7 +104,6 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
           </button>
         </div>
       </form>
-      
     </div>
   </header>
 
@@ -148,8 +112,6 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
     <!-- Barra de Filtros Ativos e Contador -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-4 mb-8 gap-4">
       <div class="flex items-center gap-3 flex-wrap">
-        
-        <!-- Contador com texto escuro focado na legibilidade -->
         <p class="text-sm font-extrabold text-slate-700">
           Exibindo <span id="results-count" class="font-black text-slate-900">{totalFiltered}</span> fontes {q || category || country ? `(filtradas de ${totalSources})` : ''}
         </p>
@@ -159,7 +121,6 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
             <span id="category-name">{capitalizedCategory}</span>
           </span>
         )}
-
       </div>
 
       <div class="flex items-center gap-4 flex-wrap">
@@ -171,7 +132,7 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
       </div>
     </div>
 
-    <!-- Grid de Fontes Renderizadas (Apenas os itens da página atual) -->
+    <!-- Grid de Fontes Renderizadas -->
     {paginatedSources.length > 0 ? (
       <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {paginatedSources.map((source: NewsSource) => (
@@ -179,7 +140,6 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
         ))}
       </div>
     ) : (
-      <!-- Mensagem de Nenhuma Fonte Encontrada -->
       <div id="no-results" class="text-center py-20 space-y-4 bg-white rounded-3xl border border-slate-200 p-8 shadow-sm mt-8">
         <span class="text-5xl">🔍</span>
         <h3 class="text-2xl font-black text-slate-900">Nenhum veículo encontrado</h3>
@@ -188,12 +148,12 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
       </div>
     )}
 
-    <!-- Controles de Paginação -->
+    <!-- Controles de Paginação (Sem o seletor "Exibir por página") -->
     {totalPages > 1 && (
-      <nav id="pagination-nav" class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-12" aria-label="Paginação">
+      <nav id="pagination-nav" class="flex items-center justify-center gap-4 pt-12" aria-label="Paginação">
         <div class="flex items-center gap-3">
           {currentPage > 1 ? (
-            <a href={`/noticias?${new URLSearchParams({ ...(q && { q }), ...(category && { category }), ...(country && { country }), limit: itemsPerPage.toString(), page: (currentPage - 1).toString() }).toString()}`} class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">← Anterior</a>
+            <a href={`/noticias?${new URLSearchParams({ ...(q && { q }), ...(category && { category }), ...(country && { country }), page: (currentPage - 1).toString() }).toString()}`} class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">← Anterior</a>
           ) : (
             <button disabled class="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-400 font-bold text-sm opacity-50 cursor-not-allowed">← Anterior</button>
           )}
@@ -203,24 +163,10 @@ const pageDescText = category ? `Exibindo veículos especializados na editoria d
           </span>
 
           {currentPage < totalPages ? (
-            <a href={`/noticias?${new URLSearchParams({ ...(q && { q }), ...(category && { category }), ...(country && { country }), limit: itemsPerPage.toString(), page: (currentPage + 1).toString() }).toString()}`} class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">Próxima →</a>
+            <a href={`/noticias?${new URLSearchParams({ ...(q && { q }), ...(category && { category }), ...(country && { country }), page: (currentPage + 1).toString() }).toString()}`} class="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition-all cursor-pointer shadow-sm">Próxima →</a>
           ) : (
             <button disabled class="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-400 font-bold text-sm opacity-50 cursor-not-allowed">Próxima →</button>
           )}
-        </div>
-
-        <div class="flex items-center gap-2 text-xs text-slate-600 sm:ml-4 sm:pl-4 sm:border-l border-slate-200 font-bold">
-          <label for="limit-select" class="font-bold">Exibir por página:</label>
-          <select 
-            id="limit-select" 
-            onchange={`const url = new URL(window.location.href); url.searchParams.set('limit', this.value); url.searchParams.delete('page'); window.location.href = url.toString();`}
-            class="bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-slate-900 font-bold focus:outline-none focus:border-cyan-500 cursor-pointer shadow-sm"
-          >
-            <option value="24" selected={itemsPerPage === 24}>24</option>
-            <option value="48" selected={itemsPerPage === 48}>48</option>
-            <option value="96" selected={itemsPerPage === 96}>96</option>
-            <option value="150" selected={itemsPerPage === 150}>150</option>
-          </select>
         </div>
       </nav>
     )}

@@ -8,7 +8,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 let offers: any[] = [];
 try {
   const db = Astro.locals.runtime.env.DB;
-  // Removido o filtro 'is_active = 1' para garantir que qualquer oferta salva pelo Smart Paste apareça
   const result = await db.prepare('SELECT * FROM offers ORDER BY created_at DESC').all();
   offers = result.results || [];
 } catch (error) {
@@ -34,21 +33,10 @@ try {
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-[60vh]">
     
-    <!-- Aviso de Transparência Comercial Estilizado -->
-    <div class="bg-cyan-50 border border-cyan-200 rounded-2xl p-6 mb-12 flex flex-col sm:flex-row items-start sm:items-center gap-4 shadow-sm">
-      <div class="text-3xl">💡</div>
-      <div class="space-y-1">
-        <h2 class="text-slate-900 font-black text-base">Aviso de Transparência Comercial</h2>
-        <p class="text-slate-600 font-bold text-xs sm:text-sm leading-relaxed">
-          Este portal é mantido de forma independente. Ao realizar compras por meio dos links exibidos nesta seção, podemos receber uma comissão de afiliado do Mercado Livre, sem que você pague nada a mais por isso.
-        </p>
-      </div>
-    </div>
-
     <!-- Grid de Produtos / Ofertas -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {offers.map((offer) => {
-        // Formatação inteligente do preço para o padrão R$ do Brasil
+        // Formatação inteligente do preço promocional
         let formattedPrice = 'Consulte';
         if (offer.price) {
           const cleanPrice = String(offer.price).trim();
@@ -61,6 +49,22 @@ try {
             formattedPrice = !isNaN(num) && num > 0 
               ? `R$ ${num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` 
               : `R$ ${cleanPrice}`;
+          }
+        }
+
+        // Formatação do preço original (riscado)
+        let formattedOriginalPrice = '';
+        if (offer.original_price && offer.original_price !== '0,00' && offer.original_price !== offer.price) {
+          const cleanOrig = String(offer.original_price).trim();
+          if (cleanOrig.startsWith('R$')) {
+            formattedOriginalPrice = cleanOrig;
+          } else if (cleanOrig.includes(',')) {
+            formattedOriginalPrice = `R$ ${cleanOrig}`;
+          } else {
+            const numOrig = Number(cleanOrig.replace(',', '.'));
+            formattedOriginalPrice = !isNaN(numOrig) && numOrig > 0 
+              ? `R$ ${numOrig.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` 
+              : `R$ ${cleanOrig}`;
           }
         }
 
@@ -100,10 +104,15 @@ try {
               )}
             </div>
 
-            <!-- Preço e Botão de Ação -->
+            <!-- Preços e Botão de Ação -->
             <div class="pt-4 border-t border-slate-100 mt-auto space-y-4">
-              <div class="flex items-baseline justify-between">
+              <div class="flex items-baseline gap-2">
                 <span class="text-xl font-black text-cyan-600">{formattedPrice}</span>
+                {formattedOriginalPrice && (
+                  <span class="text-xs font-bold text-slate-400 line-through">
+                    {formattedOriginalPrice}
+                  </span>
+                )}
               </div>
 
               <a 

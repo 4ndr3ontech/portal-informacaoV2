@@ -14,6 +14,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     let titulo = 'Oferta Especial Mercado Livre';
     let imagem = '/og-default.jpg';
     let preco = '0,00';
+    let precoOriginal = '';
     let descricao = 'Produto em destaque selecionado para você.';
 
     try {
@@ -29,29 +30,32 @@ export const POST: APIRoute = async ({ request, locals }) => {
       if (response.ok) {
         const html = await response.text();
         
-        // Extração de Título
-        const titleMatch = html.match(/<meta\s+property="og:title"\s+content="([^"]+)"/i) ||
-                           html.match(/<title>([^<]+)<\/title>/i);
+        // Título e Imagem
+        const titleMatch = html.match(/<meta\s+property="og:title"\s+content="([^"]+)"/i) || html.match(/<title>([^<]+)<\/title>/i);
         if (titleMatch) titulo = titleMatch[1].replace(' - Mercado Livre', '').trim();
 
-        // Extração de Imagem
         const imageMatch = html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/i);
         if (imageMatch) imagem = imageMatch[1];
 
-        // Extração de Preço (Múltiplas tentativas para o formato do Mercado Livre)
-        const priceFractionMatch = html.match(/<span\s+class="andes-money-amount__fraction"[^>]*>([^<]+)<\/span>/i);
-        const priceMetaMatch = html.match(/<meta\s+itemprop="price"\s+content="([^"]+)"/i);
-        const jsonLdPriceMatch = html.match(/"price"\s*:\s*"([0-9.]+)"/i);
+        // CAPTURA DE PREÇOS (Desconto e Original)
+        // O Mercado Livre costuma ter múltiplos blocos de preço (o riscado e o promocional)
+        const fractionMatches = [...html.matchAll(/<span\s+class="andes-money-amount__fraction"[^>]*>([^<]+)<\/span>/gi)];
+        const centsMatches = [...html.matchAll(/<span\s+class="andes-money-amount__cents"[^>]*>([^<]+)<\/span>/gi)];
 
-        if (priceFractionMatch) {
-          preco = priceFractionMatch[1].trim();
-        } else if (priceMetaMatch) {
-          // Formata o preço vindo da meta tag para o padrão brasileiro (ex: 1529,10 ou 1.200)
-          const rawPrice = priceMetaMatch[1];
-          preco = Number(rawPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-        } else if (jsonLdPriceMatch) {
-          const rawPrice = jsonLdPriceMatch[1];
-          preco = Number(rawPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        if (fractionMatches.length >= 2) {
+          // Se houver dois ou mais, o primeiro costuma ser o preço original (riscado) e o segundo o promocional
+          const origInt = fractionMatches[0][1].trim();
+          const origCents = centsMatches.length > 0 ? centsMatches[0][1].trim() : '00';
+          precoOriginal = `${origInt},${origCents}`;
+
+          const promoInt = fractionMatches[1][1].trim();
+          const promoCents = centsMatches.length > 1 ? centsMatches[1][1].trim() : '00';
+          preco = `${promoInt},${promoCents}`;
+        } else if (fractionMatches.length === 1) {
+          // Apenas um preço disponível
+          const intPart = fractionMatches[0][1].trim();
+          const centsPart = centsMatches.length > 0 ? centsMatches[0][1].trim() : '00';
+          preco = `${intPart},${centsPart}`;
         }
       }
     } catch (fetchErr) {
@@ -64,30 +68,30 @@ export const POST: APIRoute = async ({ request, locals }) => {
     if (!db) {
       return new Response(JSON.stringify({ 
         success: true, 
-        message: 'Simulação concluída com sucesso!',
-        data: { titulo, preco, imagem, url } 
+        message: 'Simulação concluída!',
+        data: { titulo, preco, precoOriginal, imagem, url } 
       }), { status: 200 });
     }
 
-    // Gravação real no Cloudflare D1
+    // Gravação real no D1 (incluindo o preço original)
     await db.prepare(
-      `INSERT INTO offers (title, description, image_url, affiliate_link, price, created_at) VALUES (?, ?, ?, ?, ?, ?)`
+      `INSERT INTO offers (title, description, image_url, affiliate_link, price, original_price, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`
     ).bind(
       titulo, 
       descricao, 
       imagem, 
       url, 
       preco, 
+      precoOriginal, 
       new Date().toISOString()
     ).run();
 
     return new Response(JSON.stringify({ 
       success: true, 
-      data: { titulo, preco, imagem } 
+      data: { titulo, preco, precoOriginal, imagem } 
     }), { status: 200 });
 
   } catch (error: any) {
-    console.error('❌ Erro crítico:', error);
     return new Response(JSON.stringify({ error: error.message || 'Erro no servidor' }), { status: 500 });
   }
 };
