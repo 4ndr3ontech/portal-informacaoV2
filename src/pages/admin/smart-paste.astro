@@ -1,0 +1,93 @@
+---
+import '../../styles/global.css';
+import BaseLayout from '../../layouts/BaseLayout.astro'; // Ajuste para o layout correto do seu projeto
+
+// Valida a sessão se necessário, igual ao dashboard
+const session = Astro.cookies.get('admin_session');
+if (!session || session.value !== 'authenticated') {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<BaseLayout title="Smart Paste - Adicionar Oferta | OMundoEmUmCLICK" description="Painel de Smart Paste">
+  <main class="min-h-[calc(100vh-140px)] bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+      
+      <div class="mb-8">
+        <span class="text-xs font-black uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full border border-cyan-100">Ferramenta Rápida</span>
+        <h1 class="text-3xl font-black text-slate-900 mt-2">Smart Paste ⚡</h1>
+        <p class="text-slate-500 font-bold mt-1">Cole o link do Mercado Livre (meli.la) para extrair e guardar automaticamente.</p>
+      </div>
+
+      <form id="smart-paste-form" class="space-y-4">
+        <div>
+          <label for="url" class="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2">Link da Oferta</label>
+          <input 
+            type="url" 
+            id="url" 
+            name="url" 
+            placeholder="ex: https://meli.la/..." 
+            required 
+            class="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-cyan-500 focus:ring-0 transition-colors font-bold text-slate-900 bg-slate-50"
+          />
+        </div>
+        
+        <button 
+          type="submit" 
+          id="submit-btn"
+          class="w-full bg-slate-900 hover:bg-cyan-600 text-white font-black text-xs uppercase tracking-wider py-4 rounded-xl transition-all shadow-lg active:scale-95 cursor-pointer"
+        >
+          Extrair e Guardar Oferta
+        </button>
+      </form>
+
+      <div id="status-message" class="mt-6 hidden p-4 rounded-xl font-black text-xs text-center border"></div>
+
+      <div class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center">
+        <a href="/admin/dashboard" class="text-xs font-black text-slate-600 hover:text-slate-900 uppercase tracking-wider">
+          ← Voltar ao Dashboard
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('smart-paste-form') as HTMLFormElement;
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const status = document.getElementById('status-message') as HTMLDivElement;
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const urlInput = (document.getElementById('url') as HTMLInputElement).value;
+      
+      btn.disabled = true;
+      btn.textContent = 'A EXTRAIR DADOS... ⏳';
+      status.classList.add('hidden');
+
+      try {
+        const response = await fetch('/api/salvar-oferta', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: urlInput })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          status.textContent = '✅ Oferta guardada com sucesso no D1!';
+          status.className = 'mt-6 p-4 rounded-xl font-black text-xs text-center bg-emerald-50 text-emerald-800 border border-emerald-200';
+          form.reset();
+        } else {
+          throw new Error(data.error || 'Erro ao processar');
+        }
+      } catch (error: any) {
+        status.textContent = `❌ Erro: ${error.message}`;
+        status.className = 'mt-6 p-4 rounded-xl font-black text-xs text-center bg-red-50 text-red-800 border border-red-200';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'EXTRAIR E GUARDAR OFERTA';
+      }
+    });
+  </script>
+</BaseLayout>

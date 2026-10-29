@@ -11,28 +11,40 @@ if (!session || session.value !== 'authenticated') {
 }
 
 let message = '';
-// Conexão com o banco D1
 const db = Astro.locals.runtime.env.DB;
 
-// Processamento do Formulário (Adicionar Nova Oferta)
+// Processamento de Ações (POST)
 if (Astro.request.method === 'POST') {
   try {
     const data = await Astro.request.formData();
-    const title = data.get('title')?.toString().trim();
-    const description = data.get('description')?.toString().trim();
-    const image_url = data.get('image_url')?.toString().trim();
-    const affiliate_link = data.get('affiliate_link')?.toString().trim();
-    const price = data.get('price')?.toString().trim();
+    const action = data.get('action');
 
-    if (title && affiliate_link) {
-      await db.prepare(
-        'INSERT INTO offers (title, description, image_url, affiliate_link, price) VALUES (?, ?, ?, ?, ?)'
-      ).bind(title, description, image_url, affiliate_link, price).run();
-      
-      message = 'Oferta adicionada com sucesso!';
+    // Ação de Deletar Oferta
+    if (action === 'delete') {
+      const id = data.get('id');
+      if (id) {
+        await db.prepare('DELETE FROM offers WHERE id = ?').bind(id).run();
+        message = 'Oferta eliminada com sucesso!';
+      }
+    } 
+    // Ação de Cadastrar Nova Oferta
+    else {
+      const title = data.get('title')?.toString().trim();
+      const description = data.get('description')?.toString().trim();
+      const image_url = data.get('image_url')?.toString().trim();
+      const affiliate_link = data.get('affiliate_link')?.toString().trim();
+      const price = data.get('price')?.toString().trim();
+
+      if (title && affiliate_link) {
+        await db.prepare(
+          'INSERT INTO offers (title, description, image_url, affiliate_link, price, created_at) VALUES (?, ?, ?, ?, ?, ?)'
+        ).bind(title, description || '', image_url || '', affiliate_link, price || '0,00', new Date().toISOString()).run();
+        
+        message = 'Oferta adicionada com sucesso!';
+      }
     }
   } catch (error) {
-    message = 'Erro ao salvar a oferta.';
+    message = 'Erro ao processar a operação.';
   }
 }
 
@@ -67,7 +79,7 @@ try {
       )}
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Coluna da Esquerda: Formulário -->
+        <!-- Coluna da Esquerda: Formulário de Cadastro -->
         <div class="lg:col-span-1 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm h-fit">
           <h2 class="text-lg font-black text-slate-900 mb-6">Nova Oferta</h2>
           <form method="POST" class="space-y-4">
@@ -77,7 +89,7 @@ try {
             </div>
             <div>
               <label class="block text-xs font-black text-slate-700 uppercase mb-1">Preço (Opcional)</label>
-              <input type="text" name="price" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm" placeholder="Ex: R$ 1.200,00" />
+              <input type="text" name="price" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm" placeholder="Ex: 1.200,00" />
             </div>
             <div>
               <label class="block text-xs font-black text-slate-700 uppercase mb-1">URL da Imagem</label>
@@ -97,7 +109,7 @@ try {
           </form>
         </div>
 
-        <!-- Coluna da Direita: Lista de Ofertas -->
+        <!-- Coluna da Direita: Lista de Ofertas Ativas -->
         <div class="lg:col-span-2 space-y-4">
           <h2 class="text-lg font-black text-slate-900 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
             Ofertas Ativas ({ofertas.length})
@@ -109,14 +121,22 @@ try {
                 {oferta.image_url && <img src={oferta.image_url} alt={oferta.title} class="w-full h-40 object-cover rounded-xl border border-slate-100" />}
                 <div>
                   <h3 class="font-black text-slate-900 truncate">{oferta.title}</h3>
-                  <p class="text-sm font-bold text-cyan-600">{oferta.price || 'Sem preço'}</p>
+                  <p class="text-sm font-bold text-cyan-600">{oferta.price ? `R$ ${oferta.price}` : 'Sem preço'}</p>
                 </div>
                 
-                <!-- BOTÕES ATUALIZADOS AQUI -->
                 <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <div class="flex gap-4">
+                  <div class="flex items-center gap-3">
                     <a href={oferta.affiliate_link} target="_blank" class="text-xs font-black text-cyan-600 hover:underline">Ver Link</a>
                     <a href={`/admin/editar-oferta?id=${oferta.id}`} class="text-xs font-black text-amber-500 hover:underline">Editar</a>
+                    
+                    {/* Botão de Eliminar com Confirmação em JavaScript */}
+                    <form method="POST" onsubmit="return confirm('Tem certeza que deseja eliminar esta oferta?');">
+                      <input type="hidden" name="action" value="delete" />
+                      <input type="hidden" name="id" value={oferta.id} />
+                      <button type="submit" class="text-xs font-black text-red-500 hover:underline cursor-pointer bg-transparent border-0 p-0">
+                        Eliminar
+                      </button>
+                    </form>
                   </div>
                   <span class="text-xs font-bold text-slate-400">ID: {oferta.id}</span>
                 </div>

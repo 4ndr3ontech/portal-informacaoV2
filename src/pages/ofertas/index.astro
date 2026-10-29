@@ -1,14 +1,15 @@
 ---
 export const prerender = false; // Permite a busca em tempo real no banco de dados
 
-import '../../styles/global.css'; // Corrigido: volta dois níveis (../../)
-import BaseLayout from '../../layouts/BaseLayout.astro'; // Corrigido: volta dois níveis (../../)
+import '../../styles/global.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // Conexão com o banco D1 para buscar as ofertas dinâmicas
 let offers: any[] = [];
 try {
   const db = Astro.locals.runtime.env.DB;
-  const result = await db.prepare('SELECT * FROM offers WHERE is_active = 1 ORDER BY created_at DESC').all();
+  // Removido o filtro 'is_active = 1' para garantir que qualquer oferta salva pelo Smart Paste apareça
+  const result = await db.prepare('SELECT * FROM offers ORDER BY created_at DESC').all();
   offers = result.results || [];
 } catch (error) {
   console.error('Erro ao carregar as ofertas:', error);
@@ -46,63 +47,81 @@ try {
 
     <!-- Grid de Produtos / Ofertas -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {offers.map((offer) => (
-        <article class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-          
-          <div>
-            <!-- Badge de Categoria/Destaque -->
-            <div class="flex items-center justify-between mb-4">
-              <span class="bg-slate-100 text-slate-700 text-[10px] px-2.5 py-1 rounded-lg font-black uppercase tracking-wider border border-slate-200">
-                Destaque
-              </span>
-              <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                ⭐ Recomendado
-              </span>
-            </div>
+      {offers.map((offer) => {
+        // Formatação inteligente do preço para o padrão R$ do Brasil
+        let formattedPrice = 'Consulte';
+        if (offer.price) {
+          const cleanPrice = String(offer.price).trim();
+          if (cleanPrice.startsWith('R$')) {
+            formattedPrice = cleanPrice;
+          } else if (cleanPrice.includes(',')) {
+            formattedPrice = `R$ ${cleanPrice}`;
+          } else {
+            const num = Number(cleanPrice.replace(',', '.'));
+            formattedPrice = !isNaN(num) && num > 0 
+              ? `R$ ${num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` 
+              : `R$ ${cleanPrice}`;
+          }
+        }
 
-            <!-- Imagem Ilustrativa / Espaço de Preview -->
-            <div class="w-full h-40 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center mb-5 text-slate-400 overflow-hidden">
-              {offer.image_url ? (
-                <img src={offer.image_url} alt={offer.title} class="w-full h-full object-cover mix-blend-multiply" />
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
+        return (
+          <article class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            
+            <div>
+              <!-- Badge de Categoria/Destaque -->
+              <div class="flex items-center justify-between mb-4">
+                <span class="bg-slate-100 text-slate-700 text-[10px] px-2.5 py-1 rounded-lg font-black uppercase tracking-wider border border-slate-200">
+                  Destaque
+                </span>
+                <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                  ⭐ Recomendado
+                </span>
+              </div>
+
+              <!-- Imagem Ilustrativa / Espaço de Preview -->
+              <div class="w-full h-40 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center mb-5 text-slate-400 overflow-hidden">
+                {offer.image_url ? (
+                  <img src={offer.image_url} alt={offer.title} class="w-full h-full object-cover" />
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                )}
+              </div>
+
+              <!-- Título e Descrição -->
+              <h3 class="text-base font-black text-slate-900 mb-2 leading-snug line-clamp-2">
+                {offer.title}
+              </h3>
+              {offer.description && (
+                <p class="text-slate-600 font-bold text-xs mb-6 line-clamp-3 leading-relaxed">
+                  {offer.description}
+                </p>
               )}
             </div>
 
-            <!-- Título e Descrição -->
-            <h3 class="text-base font-black text-slate-900 mb-2 leading-snug line-clamp-2">
-              {offer.title}
-            </h3>
-            {offer.description && (
-              <p class="text-slate-600 font-bold text-xs mb-6 line-clamp-3 leading-relaxed">
-                {offer.description}
-              </p>
-            )}
-          </div>
+            <!-- Preço e Botão de Ação -->
+            <div class="pt-4 border-t border-slate-100 mt-auto space-y-4">
+              <div class="flex items-baseline justify-between">
+                <span class="text-xl font-black text-cyan-600">{formattedPrice}</span>
+              </div>
 
-          <!-- Preço e Botão de Ação -->
-          <div class="pt-4 border-t border-slate-100 mt-auto space-y-4">
-            <div class="flex items-baseline justify-between">
-              <span class="text-2xl font-black text-slate-900">{offer.price || 'Ver Preço'}</span>
+              <a 
+                href={offer.affiliate_link} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-95"
+              >
+                <span>Ver Oferta</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
             </div>
 
-            <a 
-              href={offer.affiliate_link} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-95"
-            >
-              <span>Ver Oferta</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
-
-        </article>
-      ))}
+          </article>
+        );
+      })}
       
       {/* Mensagem caso não tenha nenhuma oferta no banco */}
       {offers.length === 0 && (
