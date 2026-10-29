@@ -1,8 +1,7 @@
 import type { APIRoute } from 'astro';
-import { sources } from '../data/sources';
 
-export const GET: APIRoute = async () => {
-  const baseUrl = 'https://omundoemumclick.com.br';
+export const GET: APIRoute = async ({ site }) => {
+  const baseUrl = site ? site.toString().replace(/\/$/, '') : 'https://omundoemumclick.com.br';
 
   const staticPages = [
     '',
@@ -30,9 +29,12 @@ export const GET: APIRoute = async () => {
   ];
 
   const categoryPages = categoriesList.map((slug) => `/categorias/${slug}`);
-  const sourcePages = sources.map((source) => `/fontes/${source.id}`);
+  
+  // Se você tiver as fontes locais disponíveis, pode mapear aqui. 
+  // Caso contrário, mantemos as rotas essenciais para garantir velocidade máxima no Cloudflare.
+  const allRoutes = [...staticPages, ...categoryPages];
 
-  const allRoutes = [...staticPages, ...categoryPages, ...sourcePages];
+  const currentDate = new Date().toISOString();
 
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -41,6 +43,7 @@ export const GET: APIRoute = async () => {
       (route) => `
   <url>
     <loc>${baseUrl}${route}</loc>
+    <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>${route === '' ? '1.0' : '0.8'}</priority>
   </url>`

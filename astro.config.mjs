@@ -14,5 +14,8 @@ export default defineConfig({
   image: {
     service: passthroughImageService() // Resolve o aviso do Sharp na Cloudflare
   },
-  integrations: [tailwind(), partytown()],
+  integrations: [
+    tailwind(), 
+    partytown()
+  ],
 });
