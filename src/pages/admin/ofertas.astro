@@ -82,7 +82,7 @@ try {
         <!-- Coluna da Esquerda: Formulário de Cadastro -->
         <div class="lg:col-span-1 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm h-fit">
           <h2 class="text-lg font-black text-slate-900 mb-6">Nova Oferta</h2>
-          <form method="POST" class="space-y-4">
+          <form method="POST" data-astro-reload class="space-y-4">
             <div>
               <label class="block text-xs font-black text-slate-700 uppercase mb-1">Título do Produto *</label>
               <input type="text" name="title" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm" placeholder="Ex: Monitor Dell 27..." />
@@ -129,8 +129,8 @@ try {
                     <a href={oferta.affiliate_link} target="_blank" class="text-xs font-black text-cyan-600 hover:underline">Ver Link</a>
                     <a href={`/admin/editar-oferta?id=${oferta.id}`} class="text-xs font-black text-amber-500 hover:underline">Editar</a>
                     
-                    {/* Botão de Eliminar com Confirmação em JavaScript */}
-                    <form method="POST" onsubmit="return confirm('Tem certeza que deseja eliminar esta oferta?');">
+                    {/* Botão de Eliminar com data-astro-reload para forçar o POST no servidor */}
+                    <form method="POST" data-astro-reload onsubmit="return confirm('Tem certeza que deseja eliminar esta oferta?');">
                       <input type="hidden" name="action" value="delete" />
                       <input type="hidden" name="id" value={oferta.id} />
                       <button type="submit" class="text-xs font-black text-red-500 hover:underline cursor-pointer bg-transparent border-0 p-0">
