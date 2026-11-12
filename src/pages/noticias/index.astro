@@ -13,7 +13,7 @@ const fontesGlobais: NewsSource[] = Array.isArray(fontesGlobaisJson)
   ? (fontesGlobaisJson as NewsSource[])
   : ((fontesGlobaisJson as any)?.default || []);
 
-// Unifica os sites globais/internacionais com os do Brasil em um único grande diretório
+// Unifica os sites globais/internacionais com os do Brasil num único grande diretório
 const rawAllSources: NewsSource[] = [...fontesGlobais, ...fontesBrasil];
 
 // Deduplica as fontes pelo ID para garantir unicidade absoluta
@@ -53,6 +53,19 @@ const normalizedQuery = normalizeStr(q);
 const normalizedCategory = normalizeStr(category);
 const normalizedCountry = normalizeStr(country);
 
+// 1. Dicionário de prefixos gramaticais
+const prefixosCategoria: Record<string, string> = {
+  brasil: 'do',
+  mundo: 'do',
+  politica: 'da',
+  economia: 'da',
+  tecnologia: 'de',
+  games: 'de',
+  esportes: 'de',
+  ciencia: 'da',
+  saude: 'da'
+};
+
 // Filtragem executada no servidor.
 const filteredSources = allSources.filter((source) => {
   const name = normalizeStr(source.name);
@@ -75,7 +88,6 @@ const filteredSources = allSources.filter((source) => {
     : true;
 
   // Se a categoria selecionada for 'brasil', filtramos rigorosamente pelo país 'br'.
-  // Para qualquer outra categoria, valida normalmente no array de categorias.
   const matchesCategory = normalizedCategory
     ? normalizedCategory === 'brasil'
       ? sourceCountry === 'br'
@@ -89,7 +101,7 @@ const filteredSources = allSources.filter((source) => {
   return matchesQuery && matchesCategory && matchesCountry;
 });
 
-// Paginação corrigida com sintaxe limpa.
+// Paginação
 const totalFiltered = filteredSources.length;
 const totalPages = Math.max(1, Math.ceil(totalFiltered / itemsPerPage));
 const currentPage = Math.min(page, totalPages);
@@ -100,14 +112,18 @@ const paginatedSources = filteredSources.slice(
   startIndex + itemsPerPage
 );
 
-// Nome amigável da categoria.
+// Nome amigável da categoria (capitalizado).
 const capitalizedCategory = normalizedCategory
   ? normalizedCategory === 'brasil'
     ? 'Brasil'
     : normalizedCategory.charAt(0).toUpperCase() + normalizedCategory.slice(1)
   : '';
 
-// Descrições editoriais robustas das categorias (Essencial para E-E-A-T e AdSense)
+// Montagem do título com prefixo correto.
+const prefixo = prefixosCategoria[normalizedCategory] || 'de';
+const displayCategoryWithPrefix = normalizedCategory ? `${prefixo} ${capitalizedCategory}` : '';
+
+// Descrições editoriais robustas
 const descricoesPorCategoria: Record<string, string> = {
   brasil: 'Acompanhe as principais notícias do Brasil por meio de jornais, portais de notícias, agências de informação e veículos de comunicação regionais. Explore fontes jornalísticas de diferentes estados e regiões, com conteúdos sobre política, economia, sociedade, educação, cultura, segurança pública e acontecimentos que impactam o cotidiano dos brasileiros. Encontre veículos nacionais e regionais, conheça suas áreas de cobertura e acesse diretamente suas publicações para acompanhar os fatos mais relevantes do país.',
   mundo: 'Acompanhe os principais acontecimentos internacionais e descubra como os fatos que ocorrem em diferentes países influenciam o cenário global. Explore jornais estrangeiros, agências internacionais e veículos de comunicação especializados em política internacional, economia, diplomacia, conflitos, meio ambiente, tecnologia e sociedade. Consulte fontes de diferentes países e idiomas, compare perspectivas jornalísticas e amplie sua compreensão sobre os acontecimentos que movimentam o mundo.',
@@ -120,10 +136,8 @@ const descricoesPorCategoria: Record<string, string> = {
   saude: 'Acompanhe notícias, pesquisas e avanços relacionados à saúde, medicina e qualidade de vida. Explore publicações especializadas e instituições de referência que abordam saúde pública, prevenção de doenças, vacinação, epidemiologia, pesquisas médicas, saúde mental, alimentação e inovação na medicina. Encontre informações sobre estudos científicos, tecnologias médicas, políticas de saúde e novos tratamentos. Consulte fontes confiáveis e lembre-se de que conteúdos informativos não substituem a avaliação de profissionais de saúde.'
 };
 
-// Texto editorial para a página principal quando nenhum filtro está ativo
 const textoGeralDiretorio = 'O Mundo em um Clique atua como um diretório centralizado de inteligência midiática e fontes confiáveis. Nossa missão é conectar leitores a portais de imprensa jornalística idôneos, garantindo rapidez na pesquisa e diversidade de pontos de vista sobre os fatos que moldam o cotidiano global.';
 
-// Título e descrição exibidos conforme a pesquisa ou categoria selecionada.
 const pageTitleText = q
   ? `Resultados para: "${q}"`
   : (capitalizedCategory || 'Diretório de Notícias');
@@ -137,7 +151,6 @@ const pageDescText = normalizedCategory
     ? `Encontre veículos de comunicação relacionados a "${q}". Consulte jornais, portais de notícias e agências de informação e acesse diretamente os sites das fontes encontradas.`
     : 'Diretório centralizado de portais, jornais e agências de notícias do Brasil e do exterior. Pesquise por veículo, país ou editoria e acesse diretamente as fontes de informação originais para acompanhar diferentes perspectivas com total transparência e praticidade.';
 
-// Mantém os filtros ativos ao navegar entre as páginas.
 const buildPageUrl = (targetPage: number) => {
   const params = new URLSearchParams();
 
@@ -151,17 +164,15 @@ const buildPageUrl = (targetPage: number) => {
 ---
 
 <BaseLayout title={`${pageTitleText} | O Mundo em um Clique`}>
-  <!-- HERO SECTION RENOVADA E OTIMIZADA PARA MOBILE -->
   <header class="relative overflow-hidden bg-slate-50 border-b border-slate-200 px-4 pt-12 pb-16 sm:pt-28 sm:pb-32">
-    <!-- Efeitos de iluminação de fundo (Blobs Blur) -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-cyan-400/15 blur-[100px] sm:blur-[120px] rounded-full pointer-events-none"></div>
     <div class="absolute -bottom-10 -right-10 w-64 h-64 sm:w-96 sm:h-96 bg-blue-500/10 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none"></div>
 
     <div class="relative z-10 mx-auto max-w-4xl text-center space-y-4">
       
-      <!-- Título de Alto Impacto com Cor Sólida Preta -->
+      <!-- O TÍTULO AGORA UTILIZA A VARIÁVEL CORRETA COM O PREFIXO (DO, DA, DE) -->
       <h1 class="text-3xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight sm:tracking-tighter leading-[1.2] sm:leading-[1.1]">
-        {q ? 'Resultados da Busca' : category ? `Notícias de ${capitalizedCategory}` : 'O mundo inteiro, em um só lugar.'}
+        {q ? 'Resultados da Busca' : category ? `Notícias ${displayCategoryWithPrefix}` : 'O mundo inteiro, em um só lugar.'}
       </h1>
 
       {!q && !category && (
@@ -170,17 +181,14 @@ const buildPageUrl = (targetPage: number) => {
         </p>
       )}
 
-      <!-- Subtítulo refinado para conformidade AdSense -->
       <p class="mt-2 text-base sm:text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto font-medium px-2 sm:px-0">
         {pageDescText}
       </p>
 
-      <!-- BARRA DE PESQUISA FLUTUANTE RESPONSIVA -->
       <form method="GET" action="/noticias" id="search-form" class="mt-8 sm:mt-12 max-w-2xl mx-auto relative group">
         {category && <input type="hidden" name="category" value={category} />}
         {country && <input type="hidden" name="country" value={country} />}
 
-        <!-- Sombra glow animada -->
         <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
         
         <div class="relative flex items-center rounded-2xl bg-white p-1.5 sm:p-2.5 shadow-xl border border-slate-100">
@@ -198,7 +206,6 @@ const buildPageUrl = (targetPage: number) => {
             class="w-full bg-transparent px-4 py-3 text-base sm:text-lg text-slate-900 placeholder-slate-400 focus:outline-none font-medium"
           />
 
-          <!-- Botão Mobile (Ícone Quadrado) -->
           <button
             type="submit"
             aria-label="Pesquisar"
@@ -209,7 +216,6 @@ const buildPageUrl = (targetPage: number) => {
             </svg>
           </button>
 
-          <!-- Botão Desktop -->
           <button
             type="submit"
             class="hidden sm:inline-flex shrink-0 items-center justify-center rounded-xl bg-slate-900 px-8 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:bg-cyan-600 hover:shadow-cyan-500/25 active:scale-95 uppercase tracking-wider whitespace-nowrap"
@@ -224,7 +230,6 @@ const buildPageUrl = (targetPage: number) => {
   <main class="min-h-screen w-full bg-white px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-7xl">
       
-      <!-- Cabeçalho de Controle Elegante e Responsivo -->
       <section class="mb-8 sm:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-50/50 p-4 sm:p-5 rounded-2xl border border-slate-100" aria-label="Resumo dos resultados">
         <div class="flex items-center gap-3 w-full sm:w-auto">
           <div class="h-10 w-10 shrink-0 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-600">
@@ -252,7 +257,6 @@ const buildPageUrl = (targetPage: number) => {
         </div>
       </section>
 
-      <!-- GRID DE CARDS -->
       {paginatedSources.length > 0 ? (
         <section aria-label="Fontes de notícias">
           <div id="sources-grid" class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12 sm:mb-16">
@@ -262,7 +266,6 @@ const buildPageUrl = (targetPage: number) => {
           </div>
         </section>
       ) : (
-        <!-- Estado Vazio / Sem Resultados -->
         <section id="no-results" class="mt-4 sm:mt-8 mb-12 sm:mb-16 rounded-3xl border border-slate-200 bg-slate-50 px-6 py-16 sm:py-24 text-center shadow-sm">
           <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white border border-slate-200 mb-6 shadow-sm">
             <span class="text-2xl sm:text-3xl text-slate-400">⌕</span>
@@ -279,7 +282,6 @@ const buildPageUrl = (targetPage: number) => {
         </section>
       )}
 
-      <!-- PAGINAÇÃO MODERNA E RESPONSIVA -->
       {totalPages > 1 && (
         <nav id="pagination-nav" class="flex items-center justify-center pb-12 sm:pb-16 pt-6 sm:pt-8 border-t border-slate-100" aria-label="Navegação">
           <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm w-full sm:w-auto">
@@ -311,7 +313,6 @@ const buildPageUrl = (targetPage: number) => {
         </nav>
       )}
 
-      <!-- SEÇÃO EDITORIAL (AdSense & SEO) -->
       <section class="mt-8 sm:mt-12 relative overflow-hidden bg-slate-50 rounded-3xl p-6 sm:p-14 text-slate-900 shadow-xl border border-slate-200/80">
         
         <div class="relative z-10 max-w-3xl space-y-4">
