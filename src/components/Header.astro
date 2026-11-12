@@ -62,10 +62,10 @@ const isActive = (href: string) =>
   <!-- Navegação principal -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="min-h-20 sm:min-h-24 flex items-center justify-between gap-4">
+    <div class="min-h-16 sm:min-h-24 py-3 sm:py-0 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4">
 
       <!-- Marca -->
-      <div class="flex-1 min-w-0 flex justify-start items-center">
+      <div class="flex-shrink-0 flex items-center">
         <a
           href="/"
           class="inline-flex items-center transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg"
@@ -78,7 +78,7 @@ const isActive = (href: string) =>
             height="80"
             fetchpriority="high"
             decoding="async"
-            class="w-[190px] sm:w-[250px] md:w-[300px] lg:w-[330px] h-auto object-contain"
+            class="w-[160px] sm:w-[250px] md:w-[300px] lg:w-[330px] h-auto object-contain"
           />
         </a>
       </div>
@@ -86,10 +86,10 @@ const isActive = (href: string) =>
       <!-- Menu principal -->
       <nav
         aria-label="Navegação principal"
-        class="hidden md:flex items-center justify-center flex-shrink-0"
+        class="flex-1 flex items-center justify-end sm:justify-center"
       >
         <div
-          class="flex items-center gap-1 rounded-2xl border border-slate-800 bg-slate-900/80 p-1.5 shadow-inner"
+          class="flex items-center gap-1 rounded-2xl border border-slate-800 bg-slate-900/80 p-1 sm:p-1.5 shadow-inner overflow-x-auto whitespace-nowrap custom-scrollbar"
         >
           {navLinks.map((link) => {
             const active = isActive(link.href);
@@ -99,7 +99,7 @@ const isActive = (href: string) =>
                 href={link.href}
                 aria-current={active ? 'page' : undefined}
                 class:list={[
-                  'px-5 py-2.5 rounded-xl text-sm font-semibold tracking-wide transition-all duration-200',
+                  'px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500',
                   active
                     ? 'bg-cyan-700 text-white shadow-md shadow-cyan-900/20'
@@ -114,10 +114,10 @@ const isActive = (href: string) =>
       </nav>
 
       <!-- Área administrativa -->
-      <div class="flex-1 flex justify-end items-center">
+      <div class="flex-shrink-0 flex items-center justify-end">
         <a
           href="/admin/login"
-          class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:border-cyan-700/50 hover:text-cyan-400 transition-all text-xs font-semibold tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+          class="inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:border-cyan-700/50 hover:text-cyan-400 transition-all text-xs font-semibold tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
           title="Acesso restrito à administração"
           aria-label="Acessar área administrativa"
         >
@@ -135,7 +135,7 @@ const isActive = (href: string) =>
               d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
             />
           </svg>
-          <span>Administração</span>
+          <span class="hidden md:inline">Administração</span>
         </a>
       </div>
 
@@ -143,14 +143,14 @@ const isActive = (href: string) =>
 
   </div>
 
-  <!-- Navegação por categorias (Centralizada) -->
-  <div class="border-t border-slate-800 bg-slate-950">
+  <!-- Navegação por categorias com comportamento isolado via classe CSS -->
+  <div class="border-t border-slate-800 bg-slate-950 overflow-hidden">
 
     <nav
       aria-label="Categorias de notícias"
-      class="max-w-7xl mx-auto flex items-center justify-center gap-2 overflow-x-auto px-4 sm:px-6 lg:px-8 py-3 scrollbar-none"
+      class="categories-container max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto px-3 sm:px-6 lg:px-8 py-3 pb-4 custom-scrollbar scroll-smooth"
     >
-      {categories.map((category) => {
+      {categories.map((category, index) => {
         const href = `/noticias?category=${category.slug}`;
         const active = currentPath === href || currentCategoryParam === category.slug;
 
@@ -161,6 +161,7 @@ const isActive = (href: string) =>
             class:list={[
               'inline-flex flex-shrink-0 items-center gap-1.5 px-3.5 py-2 rounded-lg border text-xs font-medium whitespace-nowrap transition-all duration-200',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500',
+              index === 0 ? 'ml-1 sm:ml-0' : '',
               active
                 ? 'border-cyan-700/70 bg-cyan-950/50 text-cyan-300'
                 : 'border-slate-800 bg-slate-900 text-slate-300 hover:border-cyan-700/50 hover:bg-slate-800 hover:text-white',
@@ -179,3 +180,36 @@ const isActive = (href: string) =>
   </div>
 
 </header>
+
+<style>
+  /* Comportamento cirúrgico para evitar conflito entre Mobile e PC */
+  .categories-container {
+    justify-content: flex-start; /* No mobile: começa à esquerda, permitindo ver a categoria 'Brasil' e fazer scroll */
+  }
+
+  @media (min-width: 640px) {
+    .categories-container {
+      justify-content: center; /* No PC: centraliza perfeitamente o bloco inteiro de categorias */
+    }
+  }
+
+  /* Barra de rolagem personalizada e elegante */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155; /* slate-700 */
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #0891b2; /* cyan-600 */
+  }
+  
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #334155 transparent;
+  }
+</style>
