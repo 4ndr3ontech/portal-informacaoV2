@@ -1,0 +1,622 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import fontesGlobaisJson from '../data/clean-news-sources.json';
+import { sources as fontesBrasil } from '../data/sources';
+
+export const prerender = true;
+
+// Normaliza os dados do JSON global
+const fontesGlobais = Array.isArray(fontesGlobaisJson)
+  ? fontesGlobaisJson
+  : ((fontesGlobaisJson as any)?.default || []);
+
+// Unifica as fontes globais e do Brasil para exibir a contagem real e exata
+const rawAllSources = [...fontesGlobais, ...fontesBrasil];
+const allSources = Array.from(
+  new Map(
+    rawAllSources
+      .filter(source => source && source.id)
+      .map(source => [source.id, source])
+  ).values()
+);
+
+const totalSourcesCount = allSources.length;
+---
+
+<BaseLayout title="Metodologia e Diretório | O Mundo em um Clique">
+
+  <!-- ===================================================== -->
+  <!-- 1. APRESENTAÇÃO PRINCIPAL -->
+  <!-- ===================================================== -->
+
+  <section class="relative bg-white text-slate-900 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+    <div class="max-w-5xl mx-auto text-center space-y-6">
+
+      <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight text-slate-900">
+        O mundo inteiro em um só lugar
+      </h1>
+
+      <p class="text-lg sm:text-xl font-bold text-slate-600 max-w-3xl mx-auto leading-relaxed">
+        Descubra jornais, portais de notícias, agências de imprensa e publicações especializadas do Brasil e do mundo. Explore diferentes países, idiomas e áreas de interesse em um diretório criado para facilitar a descoberta e o acesso a fontes de informação na internet.
+      </p>
+
+      <!-- Pesquisa principal transformada em Formulário Funcional -->
+      <form action="/noticias" method="GET" class="max-w-2xl mx-auto pt-4">
+        <div class="relative flex items-center">
+          <input
+            type="text"
+            id="search-sources-input"
+            name="q"
+            aria-label="Pesquisar fontes de informação"
+            placeholder="Pesquise por nome, assunto ou palavra-chave. Ex.: economia, tecnologia, G1..."
+            class="w-full px-6 py-4 pr-14 rounded-2xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-400 font-bold focus:outline-none focus:border-cyan-600 focus:ring-2 focus:ring-cyan-600/20 shadow-lg transition-all"
+          />
+
+          <button
+            type="submit"
+            aria-label="Pesquisar"
+            class="absolute right-3 p-2 text-cyan-600 hover:text-cyan-700 font-black cursor-pointer transition-colors"
+          >
+            🔍
+          </button>
+        </div>
+
+        <p class="text-xs font-bold text-slate-500 mt-3">
+          Explore
+          <strong class="text-cyan-700 font-black">{totalSourcesCount}</strong>
+          fontes cadastradas no diretório e descubra novos caminhos para a informação.
+        </p>
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 2. O QUE É O PORTAL -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="max-w-3xl mx-auto text-center space-y-5">
+
+        <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+          Sobre o diretório
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          Encontre fontes de informação sem precisar procurar em toda a internet
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          O Mundo em um Clique é um diretório digital que reúne e organiza endereços de jornais, revistas, portais, agências de notícias e publicações especializadas. A proposta é tornar mais simples a descoberta de fontes nacionais e internacionais, oferecendo um ponto de partida para quem deseja acompanhar diferentes assuntos e perspectivas.
+        </p>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          Em vez de produzir ou reproduzir notícias, o portal facilita o acesso aos sites responsáveis pelas publicações. Assim, o visitante pode consultar diretamente as fontes originais e conhecer diferentes veículos de informação.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 3. O QUE VOCÊ ENCONTRA -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto space-y-10">
+
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+
+        <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+          Explore diferentes assuntos
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          Fontes de informação para diferentes interesses
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          Encontre publicações que abordam acontecimentos, tendências, análises e novidades em diversas áreas. A organização por categorias ajuda a localizar veículos relacionados aos assuntos que você deseja acompanhar.
+        </p>
+
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">📰</div>
+          <h3 class="text-lg font-black text-slate-900">Jornalismo e notícias</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Jornais, portais de notícias e publicações jornalísticas que acompanham acontecimentos locais, nacionais e internacionais.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">💰</div>
+          <h3 class="text-lg font-black text-slate-900">Economia e negócios</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Publicações sobre mercado financeiro, empresas, investimentos, empreendedorismo e economia.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">💻</div>
+          <h3 class="text-lg font-black text-slate-900">Tecnologia e inovação</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Fontes especializadas em tecnologia, inteligência artificial, informática, ciência digital e inovação.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">🏛️</div>
+          <h3 class="text-lg font-black text-slate-900">Política e sociedade</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Veículos e publicações que abordam política, administração pública, sociedade e assuntos de interesse coletivo.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">⚽</div>
+          <h3 class="text-lg font-black text-slate-900">Esportes</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Portais e publicações dedicados a competições, modalidades esportivas, clubes, atletas e acontecimentos do esporte.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">🎬</div>
+          <h3 class="text-lg font-black text-slate-900">Cultura e entretenimento</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Publicações sobre cinema, música, televisão, games, cultura, comportamento e entretenimento.
+          </p>
+        </article>
+
+      </div>
+
+      <p class="text-center text-xs text-slate-500 font-medium">
+        As categorias representam áreas de interesse para organização e descoberta de publicações.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 4. ABRANGÊNCIA GEOGRÁFICA -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto space-y-10">
+
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+
+        <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+          Informação sem fronteiras
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          Explore fontes do Brasil e de diferentes regiões do mundo
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          A internet conecta pessoas, acontecimentos e publicações de diferentes partes do planeta. Por isso, o diretório reúne fontes nacionais e internacionais para ampliar as possibilidades de pesquisa e consulta.
+        </p>
+
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <article class="bg-white rounded-3xl border border-slate-200 p-7 sm:p-9 space-y-5 shadow-sm">
+
+          <div class="flex items-center gap-3">
+            <span class="text-3xl" aria-hidden="true">🇧🇷</span>
+            <h3 class="text-2xl font-black text-slate-900">
+              Fontes do Brasil
+            </h3>
+          </div>
+
+          <p class="text-slate-600 font-medium leading-relaxed">
+            Acesse jornais, portais regionais, veículos nacionais, agências de notícias e publicações especializadas brasileiras.
+          </p>
+
+          <p class="text-slate-600 font-medium leading-relaxed">
+            A organização das fontes nacionais permite explorar publicações de diferentes estados e regiões, facilitando a descoberta de veículos locais e de alcance nacional.
+          </p>
+
+        </article>
+
+        <article class="bg-white rounded-3xl border border-slate-200 p-7 sm:p-9 space-y-5 shadow-sm">
+
+          <div class="flex items-center gap-3">
+            <span class="text-3xl" aria-hidden="true">🌎</span>
+            <h3 class="text-2xl font-black text-slate-900">
+              Fontes internacionais
+            </h3>
+          </div>
+
+          <p class="text-slate-600 font-medium leading-relaxed">
+            Descubra publicações de diferentes países, regiões e idiomas, incluindo jornais, revistas, agências de imprensa e veículos especializados.
+          </p>
+
+          <p class="text-slate-600 font-medium leading-relaxed">
+            Consulte fontes internacionais para conhecer diferentes abordagens sobre acontecimentos globais, tendências, ciência, economia, tecnologia e sociedade.
+          </p>
+
+        </article>
+
+      </div>
+
+      <div class="text-center">
+        <p class="text-sm text-slate-500 font-medium">
+          A disponibilidade de países, idiomas e categorias depende das fontes cadastradas no diretório.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 5. COMO AS FONTES SÃO ORGANIZADAS -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto space-y-10">
+
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+
+        <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+          Organização do diretório
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          Encontre cada publicação pela forma mais conveniente
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          Para facilitar a navegação, as fontes são organizadas de acordo com informações que ajudam a identificar sua origem e seu conteúdo.
+        </p>
+
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">📍</div>
+          <h3 class="font-black text-slate-900">País e região</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Identificação da localização geográfica e da área de atuação da publicação.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">🌐</div>
+          <h3 class="font-black text-slate-900">Idioma</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Identificação do idioma utilizado pelo veículo para facilitar sua localização.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">📚</div>
+          <h3 class="font-black text-slate-900">Categoria</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Classificação por assunto, área de interesse e tipo de conteúdo publicado.
+          </p>
+        </article>
+
+        <article class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-2xl" aria-hidden="true">🔗</div>
+          <h3 class="font-black text-slate-900">Acesso original</h3>
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Endereço eletrônico utilizado para encaminhar o visitante ao site da publicação.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 6. METODOLOGIA DE CADASTRO E MANUTENÇÃO -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-5xl mx-auto space-y-10">
+
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+
+        <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+          Nossa metodologia
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          Como as fontes são identificadas e organizadas
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          A organização de um diretório de informação exige critérios consistentes para identificar publicações, registrar seus dados e manter os endereços disponíveis para consulta.
+        </p>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          Nosso modelo de organização considera etapas de identificação, classificação, conferência e manutenção dos registros, com o objetivo de oferecer uma experiência de navegação clara e estruturada.
+        </p>
+
+      </div>
+
+      <div class="space-y-5">
+
+        <article class="flex flex-col sm:flex-row gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            01
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-lg font-black text-slate-900">
+              Identificação das publicações
+            </h3>
+
+            <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
+              Localização de jornais, revistas, portais, agências de imprensa e publicações especializadas que possam integrar o diretório. São considerados o nome da publicação, sua área de atuação e seu endereço eletrônico.
+            </p>
+          </div>
+
+        </article>
+
+        <article class="flex flex-col sm:flex-row gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            02
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-lg font-black text-slate-900">
+              Cadastro e classificação
+            </h3>
+
+            <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
+              Registro das informações disponíveis sobre cada publicação, incluindo país, idioma, categoria e endereço oficial. Essa organização permite agrupar fontes semelhantes e facilitar sua localização.
+            </p>
+          </div>
+
+        </article>
+
+        <article class="flex flex-col sm:flex-row gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            03
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-lg font-black text-slate-900">
+              Conferência dos endereços
+            </h3>
+
+            <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
+              Verificação dos endereços cadastrados para identificar possíveis erros, alterações de domínio ou páginas indisponíveis. A conferência técnica de um endereço não representa uma certificação da qualidade editorial da publicação.
+            </p>
+          </div>
+
+        </article>
+
+        <article class="flex flex-col sm:flex-row gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            04
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-lg font-black text-slate-900">
+              Disponibilização para consulta
+            </h3>
+
+            <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
+              Apresentação das publicações em uma estrutura organizada, permitindo que o visitante pesquise, explore as categorias e acesse diretamente os sites responsáveis pelo conteúdo.
+            </p>
+          </div>
+
+        </article>
+
+        <article class="flex flex-col sm:flex-row gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            05
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-lg font-black text-slate-900">
+              Atualização e manutenção
+            </h3>
+
+            <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
+              Manutenção dos registros para corrigir informações, atualizar endereços, identificar fontes indisponíveis e ampliar gradualmente a quantidade de publicações disponíveis.
+            </p>
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 7. CRITÉRIOS E TRANSPARÊNCIA -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="max-w-3xl mx-auto text-center space-y-4 mb-10">
+
+        <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+          Transparência e critérios
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          Informação organizada com transparência
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          Um diretório útil precisa deixar claro o que oferece, como organiza suas informações e quais são os limites de sua atuação.
+        </p>
+
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <article class="p-7 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <h3 class="text-lg font-black text-slate-900">
+            Organização não é certificação editorial
+          </h3>
+
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            A presença de uma publicação no diretório indica que seu endereço foi cadastrado para consulta. Isso não significa que o portal tenha certificado sua imparcialidade, precisão, credibilidade ou qualidade editorial.
+          </p>
+        </article>
+
+        <article class="p-7 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <h3 class="text-lg font-black text-slate-900">
+            Cada publicação é responsável pelo próprio conteúdo
+          </h3>
+
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            As notícias, opiniões, análises e demais materiais são produzidos e publicados pelos respectivos veículos. O visitante acessa o conteúdo diretamente no ambiente mantido por cada publicação.
+          </p>
+        </article>
+
+        <article class="p-7 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <h3 class="text-lg font-black text-slate-900">
+            Independência das fontes
+          </h3>
+
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            A inclusão de um site não significa necessariamente parceria, vínculo institucional ou concordância com suas opiniões e posicionamentos.
+          </p>
+        </article>
+
+        <article class="p-7 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <h3 class="text-lg font-black text-slate-900">
+            Atualização dos registros
+          </h3>
+
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Endereços, serviços e conteúdos de terceiros podem mudar sem aviso. Por isso, informações e links do diretório podem passar por revisões e atualizações.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 8. COMO UTILIZAR -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-5xl mx-auto space-y-10">
+
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+
+        <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+          Navegação simples
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          Como encontrar e acessar uma fonte de informação
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+          Utilize os recursos do diretório para encontrar publicações relacionadas aos assuntos que deseja acompanhar.
+        </p>
+
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+        <article class="text-center p-6 bg-white rounded-2xl border border-slate-200 space-y-3">
+          <div class="mx-auto w-12 h-12 rounded-full bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            1
+          </div>
+
+          <h3 class="font-black text-slate-900">
+            Pesquise
+          </h3>
+
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Digite o nome de um veículo, país, assunto ou palavra-chave no campo de pesquisa.
+          </p>
+        </article>
+
+        <article class="text-center p-6 bg-white rounded-2xl border border-slate-200 space-y-3">
+          <div class="mx-auto w-12 h-12 rounded-full bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            2
+          </div>
+
+          <h3 class="font-black text-slate-900">
+            Explore
+          </h3>
+
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Consulte as publicações encontradas e identifique aquelas relacionadas ao seu interesse.
+          </p>
+        </article>
+
+        <article class="text-center p-6 bg-white rounded-2xl border border-slate-200 space-y-3">
+          <div class="mx-auto w-12 h-12 rounded-full bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl font-black">
+            3
+          </div>
+
+          <h3 class="font-black text-slate-900">
+            Acesse
+          </h3>
+
+          <p class="text-sm text-slate-600 font-medium leading-relaxed">
+            Clique no link da publicação para visitar o site original e consultar seu conteúdo.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- 9. PROPOSTA DE VALOR E ENCERRAMENTO -->
+  <!-- ===================================================== -->
+
+  <section class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-4xl mx-auto text-center space-y-6">
+
+      <span class="text-xs font-black uppercase tracking-widest text-cyan-700">
+        O Mundo em um Clique
+      </span>
+
+      <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900">
+        Descubra novas fontes. Explore diferentes perspectivas.
+      </h2>
+
+      <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed max-w-3xl mx-auto">
+        A informação está espalhada por milhares de publicações, países e idiomas. Nosso propósito é reunir referências em um só lugar, facilitar sua descoberta e aproximar você das fontes originais.
+      </p>
+
+      <p class="text-lg font-black text-slate-900">
+        Mais caminhos para encontrar informação. Mais possibilidades para explorar o mundo.
+      </p>
+
+    </div>
+  </section>
+
+</BaseLayout>

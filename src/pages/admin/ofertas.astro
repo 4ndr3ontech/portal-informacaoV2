@@ -4,151 +4,368 @@ export const prerender = false;
 import '../../styles/global.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Validação de segurança
+// ==========================================
+// 1. VALIDAÇÃO DA SESSÃO ADMINISTRATIVA
+// ==========================================
+
 const session = Astro.cookies.get('admin_session');
+
 if (!session || session.value !== 'authenticated') {
   return Astro.redirect('/admin/login');
 }
 
-let message = '';
 const db = Astro.locals.runtime.env.DB;
 
-// Processamento de Ações (POST)
+let message = '';
+let messageType = 'success';
+
+// ==========================================
+// 2. PROCESSAMENTO DOS FORMULÁRIOS
+// ==========================================
+
 if (Astro.request.method === 'POST') {
   try {
     const data = await Astro.request.formData();
-    const action = data.get('action');
+    const action = String(data.get('action') || '').trim();
 
-    // Ação de Deletar Oferta
+    // ------------------------------------------
+    // EXCLUIR OFERTA
+    // ------------------------------------------
+
     if (action === 'delete') {
-      const id = data.get('id');
-      if (id) {
-        await db.prepare('DELETE FROM offers WHERE id = ?').bind(id).run();
-        message = 'Oferta eliminada com sucesso!';
-      }
-    } 
-    // Ação de Cadastrar Nova Oferta
-    else {
-      const title = data.get('title')?.toString().trim();
-      const description = data.get('description')?.toString().trim();
-      const image_url = data.get('image_url')?.toString().trim();
-      const affiliate_link = data.get('affiliate_link')?.toString().trim();
-      const price = data.get('price')?.toString().trim();
+      const id = String(data.get('id') || '').trim();
 
-      if (title && affiliate_link) {
-        await db.prepare(
-          'INSERT INTO offers (title, description, image_url, affiliate_link, price, created_at) VALUES (?, ?, ?, ?, ?, ?)'
-        ).bind(title, description || '', image_url || '', affiliate_link, price || '0,00', new Date().toISOString()).run();
-        
-        message = 'Oferta adicionada com sucesso!';
+      if (!id) {
+        throw new Error('ID da oferta não informado.');
+      }
+
+      console.log('[EXCLUIR] ID recebido:', id);
+
+      // Exclui comparando o ID como texto, independentemente
+      // de ele estar armazenado como INTEGER ou TEXT.
+      const result = await db.prepare(
+        'DELETE FROM offers WHERE CAST(id AS TEXT) = ?'
+      ).bind(id).run();
+
+      const changes = result.meta?.changes ?? 0;
+
+      console.log('[EXCLUIR] Registros removidos:', changes);
+
+      if (changes > 0) {
+        message = 'Oferta eliminada com sucesso!';
+        messageType = 'success';
+      } else {
+        message = `Oferta ID ${id} não encontrada no banco de dados.`;
+        messageType = 'error';
       }
     }
-  } catch (error) {
-    message = 'Erro ao processar a operação.';
+
+    // ------------------------------------------
+    // CADASTRAR NOVA OFERTA
+    // ------------------------------------------
+
+    else if (action === 'create') {
+
+      const title = String(data.get('title') || '').trim();
+      const description = String(data.get('description') || '').trim();
+      const image_url = String(data.get('image_url') || '').trim();
+      const affiliate_link = String(data.get('affiliate_link') || '').trim();
+      const price = String(data.get('price') || '').trim();
+
+      if (!title || !affiliate_link) {
+        throw new Error('Preencha o título e o link de afiliado.');
+      }
+
+      await db.prepare(`
+        INSERT INTO offers (
+          title,
+          description,
+          image_url,
+          affiliate_link,
+          price,
+          created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+      `)
+      .bind(
+        title,
+        description,
+        image_url,
+        affiliate_link,
+        price || '0,00',
+        new Date().toISOString()
+      )
+      .run();
+
+      message = 'Oferta cadastrada com sucesso!';
+      messageType = 'success';
+    }
+
+    else {
+      throw new Error('Ação não reconhecida.');
+    }
+
+  } catch (error: any) {
+
+    console.error('[ADMIN] Erro ao processar formulário:', error);
+
+    message = `Erro: ${error.message || 'Falha ao processar a operação.'}`;
+    messageType = 'error';
   }
 }
 
-// Buscar todas as ofertas cadastradas
+// ==========================================
+// 3. BUSCAR OFERTAS NO BANCO DE DADOS
+// ==========================================
+
 let ofertas: any[] = [];
+
 try {
-  const result = await db.prepare('SELECT * FROM offers ORDER BY created_at DESC').all();
+
+  const result = await db.prepare(`
+    SELECT *
+    FROM offers
+    ORDER BY created_at DESC
+  `).all();
+
   ofertas = result.results || [];
-} catch (e) {
-  message = 'Erro ao carregar as ofertas. Verifique se as tabelas foram criadas.';
+
+} catch (error: any) {
+
+  console.error('[ADMIN] Erro ao carregar ofertas:', error);
+
+  message = 'Erro ao carregar as ofertas. Verifique a conexão com o Cloudflare D1.';
+  messageType = 'error';
 }
 ---
 
-<BaseLayout title="Gestão de Ofertas | Admin" description="Gerir ofertas e links de afiliados.">
+<BaseLayout
+  title="Gestão de Ofertas | Admin"
+  description="Gerenciar ofertas e links de afiliados."
+>
+
   <main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+
     <div class="max-w-7xl mx-auto space-y-8">
-      
+
+      <!-- CABEÇALHO -->
+
       <div class="flex justify-between items-center bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+
         <div>
-          <h1 class="text-2xl font-black text-slate-900">Gestão de Ofertas</h1>
-          <p class="text-sm text-slate-500 font-bold mt-1">Adicione e controle os produtos afiliados</p>
+          <h1 class="text-2xl font-black text-slate-900">
+            Gestão de Ofertas
+          </h1>
+
+          <p class="text-sm text-slate-500 font-bold mt-1">
+            Adicione e controle os produtos afiliados
+          </p>
         </div>
-        <a href="/admin/dashboard" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-wider rounded-2xl border border-slate-200 transition-colors">
+
+        <a
+          href="/admin/dashboard"
+          class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-wider rounded-2xl border border-slate-200 transition-colors"
+        >
           Voltar ao Painel
         </a>
+
       </div>
 
+      <!-- MENSAGENS -->
+
       {message && (
-        <div class={`p-4 rounded-2xl text-sm font-black border ${message.includes('Erro') ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
+        <div class={`p-4 rounded-2xl text-sm font-black border ${
+          messageType === 'error'
+            ? 'bg-red-50 text-red-700 border-red-200'
+            : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+        }`}>
           {message}
         </div>
       )}
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Coluna da Esquerda: Formulário de Cadastro -->
+
+        <!-- FORMULÁRIO DE CADASTRO -->
+
         <div class="lg:col-span-1 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm h-fit">
-          <h2 class="text-lg font-black text-slate-900 mb-6">Nova Oferta</h2>
-          <form method="POST" data-astro-reload class="space-y-4">
+
+          <h2 class="text-lg font-black text-slate-900 mb-6">
+            Nova Oferta
+          </h2>
+
+          <form method="POST" class="space-y-4">
+
+            <input type="hidden" name="action" value="create" />
+
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase mb-1">Título do Produto *</label>
-              <input type="text" name="title" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm" placeholder="Ex: Monitor Dell 27..." />
+              <label class="block text-xs font-black text-slate-700 uppercase mb-1">
+                Título do Produto *
+              </label>
+
+              <input
+                type="text"
+                name="title"
+                required
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm"
+                placeholder="Ex: Monitor Dell 27..."
+              />
             </div>
+
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase mb-1">Preço (Opcional)</label>
-              <input type="text" name="price" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm" placeholder="Ex: 1.200,00" />
+              <label class="block text-xs font-black text-slate-700 uppercase mb-1">
+                Preço (Opcional)
+              </label>
+
+              <input
+                type="text"
+                name="price"
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm"
+                placeholder="Ex: 1.200,00"
+              />
             </div>
+
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase mb-1">URL da Imagem</label>
-              <input type="url" name="image_url" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm" placeholder="https://..." />
+              <label class="block text-xs font-black text-slate-700 uppercase mb-1">
+                URL da Imagem
+              </label>
+
+              <input
+                type="url"
+                name="image_url"
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm"
+                placeholder="https://..."
+              />
             </div>
+
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase mb-1">Link de Afiliado *</label>
-              <input type="url" name="affiliate_link" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm" placeholder="https://..." />
+              <label class="block text-xs font-black text-slate-700 uppercase mb-1">
+                Link de Afiliado *
+              </label>
+
+              <input
+                type="url"
+                name="affiliate_link"
+                required
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm"
+                placeholder="https://..."
+              />
             </div>
+
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase mb-1">Descrição Curta</label>
-              <textarea name="description" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm"></textarea>
+              <label class="block text-xs font-black text-slate-700 uppercase mb-1">
+                Descrição Curta
+              </label>
+
+              <textarea
+                name="description"
+                rows="3"
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm"
+              ></textarea>
             </div>
-            <button type="submit" class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-black uppercase transition-colors">
+
+            <button
+              type="submit"
+              class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-black uppercase transition-colors"
+            >
               Cadastrar Oferta
             </button>
+
           </form>
+
         </div>
 
-        <!-- Coluna da Direita: Lista de Ofertas Ativas -->
+        <!-- LISTAGEM DE OFERTAS -->
+
         <div class="lg:col-span-2 space-y-4">
+
           <h2 class="text-lg font-black text-slate-900 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
             Ofertas Ativas ({ofertas.length})
           </h2>
-          
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
             {ofertas.map((oferta: any) => (
+
               <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex flex-col gap-3">
-                {oferta.image_url && <img src={oferta.image_url} alt={oferta.title} class="w-full h-40 object-cover rounded-xl border border-slate-100" />}
+
+                {oferta.image_url && (
+                  <img
+                    src={oferta.image_url}
+                    alt={oferta.title}
+                    class="w-full h-40 object-cover rounded-xl border border-slate-100"
+                  />
+                )}
+
                 <div>
-                  <h3 class="font-black text-slate-900 truncate">{oferta.title}</h3>
-                  <p class="text-sm font-bold text-cyan-600">{oferta.price ? `R$ ${oferta.price}` : 'Sem preço'}</p>
+                  <h3 class="font-black text-slate-900 truncate">
+                    {oferta.title}
+                  </h3>
+
+                  <p class="text-sm font-bold text-cyan-600">
+                    {oferta.price ? `R$ ${oferta.price}` : 'Sem preço'}
+                  </p>
                 </div>
-                
+
                 <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+
                   <div class="flex items-center gap-3">
-                    <a href={oferta.affiliate_link} target="_blank" class="text-xs font-black text-cyan-600 hover:underline">Ver Link</a>
-                    <a href={`/admin/editar-oferta?id=${oferta.id}`} class="text-xs font-black text-amber-500 hover:underline">Editar</a>
-                    
-                    {/* Botão de Eliminar com data-astro-reload para forçar o POST no servidor */}
-                    <form method="POST" data-astro-reload onsubmit="return confirm('Tem certeza que deseja eliminar esta oferta?');">
+
+                    <a
+                      href={oferta.affiliate_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-xs font-black text-cyan-600 hover:underline"
+                    >
+                      Ver Link
+                    </a>
+
+                    <a
+                      href={`/admin/editar-oferta?id=${encodeURIComponent(String(oferta.id))}`}
+                      class="text-xs font-black text-amber-500 hover:underline"
+                    >
+                      Editar
+                    </a>
+
+                    <!-- NOVO FORMULÁRIO DE EXCLUSÃO -->
+                    <form method="POST">
                       <input type="hidden" name="action" value="delete" />
-                      <input type="hidden" name="id" value={oferta.id} />
-                      <button type="submit" class="text-xs font-black text-red-500 hover:underline cursor-pointer bg-transparent border-0 p-0">
+                      <input type="hidden" name="id" value={String(oferta.id)} />
+
+                      <button
+                        type="submit"
+                        onclick="return confirm('Deseja realmente excluir esta oferta?');"
+                        class="text-xs font-black text-red-500 hover:underline cursor-pointer bg-transparent border-0 p-0"
+                      >
                         Eliminar
                       </button>
                     </form>
+
                   </div>
-                  <span class="text-xs font-bold text-slate-400">ID: {oferta.id}</span>
+
+                  <span class="text-xs font-bold text-slate-400">
+                    ID: {oferta.id}
+                  </span>
+
                 </div>
+
               </div>
+
             ))}
+
             {ofertas.length === 0 && (
-              <p class="text-slate-500 text-sm font-bold p-4">Nenhuma oferta cadastrada ainda.</p>
+              <p class="text-slate-500 text-sm font-bold p-4">
+                Nenhuma oferta cadastrada ainda.
+              </p>
             )}
+
           </div>
+
         </div>
+
       </div>
 
     </div>
+
   </main>
+
 </BaseLayout>

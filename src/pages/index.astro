@@ -1,387 +1,360 @@
 ---
+export const prerender = false; // Permite a busca em tempo real no servidor
+
+import '../styles/global.css';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SourceCard from '../components/SourceCard.astro';
-import { getFaviconUrl, getCountryFlag, getCategoryIcon } from '../lib/utils';
-
-import fontesGlobais from '../data/clean-news-sources.json';
-import rawFontesBrasil from '../data/brazil-sources.json';
+import fontesGlobaisJson from '../data/clean-news-sources.json';
+import { sources as fontesBrasil } from '../data/sources';
 import type { NewsSource } from '../types';
 
-// Garante segurança nos arrays
-const fontesOriginais: NewsSource[] = Array.isArray(fontesGlobais)
-  ? fontesGlobais
-  : ((fontesGlobais as any).default || []);
+// Normaliza os dados do JSON global/antigo
+const fontesGlobais: NewsSource[] = Array.isArray(fontesGlobaisJson)
+  ? (fontesGlobaisJson as NewsSource[])
+  : ((fontesGlobaisJson as any)?.default || []);
 
-const fontesBrasil: NewsSource[] = Array.isArray(rawFontesBrasil) 
-  ? rawFontesBrasil 
-  : ((rawFontesBrasil as any).default || []);
+// Unifica os sites globais/internacionais com os do Brasil em um único grande diretório
+const rawAllSources: NewsSource[] = [...fontesGlobais, ...fontesBrasil];
 
-// Como o clean-news-sources.json já está totalmente limpo, juntamos diretamente ao acervo do Brasil
-const sources: NewsSource[] = [...fontesOriginais, ...fontesBrasil];
+// Deduplica as fontes pelo ID para garantir unicidade absoluta
+const allSources = Array.from(
+  new Map(
+    rawAllSources
+      .filter(source => source && source.id)
+      .map(source => [source.id, source])
+  ).values()
+);
 
-const featuredSource = sources.find(s => s.id === 'bbc-news-brasil') || sources[0];
-const totalSources = sources.length;
+const totalSources = allSources.length;
 
-// Limita a renderização inicial no servidor para evitar o Erro 1102 da Cloudflare
-const INITIAL_RENDER_LIMIT = 12;
-const initialSources = sources.slice(0, INITIAL_RENDER_LIMIT);
+// Parâmetros da URL: busca, categoria, país e paginação.
+const url = Astro.url;
+const rawQuery = (url.searchParams.get('q') || '').trim();
+const q = rawQuery.slice(0, 120);
+const category = (url.searchParams.get('category') || '').trim();
+const country = (url.searchParams.get('country') || '').trim();
 
-const categoriesList = [
-  { slug: 'brasil', label: 'Brasil', desc: 'Principais veículos de notícias nacionais' },
-  { slug: 'mundo', label: 'Mundo', desc: 'Análises e acontecimentos internacionais' },
-  { slug: 'politica', label: 'Política', desc: 'Bastidores dos poderes executivo e legislativo' },
-  { slug: 'economia', label: 'Economia', desc: 'Mercado financeiro, negócios e finanças' },
-  { slug: 'tecnologia', label: 'Tecnologia', desc: 'IA, software, inovação e cultura digital' },
-  { slug: 'games', label: 'Games', desc: 'Lançamentos, eSports e cultura gamer' },
-  { slug: 'esportes', label: 'Esportes', desc: 'Futebol, ligas mundiais e modalidades' },
-  { slug: 'ciencia', label: 'Ciência', desc: 'Pesquisas, astronomia e descobertas' },
-  { slug: 'saude', label: 'Saúde', desc: 'Avanços médicos e políticas públicas' },
-  { slug: 'entretenimento', label: 'Entretenimento', desc: 'Filmes, séries, música e cultura' },
-  { slug: 'educacao', label: 'Educação', desc: 'Enem, vestibulares, concursos e carreiras' },
-  { slug: 'investimentos', label: 'Investimentos', desc: 'FIIs, ações, criptomoedas e finanças' }
-];
+const requestedPage = Number.parseInt(url.searchParams.get('page') || '1', 10);
+const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+const itemsPerPage = 24;
+
+// Remove acentos e diferenças entre letras maiúsculas/minúsculas.
+const normalizeStr = (value: unknown): string => {
+  if (typeof value !== 'string') return '';
+
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+};
+
+const normalizedQuery = normalizeStr(q);
+const normalizedCategory = normalizeStr(category);
+const normalizedCountry = normalizeStr(country);
+
+// Filtragem executada no servidor.
+const filteredSources = allSources.filter((source) => {
+  const name = normalizeStr(source.name);
+  const description = normalizeStr(source.description);
+  const categories = (source.categories || []).map(normalizeStr);
+  const sourceCountry = normalizeStr(source.country || 'global');
+
+  const searchableContent = [
+    name,
+    description,
+    categories.join(' '),
+    sourceCountry
+  ].join(' ');
+
+  const matchesQuery = normalizedQuery
+    ? normalizedQuery
+        .split(/\s+/)
+        .filter(Boolean)
+        .every((term) => searchableContent.includes(term))
+    : true;
+
+  // Se a categoria selecionada for 'brasil', filtramos rigorosamente pelo país 'br'.
+  // Para qualquer outra categoria, valida normalmente no array de categorias.
+  const matchesCategory = normalizedCategory
+    ? normalizedCategory === 'brasil'
+      ? sourceCountry === 'br'
+      : categories.includes(normalizedCategory)
+    : true;
+
+  const matchesCountry = normalizedCountry
+    ? sourceCountry === normalizedCountry
+    : true;
+
+  return matchesQuery && matchesCategory && matchesCountry;
+});
+
+// Ordena as fontes filtradas pelos mais acessados (rank menor primeiro)
+const sortedFilteredSources = [...filteredSources].sort((a, b) => {
+  const rankA = a.rank ?? 999;
+  const rankB = b.rank ?? 999;
+  return rankA - rankB;
+});
+
+// O primeiro item dos filtrados e ordenados é o destaque da página (se não houver busca ativa ou em geral)
+const featuredSource = sortedFilteredSources.length > 0 ? sortedFilteredSources[0] : null;
+
+// Paginação corrigida e erro de sintaxe resolvido.
+const totalFiltered = sortedFilteredSources.length;
+const totalPages = Math.max(1, Math.ceil(totalFiltered / itemsPerPage));
+const currentPage = Math.min(page, totalPages);
+const startIndex = (currentPage - 1) * itemsPerPage;
+
+const paginatedSources = sortedFilteredSources.slice(
+  startIndex,
+  startIndex + itemsPerPage
+);
+
+// Nome amigável da categoria.
+const capitalizedCategory = normalizedCategory
+  ? normalizedCategory === 'brasil'
+    ? 'Brasil'
+    : normalizedCategory.charAt(0).toUpperCase() + normalizedCategory.slice(1)
+  : '';
+
+// Descrições editoriais robustas das categorias (Essencial para E-E-A-T e AdSense)
+const descricoesPorCategoria: Record<string, string> = {
+  brasil: 'Acompanhe as principais notícias do Brasil por meio de jornais, portais de notícias, agências de informação e veículos de comunicação regionais. Explore fontes jornalísticas de diferentes estados e regiões, com conteúdos sobre política, economia, sociedade, educação, cultura, segurança pública e acontecimentos que impactam o cotidiano dos brasileiros. Encontre veículos nacionais e regionais, conheça suas áreas de cobertura e acesse diretamente suas publicações para acompanhar os fatos mais relevantes do país.',
+  mundo: 'Acompanhe os principais acontecimentos internacionais e descubra como os fatos que ocorrem em diferentes países influenciam o cenário global. Explore jornais estrangeiros, agências internacionais e veículos de comunicação especializados em política internacional, economia, diplomacia, conflitos, meio ambiente, tecnologia e sociedade. Consulte fontes de diferentes países e idiomas, compare perspectivas jornalísticas e amplie sua compreensão sobre os acontecimentos que movimentam o mundo.',
+  politica: 'Acompanhe as principais notícias e decisões que influenciam a política brasileira e internacional. Encontre veículos especializados na cobertura dos poderes Executivo, Legislativo e Judiciário, eleições, partidos políticos, políticas públicas, administração governamental e relações institucionais. Explore diferentes fontes jornalísticas para acompanhar decisões políticas, debates públicos, mudanças legislativas e acontecimentos que influenciam a sociedade e a administração dos países.',
+  economia: 'Acompanhe as principais notícias sobre economia, negócios e mercado financeiro no Brasil e no mundo. Explore publicações especializadas em investimentos, empreendedorismo, comércio, indústria, mercado de trabalho e política monetária. Encontre informações sobre inflação, taxas de juros, câmbio, bolsas de valores, decisões econômicas e tendências dos mercados. Consulte diferentes veículos para compreender os indicadores econômicos e acompanhar as transformações que afetam empresas, investidores e consumidores.',
+  tecnologia: 'Descubra as principais notícias, lançamentos e tendências do universo da tecnologia. Explore portais especializados em hardware, computadores, smartphones, inteligência artificial, sistemas operacionais, desenvolvimento de software, cibersegurança, redes e inovação digital. Acompanhe análises de produtos, atualizações de sistemas, avanços tecnológicos, pesquisas e movimentos da indústria. Encontre diferentes fontes de informação para acompanhar a evolução tecnológica e entender como as inovações estão transformando o mercado e o cotidiano.',
+  games: 'Fique por dentro das novidades da indústria dos videogames e do universo do entretenimento digital. Explore sites especializados em jogos para PC, consoles e dispositivos móveis, com notícias sobre lançamentos, atualizações, análises, desenvolvedoras, estúdios, hardware gamer e competições de eSports. Acompanhe os principais acontecimentos do mercado, descubra novos jogos e consulte diferentes publicações para conhecer as tendências que movimentam a indústria dos games.',
+  esportes: 'Acompanhe as principais notícias, competições e resultados do esporte brasileiro e internacional. Explore jornais e portais especializados em futebol, basquete, vôlei, tênis, automobilismo, esportes olímpicos e diversas outras modalidades. Encontre informações sobre campeonatos, clubes, atletas, transferências, calendário esportivo, resultados e bastidores das competições. Consulte diferentes fontes para acompanhar os acontecimentos e ficar por dentro de tudo o que movimenta o cenário esportivo.',
+  ciencia: 'Explore as principais descobertas científicas, pesquisas e avanços que ampliam o conhecimento sobre o universo e a vida na Terra. Encontre publicações especializadas em astronomia, física, química, biologia, exploração espacial, paleontologia, meio ambiente e tecnologia. Acompanhe estudos científicos, experimentos, descobertas, missões espaciais e pesquisas acadêmicas. Consulte differentes fontes de divulgação científica para compreender novas descobertas e acompanhar o desenvolvimento do conhecimento humano.',
+  saude: 'Acompanhe notícias, pesquisas e avanços relacionados à saúde, medicina e qualidade de vida. Explore publicações especializadas e instituições de referência que abordam saúde pública, prevenção de doenças, vacinação, epidemiologia, pesquisas médicas, saúde mental, alimentação e inovação na medicina. Encontre informações sobre estudos científicos, tecnologias médicas, políticas de saúde e novos tratamentos. Consulte fontes confiáveis e lembre-se de que conteúdos informativos não substituem a avaliação de profissionais de saúde.'
+};
+
+// Texto editorial para a página principal quando nenhum filtro está ativo
+const textoGeralDiretorio = 'O Mundo em um Clique atua como um diretório centralizado de inteligência midiática e fontes confiáveis. Nossa missão é conectar leitores a portais de imprensa jornalística idôneos, garantindo rapidez na pesquisa e diversidade de pontos de vista sobre os fatos que moldam o cotidiano global.';
+
+// Título e descrição exibidos conforme a pesquisa ou categoria selecionada.
+const pageTitleText = q
+  ? `Resultados para: "${q}"`
+  : (capitalizedCategory || 'Diretório de Notícias');
+
+const pageDescText = normalizedCategory
+  ? (
+      descricoesPorCategoria[normalizedCategory] ||
+      `Explore fontes de informação e veículos de comunicação relacionados à categoria ${capitalizedCategory}. Consulte as publicações e acesse diretamente os sites das fontes listadas.`
+    )
+  : q
+    ? `Encontre veículos de comunicação relacionados a "${q}". Consulte jornais, portais de notícias e agências de informação e acesse diretamente os sites das fontes encontradas.`
+    : 'Explore um diretório com milhares de portais, jornais e revistas verificadas. Encontre fontes confiáveis, pesquise por assuntos do seu interesse e acesse o conteúdo original com um clique.';
+
+// Mantém os filtros ativos ao navegar entre as páginas.
+const buildPageUrl = (targetPage: number) => {
+  const params = new URLSearchParams();
+
+  if (q) params.set('q', q);
+  if (category) params.set('category', category);
+  if (country) params.set('country', country);
+  params.set('page', String(targetPage));
+
+  return `/?${params.toString()}`;
+};
 ---
 
-<BaseLayout 
-  title="Início | O mundo em um click"
-  description="Acesse os principais jornais online e portais de notícias do Brasil e do mundo. Encontre fontes de informação sobre política, economia, tecnologia, esportes e atualidades em uma única plataforma."
->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 w-full">
-    
-    <!-- Hero Section com Pesquisa Inteligente em Tempo Real -->
-    <section class="relative text-center py-12 px-4 rounded-3xl bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 overflow-hidden">
-      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none"></div>
+<BaseLayout title={`${pageTitleText} | O Mundo em um Clique`}>
+  <!-- HERO SECTION RENOVADA E OTIMIZADA PARA MOBILE -->
+  <header class="relative overflow-hidden bg-slate-50 border-b border-slate-200 px-4 pt-12 pb-16 sm:pt-28 sm:pb-32">
+    <!-- Efeitos de iluminação de fundo (Blobs Blur) -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-cyan-400/15 blur-[100px] sm:blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="absolute -bottom-10 -right-10 w-64 h-64 sm:w-96 sm:h-96 bg-blue-500/10 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none"></div>
 
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-4 max-w-4xl mx-auto leading-tight">
-        O mundo inteiro em um <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">só lugar</span>
+    <div class="relative z-10 mx-auto max-w-4xl text-center">
+      
+      <!-- Título de Alto Impacto com Cor Sólida Preta -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight sm:tracking-tighter mb-6 leading-[1.15]">
+        {q ? 'Resultados da Busca' : category ? `Notícias de ${capitalizedCategory}` : (
+          <Fragment>
+            Conectando você à <br class="hidden sm:block" />
+            <span class="text-slate-900 font-black">
+              informação global.
+            </span>
+          </Fragment>
+        )}
       </h1>
 
-      <p class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto mb-8 font-bold leading-relaxed">
-        Acesse os principais jornais online e portais de notícias do Brasil e do mundo. Encontre fontes de informação sobre política, economia, tecnologia, esportes e atualidades em uma única plataforma.
+      <!-- Subtítulo mais Profissional e Persuasivo -->
+      <p class="mt-4 text-base sm:text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto font-medium px-2 sm:px-0">
+        {pageDescText}
       </p>
 
-      <!-- Input de Pesquisa Interativa -->
-      <div class="max-w-2xl mx-auto relative group">
-        <div class="flex items-center rounded-2xl bg-white border border-slate-300 p-2 shadow-lg shadow-slate-200/50 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
-          <span class="pl-3 text-slate-400 text-lg">🔍</span>
+      <!-- BARRA DE PESQUISA FLUTUANTE RESPONSIVA -->
+      <form method="GET" action="/" id="search-form" class="mt-8 sm:mt-12 max-w-2xl mx-auto relative group">
+        {category && <input type="hidden" name="category" value={category} />}
+        {country && <input type="hidden" name="country" value={country} />}
+
+        <!-- Sombra glow animada -->
+        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+        
+        <div class="relative flex items-center rounded-2xl bg-white p-1.5 sm:p-2.5 shadow-xl border border-slate-100">
+          <svg class="hidden sm:block ml-4 h-6 w-6 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+
           <input
             id="search-input"
-            type="text"
-            aria-label="Pesquise por portais, temas ou palavras-chave (ex: Economia, G1, Inteligência Artificial...)"
-            placeholder="Pesquise por portais, temas ou palavras-chave (ex: Economia, G1, Inteligência Artificial...)"
-            class="w-full bg-transparent px-3 py-2 text-slate-900 placeholder-slate-400 focus:outline-none text-sm font-bold"
+            type="search"
+            name="q"
+            value={q}
+            maxlength="120"
+            placeholder="Buscar por jornal, portal, revista ou assunto..."
+            class="w-full bg-transparent px-4 py-3 text-base sm:text-lg text-slate-900 placeholder-slate-400 focus:outline-none font-medium"
           />
-        </div>
-      </div>
 
-      <!-- Contador de fontes dinâmico atualizado -->
-      <div id="results-count" class="mt-6 text-slate-600 font-extrabold text-sm tracking-wide">
-        Exibindo <span class="text-cyan-600 font-black text-base">{totalSources}</span> fontes de informação ativas
-      </div>
-    </section>
-
-    <!-- Explore por Categoria -->
-    <section class="space-y-6">
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Explore por Categoria</h2>
-          <p class="text-sm font-bold text-slate-500 mt-1">Navegue pelas editorias mais acessadas do portal</p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {categoriesList.map(cat => (
-          <a
-            href={`/noticias?category=${cat.slug}`}
-            class="group p-5 rounded-2xl bg-white border border-slate-200 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-500/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shadow-sm"
+          <!-- Botão Mobile (Ícone Quadrado) -->
+          <button
+            type="submit"
+            aria-label="Pesquisar"
+            class="sm:hidden flex shrink-0 items-center justify-center rounded-xl bg-slate-900 p-3.5 text-white shadow-md transition-all hover:bg-cyan-600 active:scale-95 ml-1"
           >
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-3xl p-2 rounded-xl bg-slate-50 border border-slate-200/80 group-hover:scale-110 group-hover:border-cyan-500/30 transition-all shadow-2xs">
-                  {getCategoryIcon(cat.slug)}
-                </span>
-                <span class="text-xs text-slate-400 group-hover:text-cyan-600 transition-colors font-mono font-bold">
-                  Explorar ↗
-                </span>
-              </div>
-              <h3 class="text-base font-black text-slate-900 group-hover:text-cyan-600 transition-colors">
-                {cat.label}
-              </h3>
-              <p class="text-xs text-slate-600 font-bold mt-1 line-clamp-2 leading-relaxed">
-                {cat.desc}
-              </p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
 
-    <!-- Veículo em Destaque -->
-    {featuredSource && (
-      <section class="space-y-4" id="featured-section">
-        <div class="flex items-center gap-2">
-          <span class="h-2.5 w-2.5 rounded-full bg-cyan-500 animate-pulse"></span>
-          <h2 class="text-xl font-black text-slate-900">Veículo em Destaque</h2>
+          <!-- Botão Desktop -->
+          <button
+            type="submit"
+            class="hidden sm:inline-flex shrink-0 items-center justify-center rounded-xl bg-slate-900 px-8 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:bg-cyan-600 hover:shadow-cyan-500/25 active:scale-95 uppercase tracking-wider whitespace-nowrap"
+          >
+            Pesquisar
+          </button>
+        </div>
+      </form>
+    </div>
+  </header>
+
+  <main class="min-h-screen w-full bg-white px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      
+      <!-- Cabeçalho de Controle Elegante e Responsivo -->
+      <section class="mb-8 sm:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-50/50 p-4 sm:p-5 rounded-2xl border border-slate-100" aria-label="Resumo dos resultados">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <div class="h-10 w-10 shrink-0 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-600">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-slate-500 leading-tight">Fontes Encontradas</p>
+            <p class="text-lg font-black text-slate-900 leading-tight">
+              {totalFiltered} <span class="text-xs sm:text-sm font-medium text-slate-400 font-mono tracking-widest uppercase">/ {totalSources} total</span>
+            </p>
+          </div>
         </div>
 
-        <div class="relative rounded-2xl border border-cyan-500/40 bg-white p-6 lg:p-8 shadow-xl shadow-cyan-500/5 flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden">
-          <div class="space-y-4 max-w-2xl">
-            <div class="flex items-center gap-3.5">
-              <img
-                id="featured-logo"
-                src={getFaviconUrl(featuredSource.url, 128)}
-                alt={`Logo ${featuredSource.name}`}
-                class="h-14 w-14 rounded-xl bg-slate-50 p-2 object-contain border border-slate-200/80 shadow-md"
-                loading="lazy"
-                {...{ onerror: "this.onerror=null; this.src='/default-icon.svg';" }}
-              />
-              <div>
-                <span class="text-xs font-black text-cyan-600 uppercase tracking-widest">
-                  Destaque da Semana
-                </span>
-                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-2">
-                  <button
-                    type="button"
-                    id="featured-name-btn"
-                    class="open-source-modal hover:text-cyan-600 transition-colors cursor-pointer text-left"
-                    data-source={JSON.stringify(featuredSource)}
-                  >
-                    <span id="featured-name">{featuredSource.name}</span>
-                  </button>
-                  <span id="featured-flag" class="text-lg">{getCountryFlag(featuredSource.country || 'Global')}</span>
-                </h3>
-              </div>
-            </div>
-
-            <p id="featured-desc" class="text-slate-600 text-sm font-bold leading-relaxed">
-              {featuredSource.description || 'Plataforma e veículo de comunicação.'}
-            </p>
-
-            <div id="featured-categories" class="flex flex-wrap items-center gap-2 pt-1">
-              {(featuredSource.categories || ['geral']).map((cat: string) => (
-                <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-100/80 text-slate-700 border border-slate-200/80 shadow-2xs flex items-center gap-1 font-black">
-                  <span>{getCategoryIcon(cat)}</span>
-                  <span class="capitalize">{cat}</span>
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div class="flex flex-col sm:flex-row md:flex-col gap-3 min-w-[200px]">
-            <a
-              id="featured-url"
-              href={featuredSource.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-track-source={featuredSource.id}
-              class="track-click-btn px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider text-center transition-all shadow-lg shadow-cyan-500/20 active:scale-95"
-            >
-              Acessar portal oficial ↗
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          {category && (
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-bold capitalize text-slate-700 shadow-sm">
+              <span class="text-cyan-500 mr-1">#</span>{capitalizedCategory}
+            </span>
+          )}
+          {(q || category || country) && (
+            <a href="/" class="w-full sm:w-auto text-center text-xs font-bold uppercase tracking-wider text-slate-500 transition-colors hover:text-red-500 bg-white border border-slate-200 px-4 py-2.5 sm:py-1.5 rounded-xl sm:rounded-full shadow-sm">
+              Limpar Filtros ✕
             </a>
-            <button
-              type="button"
-              id="featured-modal-trigger"
-              class="open-source-modal px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 text-xs uppercase tracking-wider font-black text-center transition-all cursor-pointer shadow-2xs"
-              data-source={JSON.stringify(featuredSource)}
-            >
-              Ver ficha completa
-            </button>
-          </div>
+          )}
         </div>
       </section>
-    )}
 
-    <!-- Todos os Veículos -->
-    <section class="space-y-6">
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Todos os Veículos</h2>
-          <p class="text-sm font-bold text-slate-500 mt-1">Pesquise para encontrar fontes por assunto</p>
-        </div>
-        <a href="/noticias?country=BR" class="text-xs font-black uppercase tracking-wider text-cyan-600 hover:text-cyan-700 flex items-center gap-1 transition-colors">
-          Ver lista completa ➔
-        </a>
-      </div>
-
-      <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
-        {initialSources.map((source: NewsSource, index: number) => (
-          <div 
-            class="source-card-wrapper w-full h-full flex flex"
-            data-original-index={index}
-            data-name={source.name.toLowerCase()}
-            data-desc={(source.description || '').toLowerCase()}
-            data-categories={JSON.stringify(source.categories || []).toLowerCase()}
-          >
-            <SourceCard source={source} />
+      <!-- NOVO BLOCO: VEÍCULO EM DESTAQUE (Sempre o mais acessado/ranqueado no topo) -->
+      {featuredSource && currentPage === 1 && !q && (
+        <section class="mb-10" aria-label="Veículo em Destaque">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="flex h-2.5 w-2.5 rounded-full bg-cyan-500 animate-pulse"></span>
+            <h2 class="text-xs sm:text-sm font-black text-slate-700 uppercase tracking-widest">
+              Veículo em Destaque (Mais Acessado)
+            </h2>
           </div>
-        ))}
-      </div>
+          <div class="w-full">
+            <SourceCard source={featuredSource} featured={true} />
+          </div>
+        </section>
+      )}
 
-      <div id="no-results" class="hidden text-center py-16 space-y-3">
-        <p class="text-2xl font-black text-slate-700">Nenhum portal encontrado para esta pesquisa.</p>
-        <p class="text-sm font-bold text-slate-500">Tente pesquisar por outros termos (ex: tecnologia, jogos, economia, notícias).</p>
-      </div>
-    </section>
+      <!-- GRADE DE CARDS -->
+      {paginatedSources.length > 0 ? (
+        <section aria-label="Fontes de notícias">
+          <div id="sources-grid" class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12 sm:mb-16">
+            {paginatedSources.map((source: NewsSource) => (
+              <SourceCard source={source} />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <!-- Estado Vazio / Sem Resultados -->
+        <section id="no-results" class="mt-4 sm:mt-8 mb-12 sm:mb-16 rounded-3xl border border-slate-200 bg-slate-50 px-6 py-16 sm:py-24 text-center shadow-sm">
+          <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white border border-slate-200 mb-6 shadow-sm">
+            <span class="text-2xl sm:text-3xl text-slate-400">⌕</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3">
+            Nenhuma fonte encontrada
+          </h2>
+          <p class="mx-auto max-w-md text-sm sm:text-base leading-relaxed text-slate-500 mb-8">
+            Não localizamos nenhum veículo de mídia com os termos pesquisados. Tente usar palavras mais curtas ou remova os filtros atuais.
+          </p>
+          <a href="/" class="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-slate-900 px-8 py-3.5 text-xs font-bold text-white shadow-md transition-all hover:bg-cyan-600 active:scale-95 uppercase tracking-wider">
+            Ver todas as fontes
+          </a>
+        </section>
+      )}
 
+      <!-- PAGINAÇÃO MODERNA E RESPONSIVA -->
+      {totalPages > 1 && (
+        <nav id="pagination-nav" class="flex items-center justify-center pb-12 sm:pb-16 pt-6 sm:pt-8 border-t border-slate-100" aria-label="Navegação">
+          <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm w-full sm:w-auto">
+            
+            {currentPage > 1 ? (
+              <a href={buildPageUrl(currentPage - 1)} class="flex-1 sm:flex-none text-center inline-flex items-center justify-center rounded-xl bg-slate-50 px-4 sm:px-5 py-3 sm:py-2.5 text-xs sm:text-sm font-bold text-slate-700 transition-colors hover:bg-cyan-50 hover:text-cyan-700">
+                ← <span class="hidden sm:inline ml-1">Anterior</span>
+              </a>
+            ) : (
+              <span class="flex-1 sm:flex-none text-center inline-flex items-center justify-center rounded-xl bg-slate-50/50 px-4 sm:px-5 py-3 sm:py-2.5 text-xs sm:text-sm font-bold text-slate-300 cursor-not-allowed">
+                ← <span class="hidden sm:inline ml-1">Anterior</span>
+              </span>
+            )}
+
+            <div class="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-50 rounded-xl text-xs sm:text-sm font-medium text-slate-500 whitespace-nowrap">
+              Pág <strong class="font-black text-slate-900 mx-1">{currentPage}</strong> de <strong class="font-black text-slate-900 ml-1">{totalPages}</strong>
+            </div>
+
+            {currentPage < totalPages ? (
+              <a href={buildPageUrl(currentPage + 1)} class="flex-1 sm:flex-none text-center inline-flex items-center justify-center rounded-xl bg-slate-50 px-4 sm:px-5 py-3 sm:py-2.5 text-xs sm:text-sm font-bold text-slate-700 transition-colors hover:bg-cyan-50 hover:text-cyan-700">
+                <span class="hidden sm:inline mr-1">Próxima</span> →
+              </a>
+            ) : (
+              <span class="flex-1 sm:flex-none text-center inline-flex items-center justify-center rounded-xl bg-slate-50/50 px-4 sm:px-5 py-3 sm:py-2.5 text-xs sm:text-sm font-bold text-slate-300 cursor-not-allowed">
+                <span class="hidden sm:inline mr-1">Próxima</span> →
+              </span>
+            )}
+          </div>
+        </nav>
+      )}
+
+      <!-- SEÇÃO EDITORIAL (AdSense & SEO) COM FUNDO CLARO -->
+      <section class="mt-8 sm:mt-12 relative overflow-hidden bg-slate-50 rounded-3xl p-6 sm:p-14 text-slate-900 shadow-xl border border-slate-200/80">
+        
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+            Sobre o Diretório de Mídia
+          </h2>
+          <p class="text-slate-700 text-base sm:text-lg leading-relaxed pt-2 font-medium">
+            {normalizedCategory 
+              ? `A editoria de ${capitalizedCategory} reúne referências essenciais e fontes jornalísticas de credibilidade reconhecida. O objetivo é permitir que leitores e profissionais encontrem rapidamente canais especializados.`
+              : textoGeralDiretorio}
+          </p>
+          <p class="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
+            Nosso compromisso é estruturar a navegação de forma limpa, permitindo que você descubra novos portais e acesse os veículos informativos originais com total transparência e segurança.
+          </p>
+        </div>
+      </section>
+
+    </div>
   </main>
 </BaseLayout>
-
-<script is:inline define:vars={{ allSources: sources }}>
-  document.addEventListener('DOMContentLoaded', () => {
-    const featuredLogo = document.getElementById('featured-logo');
-    const featuredName = document.getElementById('featured-name');
-    const featuredNameBtn = document.getElementById('featured-name-btn');
-    const featuredModalTrigger = document.getElementById('featured-modal-trigger');
-    const featuredFlag = document.getElementById('featured-flag');
-    const featuredDesc = document.getElementById('featured-desc');
-    const featuredCategories = document.getElementById('featured-categories');
-    const featuredUrl = document.getElementById('featured-url');
-    
-    const searchInput = document.getElementById('search-input');
-    const sourcesGrid = document.getElementById('sources-grid');
-    const noResultsMsg = document.getElementById('no-results');
-    const resultsCount = document.getElementById('results-count');
-
-    const countryFlags = {
-      BR: '🇧🇷', US: '🇺🇸', GB: '🇬🇧', AR: '🇦🇷', MX: '🇲🇽',
-      CL: '🇨🇱', CO: '🇨🇴', PE: '🇵🇪', UY: '🇺🇾', ES: '🇪🇸',
-      PT: '🇵🇹', FR: '🇫🇷', DE: '🇩🇪', IT: '🇮🇹', CA: '🇨🇦',
-      AU: '🇦🇺', JP: '🇯🇵', CN: '🇨🇳', IN: '🇮🇳'
-    };
-
-    const categoryIcons = {
-      brasil: '🇧🇷', mundo: '🌐', politica: '⚖️', economia: '📈',
-      tecnologia: '💻', ciencia: '🔬', saude: '🏥', esportes: '⚽', geral: '📌',
-      games: '🎮', entretenimento: '🎬', educacao: '📚', investimentos: '💰'
-    };
-
-    const getClicks = (id) => parseInt(localStorage.getItem(`clicks_${id}`) || '0', 10);
-    const setClicks = (id, count) => localStorage.setItem(`clicks_${id}`, count.toString());
-
-    if (searchInput && sourcesGrid) {
-      searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-
-        if (query === '') {
-          const initialSlice = allSources.slice(0, 12);
-          sourcesGrid.innerHTML = initialSlice.map((source, index) => `
-            <div class="source-card-wrapper w-full h-full flex flex" data-name="${source.name.toLowerCase()}" data-desc="${(source.description || '').toLowerCase()}" data-categories="${JSON.stringify(source.categories || []).toLowerCase()}">
-              <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between w-full">
-                <div>
-                  <div class="flex items-center justify-between mb-4">
-                    <img src="https://www.google.com/s2/favicons?domain=${source.url}&sz=64" alt="Logo" class="h-10 w-10 rounded-xl bg-slate-50 p-2 object-contain border border-slate-200" />
-                    <span class="text-xs font-black px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">${source.country || 'Global'}</span>
-                  </div>
-                  <h3 class="text-lg font-black text-slate-900 mb-2">${source.name}</h3>
-                  <p class="text-slate-600 text-xs font-bold line-clamp-2">${source.description || ''}</p>
-                </div>
-                <div class="mt-4 pt-4 border-t border-slate-100">
-                  <a href="${source.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-black text-cyan-600 hover:text-cyan-700 uppercase tracking-wider">Acessar portal ↗</a>
-                </div>
-              </div>
-            </div>
-          `).join('');
-
-          if (resultsCount) {
-            resultsCount.innerHTML = `Exibindo <span class="text-cyan-600 font-black text-base">${allSources.length}</span> fontes de informação ativas`;
-          }
-          if (noResultsMsg) noResultsMsg.classList.add('hidden');
-          return;
-        }
-
-        const matched = allSources.filter(source => {
-          const name = (source.name || '').toLowerCase();
-          const desc = (source.description || '').toLowerCase();
-          const cats = JSON.stringify(source.categories || []).toLowerCase();
-          return name.includes(query) || desc.includes(query) || cats.includes(query);
-        });
-
-        if (matched.length > 0) {
-          sourcesGrid.innerHTML = matched.map((source) => `
-            <div class="source-card-wrapper w-full h-full flex flex">
-              <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between w-full">
-                <div>
-                  <div class="flex items-center justify-between mb-4">
-                    <img src="https://www.google.com/s2/favicons?domain=${source.url}&sz=64" alt="Logo" class="h-10 w-10 rounded-xl bg-slate-50 p-2 object-contain border border-slate-200" />
-                    <span class="text-xs font-black px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">${source.country || 'Global'}</span>
-                  </div>
-                  <h3 class="text-lg font-black text-slate-900 mb-2">${source.name}</h3>
-                  <p class="text-slate-600 text-xs font-bold line-clamp-2">${source.description || ''}</p>
-                </div>
-                <div class="mt-4 pt-4 border-t border-slate-100">
-                  <a href="${source.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-black text-cyan-600 hover:text-cyan-700 uppercase tracking-wider">Acessar portal ↗</a>
-                </div>
-              </div>
-            </div>
-          `).join('');
-          if (noResultsMsg) noResultsMsg.classList.add('hidden');
-        } else {
-          sourcesGrid.innerHTML = '';
-          if (noResultsMsg) noResultsMsg.classList.remove('hidden');
-        }
-
-        if (resultsCount) {
-          resultsCount.innerHTML = `Encontradas <span class="text-cyan-600 font-black text-base">${matched.length}</span> fontes correspondentes a "${query}"`;
-        }
-      });
-    }
-
-    function updateFeaturedCard() {
-      if (!allSources || allSources.length === 0) return;
-
-      const sortedSources = [...allSources].map(s => ({
-        ...s,
-        clicks: getClicks(s.id)
-      })).sort((a, b) => b.clicks - a.clicks);
-
-      const topSource = sortedSources[0];
-
-      if (topSource && featuredName) {
-        featuredName.textContent = topSource.name;
-        if (featuredFlag) featuredFlag.textContent = countryFlags[topSource.country] || '🌐';
-        if (featuredDesc) featuredDesc.textContent = topSource.description || 'Plataforma e veículo de comunicação.';
-        if (featuredLogo) {
-          featuredLogo.src = `https://www.google.com/s2/favicons?domain=${topSource.url}&sz=128`;
-          featuredLogo.alt = `Logo ${topSource.name}`;
-        }
-        if (featuredUrl) {
-          featuredUrl.href = topSource.url;
-          featuredUrl.setAttribute('data-track-source', topSource.id);
-        }
-
-        const serializedSource = JSON.stringify(topSource);
-        if (featuredNameBtn) featuredNameBtn.setAttribute('data-source', serializedSource);
-        if (featuredModalTrigger) featuredModalTrigger.setAttribute('data-source', serializedSource);
-
-        if (featuredCategories) {
-          const cats = topSource.categories || ['geral'];
-          featuredCategories.innerHTML = cats.map(cat => `
-            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-100/80 text-slate-700 border border-slate-200/80 shadow-2xs flex items-center gap-1 font-black">
-              <span>${categoryIcons[cat] || '📌'}</span>
-              <span class="capitalize">${cat}</span>
-            </span>
-          `).join('');
-        }
-      }
-    }
-
-    updateFeaturedCard();
-
-    document.addEventListener('click', (e) => {
-      const link = e.target.closest('a');
-      if (!link) return;
-
-      let sourceId = link.getAttribute('data-track-source');
-      if (!sourceId && link.href) {
-        const match = link.href.match(/\/fontes\/([a-zA-Z0-9-]+)/);
-        if (match) sourceId = match[1];
-      }
-
-      if (sourceId) {
-        const currentClicks = getClicks(sourceId) + 1;
-        setClicks(sourceId, currentClicks);
-        updateFeaturedCard();
-      }
-    });
-  });
-</script>

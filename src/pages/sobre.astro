@@ -2,93 +2,114 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout 
-  title="Sobre o Portal | OMundoEmUmCLICK" 
-  description="Conheça a nossa proposta, modelo de sustentabilidade e compromisso editorial."
->
-  <!-- CABEÇALHO CLARO -->
-  <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
-    <div class="max-w-3xl mx-auto text-center space-y-4">
-      <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 pb-2">
-        Sobre OMundoEmUmCLICK
+<BaseLayout title="Sobre Nós | O Mundo em um Clique">
+  <!-- Hero Section Refinado (Tema Claro) -->
+  <header class="relative overflow-hidden bg-slate-50 border-b border-slate-200 px-4 pt-12 pb-16 sm:pt-20 sm:pb-24">
+    <!-- Efeitos de iluminação decorativos opcionais -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-cyan-400/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto text-center space-y-4">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900">
+        Sobre o Mundo em um Clique
       </h1>
-      <p class="text-slate-600 font-bold text-lg">
-        Organizando o acesso à informação de qualidade com transparência e independência.
+      
+      <p class="text-base sm:text-lg font-medium text-slate-600 max-w-2xl mx-auto leading-relaxed">
+        Os principais caminhos para descobrir notícias, informações e conteúdos do Brasil e do mundo em um só lugar.
       </p>
     </div>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL CENTRALIZADO -->
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-[60vh]">
-    <div class="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-sm space-y-12">
-      
-      <!-- Seção 1: Nossa Proposta -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-4 flex items-center gap-3">
-          <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 text-xl shadow-sm border border-cyan-200/50">🎯</span> 
-          Nossa Proposta
-        </h2>
-        <div class="space-y-4 text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-2 sm:pl-13">
-          <p>
-            O portal <span class="text-slate-900 font-black">OMundoEmUmCLICK</span> nasceu com o propósito de agrupar, categorizar e organizar fontes oficiais de notícias e veículos jornalísticos do Brasil e do mundo em uma interface única, rápida e sem poluição visual.
-          </p>
-          <p>
-            Não republicamos o conteúdo integral nem copiamos artigos de veículos terceiros. Nosso papel é atuar como um diretório editorial que direciona o leitor diretamente ao site do veículo original responsável pela publicação.
-          </p>
-        </div>
-      </section>
+  <!-- Conteúdo Principal -->
+  <main class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full space-y-8">
+    <article class="bg-white p-8 sm:p-12 rounded-3xl border border-slate-200/80 shadow-sm space-y-8">
 
-      <!-- Seção 2: Área Comercial e Sustentabilidade -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-4 flex items-center gap-3">
-          <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 text-xl shadow-sm border border-cyan-200/50">💡</span> 
-          Área Comercial e Sustentabilidade
+      <!-- O que é -->
+      <div class="space-y-3">
+        <h2 class="text-2xl font-black text-slate-900 tracking-tight">
+          O que é o Mundo em um Clique?
         </h2>
-        <div class="space-y-4 text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-2 sm:pl-13">
-          <p>
-            Acreditamos que é possível construir um modelo de negócio altamente rentável e sustentável sem recorrer a banners poluivos ou anúncios invasivos que atrapalham a leitura.
-          </p>
-          <p>
-            Para gerar receitas e manter a plataforma operando com alta performance e gratuidade para os usuários, adotamos um ecossistema comercial inteligente baseado em curadoria de ofertas e parcerias estratégicas:
-          </p>
-          <ul class="space-y-3 mt-3">
-            <li class="flex items-start gap-2">
-              <span class="text-cyan-600 font-black">•</span>
-              <span><strong class="text-slate-900">Monetização via Afiliados:</strong> Contamos com uma seção dedicada a ofertas comerciais recomendadas em parceria com programas de afiliados (como o Mercado Livre). Quando uma compra é realizada através de nossos links, recebemos uma comissão sem qualquer custo adicional para você.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-cyan-600 font-black">•</span>
-              <span><strong class="text-slate-900">Parcerias e Destaques Comerciais:</strong> Oferecemos visibilidade direcionada para marcas e parceiros que compartilham do nosso padrão de qualidade.</span>
-            </li>
-          </ul>
-          <p class="pt-2">
-            Dessa forma, garantimos a saúde financeira e a expansão contínua do projeto, preservando uma interface rápida, limpa e focada no que realmente importa: a sua informação.
-          </p>
-        </div>
-      </section>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          O <strong>Mundo em um Clique</strong> é uma plataforma digital independente que organiza e reúne links de jornais, revistas, agências de notícias, portais especializados e outros veículos de comunicação do Brasil e do mundo. Nossa proposta é facilitar a descoberta de fontes de informação, oferecendo aos visitantes um ambiente centralizado, intuitivo e de fácil navegação.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Em um único lugar, você encontra acesso a diferentes fontes sobre política, economia, negócios, tecnologia, ciência, educação, cultura, entretenimento, esportes e diversos outros assuntos. Assim, fica mais fácil explorar conteúdos, acompanhar acontecimentos e consultar diferentes perspectivas sem precisar procurar individualmente por cada veículo.
+        </p>
+      </div>
 
-      <!-- Seção 3: Compromisso Editorial -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-4 flex items-center gap-3">
-          <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 text-xl shadow-sm border border-cyan-200/50">🛡️</span> 
-          Compromisso Editorial
+      <!-- Missão e Visão -->
+      <div class="space-y-3">
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">
+          Nossa Missão e Visão
         </h2>
-        <ul class="space-y-5 text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-2 sm:pl-13 mt-2">
-          <li class="flex items-start gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-            <span class="text-cyan-500 mt-0.5 text-lg">✔</span>
-            <span><strong class="text-slate-900 font-black">Transparência:</strong> Identificação clara de links comerciais e de fontes jornalísticas.</span>
-          </li>
-          <li class="flex items-start gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-            <span class="text-cyan-500 mt-0.5 text-lg">✔</span>
-            <span><strong class="text-slate-900 font-black">Acessibilidade e Velocidade:</strong> Interface leve desenvolvida com Astro, focada na rápida navegação em computadores e celulares.</span>
-          </li>
-          <li class="flex items-start gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-            <span class="text-cyan-500 mt-0.5 text-lg">✔</span>
-            <span><strong class="text-slate-900 font-black">Independência:</strong> O portal não possui vínculo com partidos políticos ou grupos de mídia específicos.</span>
-          </li>
-        </ul>
-      </section>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Nossa missão é tornar o acesso às fontes de informação mais simples, organizado e acessível. Acreditamos que conhecer diferentes veículos de comunicação e perspectivas editoriais é importante para ampliar o conhecimento e acompanhar os acontecimentos de maneira mais consciente.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Queremos construir um diretório de referência para quem busca praticidade na internet, conectando pessoas a fontes de informação de diferentes regiões, especialidades e áreas de interesse.
+        </p>
+      </div>
 
-    </div>
+      <!-- Curadoria -->
+      <div class="space-y-3">
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">
+          Como funciona nossa curadoria?
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Os veículos disponíveis no portal são organizados por categorias e áreas de interesse, facilitando a localização de conteúdos e a descoberta de novas fontes. O processo de catalogação considera informações como identificação do veículo, área de atuação, relevância temática e disponibilidade dos respectivos endereços na internet.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Buscamos manter o diretório organizado e seus links atualizados por meio de revisões periódicas. Como os sites externos podem alterar seus endereços, funcionalidades ou disponibilidade a qualquer momento, eventuais mudanças podem ocorrer independentemente da nossa plataforma.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          <strong>Transparência na curadoria:</strong> a presença de um veículo no diretório tem finalidade informativa e de organização. Isso não representa aprovação, parceria, recomendação ou concordância com todas as opiniões e conteúdos publicados por terceiros.
+        </p>
+      </div>
+
+      <!-- Independência Editorial -->
+      <div class="space-y-3">
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">
+          Independência e Responsabilidade Editorial
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          O <strong>Mundo em um Clique</strong> funciona como um diretório de fontes de informação e acesso a conteúdos externos. Nossa atividade consiste em organizar e disponibilizar links para os respectivos sites, não em produzir, editar ou publicar as notícias e reportagens apresentadas por esses veículos.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Ao selecionar um link, o visitante é direcionado ao site de origem, onde o conteúdo é disponibilizado sob a responsabilidade de seus respectivos editores e administradores. O portal não controla as políticas editoriais, a disponibilidade ou as informações publicadas nesses ambientes externos.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Incentivamos nossos visitantes a consultar as fontes originais, verificar as informações e conhecer diferentes perspectivas sobre os assuntos de seu interesse.
+        </p>
+      </div>
+
+      <!-- Publicidade -->
+      <div class="space-y-3">
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">
+          Publicidade e Sustentabilidade do Projeto
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          A manutenção de uma plataforma digital envolve custos de infraestrutura, hospedagem, desenvolvimento e aprimoramento tecnológico. Para contribuir com a sustentabilidade do projeto e manter o acesso gratuito aos visitantes, o portal poderá apresentar anúncios publicitários fornecidos por plataformas de publicidade, como o Google AdSense.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Também poderão ser disponibilizados links de afiliados e ofertas comerciais, sempre que aplicável e devidamente identificados. Nessas situações, o portal poderá receber uma comissão caso o visitante realize uma compra por meio de um link participante, sem custo adicional para o comprador, quando aplicável.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          A publicidade e as iniciativas comerciais têm como finalidade apoiar a continuidade do projeto e devem ser diferenciadas dos links informativos do diretório.
+        </p>
+      </div>
+
+      <!-- Contato -->
+      <div class="space-y-3 pt-4 border-t border-slate-100">
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">
+          Fale Conosco
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Sua participação é importante para o aprimoramento do Mundo em um Clique. Se encontrou algum link indisponível, deseja sugerir um veículo de comunicação, identificar alguma informação incorreta ou simplesmente enviar uma dúvida, estamos disponíveis para receber sua mensagem.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Utilize a nossa <a href="/contato" class="text-cyan-600 font-bold hover:underline">página de contato oficial</a> para enviar sua mensagem de forma rápida e segura.
+        </p>
+      </div>
+
+    </article>
   </main>
 </BaseLayout>

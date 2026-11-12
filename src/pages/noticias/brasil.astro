@@ -1,0 +1,99 @@
+
+---
+import { sources } from '../../data/sources';
+
+// Filtra rigorosamente todas as fontes ativas do Brasil
+const fontesBrasil = sources.filter(source => source.country === 'BR' && source.active);
+
+// Extrai todas as categorias únicas presentes nas fontes do Brasil para criar filtros dinâmicos
+const categoriasDisponiveis = Array.from(
+  new Set(fontesBrasil.flatMap(source => source.categories))
+);
+---
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Diretório de Fontes do Brasil | O Mundo em um Clique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="bg-slate-900 text-slate-100 min-h-screen p-6 font-sans">
+    
+    <main class="max-w-6xl mx-auto">
+      <header class="mb-8 text-center">
+        <h1 class="text-3xl font-extrabold tracking-tight mb-2">🇧🇷 Fontes Jornalísticas do Brasil</h1>
+        <p class="text-slate-400">Explore mais de 100 portais de notícias, jornais e veículos especializados catalogados.</p>
+      </header>
+
+      <!-- Barra de Pesquisa em Tempo Real -->
+      <div class="mb-8 max-w-md mx-auto">
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Pesquisar portal, jornal ou assunto..." 
+          class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-500 shadow-inner transition"
+        />
+      </div>
+
+      <!-- Grid de Cards das Fontes -->
+      <div id="sources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {fontesBrasil.map(source => (
+          <article 
+            class="source-card p-5 rounded-2xl bg-slate-800/80 border border-slate-700/60 hover:border-cyan-500/50 transition shadow-lg flex flex-col justify-between"
+            data-name={source.name.toLowerCase()}
+            data-description={source.description.toLowerCase()}
+            data-categories={source.categories.join(',')}
+          >
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/50 uppercase tracking-wide">
+                  {source.categories[0] || 'geral'}
+                </span>
+                <span class="text-xs text-slate-400">Rank #{source.rank}</span>
+              </div>
+              
+              <h2 class="text-xl font-bold text-white mb-2">{source.name}</h2>
+              <p class="text-sm text-slate-300 leading-relaxed mb-4 line-clamp-3">{source.description}</p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-700/40 flex items-center justify-between">
+              <span class="text-xs text-slate-400 uppercase tracking-wider font-mono">Audiência: {source.audience}</span>
+              <a 
+                href={source.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="inline-flex items-center text-sm font-bold text-cyan-400 hover:text-cyan-300 transition"
+              >
+                Visitar Portal →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </main>
+
+    <!-- Script leve para filtragem dinâmica instantânea -->
+    <script>
+      const searchInput = document.getElementById('search-input') as HTMLInputElement;
+      const cards = document.querySelectorAll('.source-card');
+
+      searchInput?.addEventListener('input', (e) => {
+        const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+
+        cards.forEach(card => {
+          const name = card.getAttribute('data-name') || '';
+          const description = card.getAttribute('data-description') || '';
+          const categories = card.getAttribute('data-categories') || '';
+
+          const match = name.includes(query) || description.includes(query) || categories.includes(query);
+          
+          if (match) {
+            (card as HTMLElement).style.display = 'flex';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

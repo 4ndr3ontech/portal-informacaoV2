@@ -2,89 +2,205 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout 
-  title="Política de Privacidade | OMundoEmUmCLICK" 
-  description="Nossa política de privacidade, detalhando a coleta de dados, uso de cookies, exibição de anúncios do Google AdSense e conformidade com a LGPD."
->
-  <!-- CABEÇALHO CLARO -->
-  <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
-    <div class="max-w-3xl mx-auto text-center space-y-4">
-      <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 pb-2">
+<BaseLayout title="Política de Privacidade e Proteção de Dados | O Mundo em um Clique">
+  <!-- Hero Section Refinado (Tema Claro) -->
+  <header class="relative overflow-hidden bg-slate-50 border-b border-slate-200 px-4 pt-12 pb-16 sm:pt-20 sm:pb-24">
+    <!-- Efeito de iluminação decorativo -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-cyan-400/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto text-center space-y-4">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900">
         Política de Privacidade
       </h1>
-      <p class="text-slate-600 font-bold text-lg">
-        Última atualização: 19 de outubro de 2026
+      <p class="text-base sm:text-lg font-medium text-slate-600 max-w-2xl mx-auto leading-relaxed">
+        Transparência, segurança e responsabilidade no tratamento de informações durante a sua navegação.
       </p>
     </div>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL CENTRALIZADO -->
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-[60vh]">
-    <div class="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-sm space-y-10">
-      
-      <!-- Seção 1 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">1</span> 
-          Coleta de Dados
-        </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          O portal opera prioritariamente como um ambiente de navegação estática e pública. Não solicitamos cadastro de usuários nem exigimos a criação de contas para navegação nas seções de notícias ou ofertas.
-        </p>
-      </section>
+  <!-- Conteúdo Principal -->
+  <main class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-3xl border border-slate-200/80 shadow-sm space-y-10">
 
-      <!-- Seção 2 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">2</span> 
-          Utilização de Cookies e Google AdSense
+      <!-- Introdução -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">1.</span> Introdução
         </h2>
-        <div class="space-y-3 text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          <p>
-            Utilizamos cookies estritamente necessários para registrar preferências de interface, como o tema visual selecionado e o aceite do aviso de privacidade.
-          </p>
-          <p>
-            Além disso, utilizamos serviços de publicidade de terceiros, como o <strong>Google AdSense</strong>, para exibir anúncios quando você visita o nosso portal. O Google utiliza cookies (como o cookie DART) para exibir anúncios com base nas suas visitas anteriores a este e a outros sites na internet.
-          </p>
-          <p>
-            Os usuários podem desativar o uso do cookie DART visitando a política de privacidade da rede de conteúdo e dos anúncios do Google.
-          </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          O <strong>Mundo em um Clique</strong> valoriza profundamente a privacidade e a segurança dos dados pessoais de seus visitantes. Esta Política de Privacidade explica de forma clara como as informações são coletadas, utilizadas, armazenadas e protegidas durante a utilização de nossa plataforma.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Nosso compromisso é tratar os dados de maneira transparente e estritamente legal, em total conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018).
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Ao navegar pelo portal, recomendamos a leitura atenta deste documento para compreender nossas práticas.
+        </p>
+      </div>
+
+      <!-- Dados coletados -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">2.</span> Informações que podem ser coletadas
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Durante a navegação, determinadas informações técnicas podem ser coletadas de forma automatizada por meio de ferramentas integradas de infraestrutura e análise:
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-slate-700 font-medium leading-relaxed">
+          <li>Endereço IP e dados gerais de conexão.</li>
+          <li>Tipo, versão e idioma do navegador utilizado.</li>
+          <li>Sistema operacional e características do dispositivo.</li>
+          <li>Páginas visitadas, cliques e interações dentro do portal.</li>
+          <li>Data, horário e duração aproximada da sessão.</li>
+          <li>Identificadores armazenados via cookies e tecnologias semelhantes.</li>
+        </ul>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Nosso diretório público pode ser livremente navegado sem a necessidade de cadastro ou fornecimento de dados pessoais identificáveis.
+        </p>
+      </div>
+
+      <!-- Finalidade -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">3.</span> Como utilizamos as informações
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Os dados coletados são empregados exclusivamente para propósitos legítimos de operação, segurança e otimização da plataforma:
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-slate-700 font-medium leading-relaxed">
+          <li>Garantir a estabilidade técnica, o desempenho e a segurança do site.</li>
+          <li>Identificar e prevenir falhas, bugs ou tentativas de fraudes e acessos maliciosos.</li>
+          <li>Compreender o comportamento de navegação para aprimorar a experiência do usuário.</li>
+          <li>Gerar métricas e estatísticas agregadas de acesso ao diretório.</li>
+          <li>Exibir publicidade relevante por meio de parceiros certificados.</li>
+          <li>Responder a dúvidas, sugestões ou solicitações enviadas através de nossos canais.</li>
+        </ul>
+      </div>
+
+      <!-- Cookies -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">4.</span> Cookies e Tecnologias Semelhantes
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Cookies são pequenos arquivos de texto salvos no seu dispositivo que auxiliam no funcionamento do site, recordam preferências e otimizam a navegação. Utilizamos as seguintes categorias:
+        </p>
+
+        <div class="grid grid-cols-1 gap-4 pt-2">
+          <div class="border border-slate-200 bg-slate-50/50 rounded-2xl p-5 space-y-1">
+            <h3 class="font-black text-slate-900 text-base">Cookies Essenciais</h3>
+            <p class="text-slate-700 text-sm font-medium leading-relaxed">
+              Indispensáveis para a operação correta da plataforma, navegação segura e carregamento de recursos fundamentais.
+            </p>
+          </div>
+
+          <div class="border border-slate-200 bg-slate-50/50 rounded-2xl p-5 space-y-1">
+            <h3 class="font-black text-slate-900 text-base">Cookies de Desempenho e Análise</h3>
+            <p class="text-slate-700 text-sm font-medium leading-relaxed">
+              Permitem analisar de forma anônima como os visitantes utilizam o portal, ajudando a identificar páginas populares e pontos de melhoria.
+            </p>
+          </div>
+
+          <div class="border border-slate-200 bg-slate-50/50 rounded-2xl p-5 space-y-1">
+            <h3 class="font-black text-slate-900 text-base">Cookies de Publicidade</h3>
+            <p class="text-slate-700 text-sm font-medium leading-relaxed">
+              Utilizados por redes de anúncios parceiras para exibir campanhas relevantes, medir a eficácia publicitária e limitar a repetição de anúncios.
+            </p>
+          </div>
         </div>
-      </section>
 
-      <!-- Seção 3 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">3</span> 
-          Links Externos e Afiliados
-        </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          Nosso portal contém links para veículos de imprensa independentes e anúncios de produtos. Ao clicar em um link externo, o usuário será direcionado ao ambiente do terceiro, regido por sua respectiva política de privacidade.
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Você pode desativar ou gerenciar o uso de cookies diretamente nas definições do seu navegador a qualquer momento.
         </p>
-      </section>
+      </div>
 
-      <!-- Seção 4 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">4</span> 
-          Conformidade com a LGPD
+      <!-- Google -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">5.</span> Serviços de Terceiros e Publicidade (Google AdSense)
         </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          Em cumprimento à Lei Geral de Proteção de Dados (Lei nº 13.709/2018), garantimos o respeito à privacidade dos visitantes, a limitação da coleta ao mínimo necessário e a transparência no uso das ferramentas de navegação.
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Utilizamos ferramentas de parceiros externos para gerenciar anúncios e analisar o fluxo de visitantes:
         </p>
-      </section>
 
-      <!-- Seção 5 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">5</span> 
-          Contato sobre Privacidade
+        <div class="space-y-4 pl-4 border-l-2 border-cyan-500 my-4">
+          <div class="space-y-1">
+            <h3 class="font-black text-slate-900 text-base">Google AdSense</h3>
+            <p class="text-slate-700 font-medium leading-relaxed text-sm">
+              O Google emprega cookies para veicular anúncios com base nas suas visitas anteriores ao nosso site ou a outros portais na internet. O usuário pode optar por desativar a publicidade personalizada acessando as <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="text-cyan-600 font-bold hover:underline">Configurações de Anúncios do Google</a>.
+            </p>
+            <p class="text-slate-700 font-medium leading-relaxed text-sm pt-1">
+              Saiba mais detalhes na <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="text-cyan-600 font-bold hover:underline">Política de Privacidade do Google</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Links externos -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">6.</span> Links para Sites Externos
         </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          Dúvidas ou solicitações relacionadas à privacidade podem ser encaminhadas através da nossa <a href="/contato" class="text-cyan-600 hover:text-cyan-700 underline transition-colors">página de Contato</a>.
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Nosso diretório centraliza links de jornais, portais e agências de notícias externas. Ao clicar em tais links, você será direcionado para ambientes de terceiros que possuem políticas de privacidade próprias. Não possuímos controle sobre as práticas de coleta de dados dessas páginas externas.
         </p>
-      </section>
+      </div>
 
-    </div>
+      <!-- Compartilhamento -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">7.</span> Compartilhamento de Informações
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          O <strong>Mundo em um Clique</strong> sob nenhuma hipótese comercializa dados pessoais de seus visitantes. O compartilhamento ocorre estritamente com provedores de hospedagem, infraestrutura tecnológica e ferramentas de monetização essenciais para o funcionamento do portal, ou mediante exigência legal e judicial.
+        </p>
+      </div>
+
+      <!-- Segurança -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">8.</span> Segurança dos Dados
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Adotamos sólidas práticas técnicas, padrões de criptografia e procedimentos organizacionais para salvaguardar as informações contra acessos não autorizados, perdas ou vazamentos indevidos.
+        </p>
+      </div>
+
+      <!-- Direitos LGPD -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">9.</span> Direitos dos Titulares (LGPD)
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Conforme estabelecido pela LGPD, os usuários possuem o direito de solicitar a confirmação de tratamento, acesso, correção, anonimização ou exclusão de eventuais dados pessoais que estejam sob nossa tutela, por meio de nossos canais oficiais de atendimento.
+        </p>
+      </div>
+
+      <!-- Alterações -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">10.</span> Atualizações desta Política
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Esta Política de Privacidade poderá ser revisada periodicamente para acompanhar evoluções tecnológicas ou normativas. Recomendamos que consulte esta página com regularidade.
+        </p>
+      </div>
+
+      <!-- Contato -->
+      <div class="space-y-4 pt-6 border-t border-slate-200">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">11.</span> Contato
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Se restarem dúvidas referentes a esta política ou ao tratamento de dados, utilize a nossa <a href="/contato" class="text-cyan-600 font-bold hover:underline">página de contato oficial</a> para enviar sua mensagem diretamente à nossa equipe.
+        </p>
+        <p class="text-xs text-slate-400 font-medium pt-4">
+          Portal: Mundo em um Clique
+          <br />
+          Documento atualizado e em conformidade com as diretrizes do Google AdSense e da LGPD.
+        </p>
+      </div>
+
+    </article>
   </main>
 </BaseLayout>

@@ -13,13 +13,13 @@ const flag = getCountryFlag(source.country || 'Global');
 const categories = source.categories || [];
 ---
 
-<!-- 1. Otimização SEO: Uso da tag semântica <article> em vez de <div> -->
+<!-- Cartão com fundo branco limpo e bordas suaves -->
 <article
   class:list={[
-    "group relative h-full flex flex-col justify-between rounded-2xl border transition-all duration-300 overflow-hidden",
+    "group relative h-full flex flex-col justify-between rounded-2xl border transition-all duration-300 overflow-hidden bg-white",
     featured
-      ? "border-cyan-500/40 bg-gradient-to-b from-cyan-50/50 to-white p-6 shadow-md shadow-cyan-500/10 hover:border-cyan-500 hover:shadow-2xl hover:shadow-cyan-500/15"
-      : "border-slate-200/80 bg-white p-5 shadow-sm hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-xl hover:shadow-slate-200/70"
+      ? "border-cyan-500/40 bg-gradient-to-b from-cyan-50/40 to-white p-6 shadow-md shadow-cyan-500/10 hover:border-cyan-500 hover:shadow-2xl hover:shadow-cyan-500/15"
+      : "border-slate-200/80 p-5 shadow-sm hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-xl hover:shadow-slate-200/70"
   ]}
 >
   <!-- Detalhe decorativo de borda no hover -->
@@ -40,33 +40,32 @@ const categories = source.categories || [];
             ]}
             loading="lazy"
             decoding="async" 
-            {...{ onerror: "this.onerror=null; this.src='/default-icon.svg';" }}
+            onerror="this.onerror=null; this.src='/default-icon.svg';"
           />
         </div>
 
         <div>
-          <!-- Título principal com maior destaque -->
-          <button
-            type="button"
-            class="open-source-modal text-left text-slate-900 text-lg sm:text-xl tracking-tight leading-snug hover:text-cyan-600 transition-colors cursor-pointer block line-clamp-1"
-            data-source={JSON.stringify(source)}
+          <!-- Título principal -->
+          <a
+            href={`/site/${source.id}`}
+            class="text-left font-bold text-slate-900 text-lg sm:text-xl tracking-tight leading-snug hover:text-cyan-600 transition-colors cursor-pointer block line-clamp-1"
           >
             {source.name}
-          </button>
+          </a>
           
-          <!-- Linha de metadados refinada -->
+          <!-- Metadados -->
           <p class="text-[10px] sm:text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 tracking-widest uppercase font-mono">
             <span title={`País: ${source.country}`}>{flag}</span>
             <span>{source.country}</span>
             <span class="text-slate-300">•</span>
-            <span class="capitalize font-sans text-slate-600">{source.type}</span>
+            <span class="capitalize font-sans text-slate-600">{(source as any).type || 'Portal'}</span>
           </p>
         </div>
       </div>
 
-      <!-- Badge de Verificado em caixa alta bem espaçada -->
+      <!-- Badge de Verificado -->
       {source.active && (
-        <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50/90 px-2.5 py-1 text-[10px] text-emerald-700 uppercase tracking-widest border border-emerald-200/80 shrink-0 shadow-2xs">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50/90 px-2.5 py-1 text-[10px] font-bold text-emerald-700 uppercase tracking-widest border border-emerald-200/80 shrink-0 shadow-2xs">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -76,104 +75,46 @@ const categories = source.categories || [];
       )}
     </div>
 
-    <!-- Descrição com altura mínima padronizada para forçar todos os cards a terem o mesmo tamanho -->
+    <!-- Descrição -->
     <div class="min-h-[2.5rem] mb-4 flex items-start">
-      <p class="text-xs sm:text-sm text-slate-600/90 line-clamp-2 leading-relaxed tracking-wide w-full">
+      <p class="text-xs sm:text-sm text-slate-600 font-medium line-clamp-2 leading-relaxed tracking-wide w-full">
         {source.description || 'Sem descrição disponível.'}
       </p>
     </div>
   </div>
 
-  <!-- Rodapé do Card: Categorias e Botão (Fixado perfeitamente na base) -->
+  <!-- Rodapé do Card: Categorias e Botões -->
   <div class="pt-3.5 border-t border-slate-100 flex items-center justify-between gap-2 mt-auto">
-    <!-- Etiquetas de Categorias em tamanho compacto -->
+    <!-- Categorias -->
     <div class="flex flex-wrap gap-1.5">
-      {categories.slice(0, 2).map((cat: string) => (
-        <span class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-100/80 text-slate-600 border border-slate-200/60 flex items-center gap-1.5 uppercase tracking-wider transition-colors hover:bg-slate-200/60">
+      {categories.slice(0, 2).map((cat) => (
+        <span class="font-bold text-[10px] px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 border border-slate-200/60 flex items-center gap-1.5 uppercase tracking-wider transition-colors hover:bg-slate-200/60">
           <span class="text-xs">{getCategoryIcon(cat)}</span>
           <span class="capitalize">{cat}</span>
         </span>
       ))}
     </div>
 
-    <!-- Botão Acessar com tipografia em caixa alta clara -->
-    <a
-      href={source.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-track-source={source.id}
-      class="track-click-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-500 text-cyan-700 hover:text-white border border-cyan-200/60 hover:border-cyan-500 text-xs uppercase tracking-wider transition-all duration-200 group/btn shadow-2xs shrink-0"
-    >
-      <span>Acessar</span>
-      <span class="text-sm transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">↗</span>
-    </a>
+    <div class="flex items-center gap-3">
+      <!-- Link para Detalhes -->
+      <a 
+        href={`/site/${source.id}`} 
+        class="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider text-cyan-600 hover:text-cyan-800 transition-colors"
+      >
+        Detalhes
+      </a>
+
+      <!-- Botão Acessar -->
+      <a
+        href={source.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track-source={source.id}
+        class="track-click-btn inline-flex items-center font-bold gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-500 text-cyan-700 hover:text-white border border-cyan-200/60 hover:border-cyan-500 text-xs uppercase tracking-wider transition-all duration-200 group/btn shadow-2xs shrink-0"
+      >
+        <span>Acessar</span>
+        <span class="text-sm transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">↗</span>
+      </a>
+    </div>
   </div>
 </article>
-
-<script>
-  function initModalHandler() {
-    if ((window as any).__SOURCE_MODAL_HANDLER_BOUND__) return;
-    (window as any).__SOURCE_MODAL_HANDLER_BOUND__ = true;
-
-    document.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement | null;
-      const modalBtn = target?.closest('.open-source-modal') as HTMLButtonElement | null;
-      
-      if (!modalBtn) return;
-      
-      const rawData = modalBtn.getAttribute('data-source');
-      if (!rawData) return;
-
-      try {
-        const source = JSON.parse(rawData);
-        const modal = document.getElementById('source-detail-modal');
-        if (!modal) return;
-
-        const nameEl = document.getElementById('modal-source-name');
-        const footerNameEl = document.getElementById('modal-source-footer-name');
-        const descEl = document.getElementById('modal-source-desc');
-        const countryEl = document.getElementById('modal-source-country');
-        const langEl = document.getElementById('modal-source-language');
-        const badgeTypeEl = document.getElementById('modal-source-type-badge');
-        const gridTypeEl = document.getElementById('modal-grid-type');
-        const verifiedEl = document.getElementById('modal-source-verified');
-        const categoriesContainer = document.getElementById('modal-source-categories');
-        const linkEl = document.getElementById('modal-source-link') as HTMLAnchorElement | null;
-
-        if (nameEl) nameEl.textContent = source.name;
-        if (footerNameEl) footerNameEl.textContent = source.name;
-        if (descEl) descEl.textContent = source.description || 'Descrição não informada.';
-        if (countryEl) countryEl.textContent = source.country || 'BR';
-        if (langEl) langEl.textContent = source.language || 'PT-BR';
-        if (badgeTypeEl) badgeTypeEl.textContent = (source.type || 'PORTAL').toUpperCase();
-        if (gridTypeEl) gridTypeEl.textContent = source.type || 'Portal';
-        if (verifiedEl) verifiedEl.textContent = source.lastVerified || '2026-10-20';
-
-        if (linkEl) {
-          linkEl.href = source.url || '#';
-          linkEl.setAttribute('data-track-source', source.id || '');
-        }
-
-        if (categoriesContainer) {
-          categoriesContainer.innerHTML = '';
-          const cats = source.categories || ['Geral'];
-          cats.forEach((cat: string) => {
-            const span = document.createElement('span');
-            span.className = 'px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-slate-900 text-sm font-black capitalize';
-            span.textContent = cat;
-            categoriesContainer.appendChild(span);
-          });
-        }
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-      } catch (err) {
-        console.error('Erro ao abrir modal do veículo:', err);
-      }
-    });
-  }
-
-  initModalHandler();
-  document.addEventListener('astro:page-load', initModalHandler);
-</script>

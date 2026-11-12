@@ -1,10 +1,14 @@
 ---
-export const prerender = false; // Garante que a página valide os cookies em tempo real (SSR)
+export const prerender = false;
 
 import '../../styles/global.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Valida obrigatoriamente se o cookie de sessão existe
+// ATENÇÃO:
+// Esta validação é apenas uma verificação provisória.
+// Em produção, utilize uma sessão autenticada e assinada,
+// validada no servidor, com expiração e revogação.
+
 const session = Astro.cookies.get('admin_session');
 
 if (!session || session.value !== 'authenticated') {
@@ -12,145 +16,308 @@ if (!session || session.value !== 'authenticated') {
 }
 ---
 
-<BaseLayout 
-  title="Painel Administrativo | OMundoEmUmCLICK" 
-  description="Painel de controlo do administrador."
+<BaseLayout
+  title="Painel Administrativo | O Mundo em um Clique"
+  description="Área administrativa para gerenciamento de ofertas e acompanhamento das funcionalidades do portal."
 >
-  <main class="min-h-[calc(100vh-140px)] bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+  <main class="min-h-[calc(100vh-140px)] bg-slate-50 py-10 sm:py-12 px-4 sm:px-6 lg:px-8">
+
     <div class="max-w-7xl mx-auto">
-      
-      <!-- Cabeçalho do Dashboard -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm mb-8">
+
+      <!-- Cabeçalho do painel -->
+      <section class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm mb-8">
+
         <div>
-          <span class="text-xs font-black uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full border border-cyan-100">Área Segura</span>
-          <h1 class="text-3xl font-black text-slate-900 mt-2">Painel de Controlo</h1>
+          <span class="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded border border-cyan-100 mb-2">
+            Área segura
+          </span>
+
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            Painel de Controlo
+          </h1>
         </div>
-        
-        <!-- Botões de Ação do Cabeçalho -->
-        <div class="flex items-center gap-3">
-          <a href="/" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-wider rounded-2xl border border-slate-200 transition-colors cursor-pointer">
+
+        <!-- Ações do cabeçalho -->
+        <div class="flex items-center gap-3 flex-wrap">
+
+          <a
+            href="/"
+            class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs uppercase tracking-wider rounded-lg transition-colors border border-slate-200"
+          >
             Ver Site
           </a>
-          <a href="/admin/logout" class="px-5 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 font-black text-xs uppercase tracking-wider rounded-2xl border border-red-200 transition-colors cursor-pointer flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+
+          <a
+            href="/admin/logout"
+            class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-semibold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center gap-2 border border-red-100"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
             Sair
           </a>
-        </div>
-      </div>
 
-      <!-- Cards de Estatísticas/Status -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400">Estado do Sistema</h3>
-          <p class="text-2xl font-black text-emerald-600 mt-2">Online & SSR Ativo</p>
-          <span class="text-xs text-slate-500 font-bold mt-1 block">Acesso restrito verificado</span>
         </div>
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400">Autenticação</h3>
-          <p class="text-2xl font-black text-cyan-600 mt-2">Sessão Ativa</p>
-          <span class="text-xs text-slate-500 font-bold mt-1 block">Protegido por Cookies</span>
-        </div>
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400">Permissões</h3>
-          <p class="text-2xl font-black text-slate-900 mt-2">Administrador</p>
-          <span class="text-xs text-slate-500 font-bold mt-1 block">Acesso total ao portal</span>
-        </div>
-      </div>
 
-      <!-- Ações Rápidas e Smart Paste -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- Bloco Original: Ações Rápidas -->
-        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-          <h2 class="text-lg font-black text-slate-900 mb-4">Ações Rápidas</h2>
-          <div class="flex flex-wrap gap-4">
-            <a href="/admin/ofertas" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-              Gerir Ofertas
-            </a>
-            <a href="/admin/boletim" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-              Mensagens / Boletim
-            </a>
-            <a href="/" target="_blank" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-2xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-2">
-              Ver Portal ↗
-            </a>
+      </section>
+
+      <!-- Indicadores do painel -->
+      <section
+        aria-label="Informações administrativas"
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+      >
+
+        <article class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+             <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+            <h2 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Estado do Sistema
+            </h2>
           </div>
-        </div>
+          <p class="text-xl font-bold text-slate-900">
+            Online & SSR Ativo
+          </p>
+          <p class="text-[11px] text-slate-500 font-medium mt-1">
+             Acesso restrito verificado
+          </p>
+        </article>
 
-        <!-- NOVO Bloco: Smart Paste -->
-        <div class="bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-3xl border border-slate-700 shadow-lg relative overflow-hidden">
-          <div class="absolute top-0 right-0 p-6 opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+        <article class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-2 h-2 rounded-full bg-cyan-500"></div>
+            <h2 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Autenticação
+            </h2>
+          </div>
+          <p class="text-xl font-bold text-slate-900">
+            Sessão Ativa
+          </p>
+          <p class="text-[11px] text-slate-500 font-medium mt-1">
+            Protegido por Cookies
+          </p>
+        </article>
+
+        <article class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+           <div class="flex items-center gap-2 mb-2">
+             <div class="w-2 h-2 rounded-full bg-amber-500"></div>
+            <h2 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Permissões
+            </h2>
+          </div>
+          <p class="text-xl font-bold text-slate-900">
+            Administrador
+          </p>
+          <p class="text-[11px] text-slate-500 font-medium mt-1">
+            Acesso total ao portal
+          </p>
+        </article>
+
+      </section>
+
+      <!-- Ferramentas administrativas -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Ações rápidas -->
+        <article class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+             <h2 class="text-lg font-bold text-slate-900 mb-6">
+              Ações Rápidas
+             </h2>
+          
+             <div class="flex flex-wrap gap-3">
+               <a
+                 href="/admin/ofertas"
+                 class="px-4 py-2.5 bg-cyan-700 hover:bg-cyan-600 text-white rounded-lg text-[11px] font-semibold uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2"
+               >
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
+                 </svg>
+                 Gerir Ofertas
+               </a>
+
+               <a
+                 href="/admin/boletim"
+                 class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[11px] font-semibold uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2"
+               >
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                 </svg>
+                 Mensagens / Boletim
+               </a>
+             </div>
           </div>
           
+           <div class="mt-6">
+              <a
+                 href="/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="inline-flex px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg text-[11px] font-semibold uppercase tracking-wider transition-colors border border-slate-200 items-center gap-1.5"
+               >
+                 Ver Portal
+                 <span aria-hidden="true" class="text-xs">↗</span>
+               </a>
+           </div>
+
+        </article>
+
+        <!-- Smart Paste -->
+        <article class="bg-slate-900 p-6 sm:p-8 rounded-2xl shadow-md relative overflow-hidden">
+
+          <div class="absolute top-0 right-0 p-6 opacity-5" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-28 w-28 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+
           <div class="relative z-10">
-            <h2 class="text-lg font-black text-white mb-1 flex items-center gap-2">
-              <span class="text-cyan-400">⚡</span> Smart Paste
-            </h2>
-            <p class="text-slate-400 text-xs font-bold mb-5">Adicione ofertas rapidamente usando links curtos (meli.la).</p>
-            
-            <form id="smart-paste-form" class="space-y-3">
-              <input 
-                type="url" 
-                id="url" 
-                placeholder="Cole o link do Mercado Livre aqui..." 
-                required 
-                class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-800/50 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-0 font-bold text-sm"
+
+            <div class="mb-5">
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                 <span class="text-cyan-400">⚡</span> Smart Paste
+              </h2>
+              <p class="text-[11px] text-slate-400 mt-1">
+                Adicione ofertas rapidamente usando links curtos (meli.la).
+              </p>
+            </div>
+
+            <form id="smart-paste-form" class="space-y-4">
+              <input
+                type="url"
+                id="url"
+                name="url"
+                placeholder="Cole o link do Mercado Livre aqui..."
+                autocomplete="url"
+                required
+                maxlength="2048"
+                class="w-full px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-200 placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none text-sm transition-all"
               />
-              <button 
-                type="submit" 
+
+              <button
+                type="submit"
                 id="submit-btn"
-                class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-md active:scale-95"
+                class="w-full bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-[11px] uppercase tracking-wider px-6 py-3 rounded-lg transition-colors"
               >
                 Extrair e Guardar
               </button>
             </form>
-            <div id="status-message" class="mt-3 hidden p-3 rounded-xl font-bold text-xs text-center border"></div>
-          </div>
-        </div>
 
-      </div>
+            <div
+              id="status-message"
+              class="mt-4 hidden p-3 rounded-lg font-medium text-xs text-center border"
+              role="status"
+              aria-live="polite"
+            ></div>
+
+          </div>
+
+        </article>
+
+      </section>
+
     </div>
+
   </main>
 
+  <!-- Processamento do Smart Paste -->
   <script>
-    const form = document.getElementById('smart-paste-form') as HTMLFormElement;
-    const btn = document.getElementById('submit-btn') as HTMLButtonElement;
-    const status = document.getElementById('status-message') as HTMLDivElement;
+    const form = document.getElementById('smart-paste-form') as HTMLFormElement | null;
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const status = document.getElementById('status-message') as HTMLDivElement | null;
+    const urlInput = document.getElementById('url') as HTMLInputElement | null;
 
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const urlInput = (document.getElementById('url') as HTMLInputElement).value;
-      
+    function showStatus(message: string, type: 'success' | 'error') {
+      if (!status) return;
+
+      status.textContent = message;
+
+      status.className = type === 'success'
+        ? 'mt-4 p-3 rounded-lg font-medium text-xs text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+        : 'mt-4 p-3 rounded-lg font-medium text-xs text-center bg-red-500/10 text-red-400 border border-red-500/20';
+
+      status.hidden = false;
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!form || !btn || !urlInput || !urlInput.value.trim()) {
+        return;
+      }
+
+      const submittedUrl = urlInput.value.trim();
+
+      if (!urlInput.checkValidity()) {
+        urlInput.reportValidity();
+        return;
+      }
+
       btn.disabled = true;
-      btn.textContent = 'A EXTRAIR DADOS... ⏳';
-      status.classList.add('hidden');
+      btn.textContent = 'PROCESSANDO...';
+
+      if (status) {
+        status.hidden = true;
+      }
 
       try {
         const response = await fetch('/api/salvar-oferta', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: urlInput })
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            url: submittedUrl,
+          }),
         });
+
+        const contentType = response.headers.get('content-type') || '';
+
+        if (!contentType.includes('application/json')) {
+          throw new Error('O servidor retornou uma resposta inesperada.');
+        }
 
         const data = await response.json();
 
-        if (response.ok) {
-          status.textContent = '✅ Oferta guardada com sucesso no D1!';
-          status.className = 'mt-3 p-3 rounded-xl font-black text-xs text-center bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-          form.reset();
-        } else {
-          throw new Error(data.error || 'Erro ao processar');
+        if (!response.ok) {
+          throw new Error(
+            typeof data.error === 'string'
+              ? data.error
+              : 'Não foi possível processar o produto.'
+          );
         }
-      } catch (error: any) {
-        status.textContent = `❌ Erro: ${error.message}`;
-        status.className = 'mt-3 p-3 rounded-xl font-black text-xs text-center bg-red-500/20 text-red-300 border border-red-500/30';
+
+        showStatus(
+          'Solicitação processada. Verifique o cadastro para confirmar os dados da oferta.',
+          'success'
+        );
+
+        form.reset();
+
+      } catch (error) {
+        const message = error instanceof Error
+          ? error.message
+          : 'Ocorreu um erro inesperado. Tente novamente.';
+
+        showStatus(`Não foi possível concluir a operação: ${message}`, 'error');
+
       } finally {
         btn.disabled = false;
         btn.textContent = 'EXTRAIR E GUARDAR';
       }
     });
   </script>
+
 </BaseLayout>

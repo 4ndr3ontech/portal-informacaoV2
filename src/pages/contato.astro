@@ -6,23 +6,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title="Fale Conosco | OMundoEmUmCLICK" 
   description="Entre em contato para sugerir novos veículos de notícias, comunicar correções ou enviar mensagens."
 >
-  <!-- CABEÇALHO CLARO (FUNDO BRANCO) -->
-  <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
-    <div class="max-w-3xl mx-auto text-center space-y-4">
-      <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 pb-2">
+  <!-- HERO SECTION REFINADA (TEMA CLARO) -->
+  <header class="relative overflow-hidden bg-slate-50 border-b border-slate-200 px-4 pt-12 pb-16 sm:pt-20 sm:pb-24">
+    <!-- Efeito de iluminação decorativo -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-cyan-400/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto text-center space-y-4">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900">
         Fale Conosco
       </h1>
-      <p class="text-slate-600 font-bold text-lg">
-        Envie sugestões de veículos, correções de links ou dúvidas gerais.
+      <p class="text-slate-600 font-bold text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+        Envie sugestões de veículos, correções de links ou dúvidas gerais sobre o nosso diretório.
       </p>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-[60vh]">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 w-full min-h-[60vh]">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
       
       <!-- COLUNA ESQUERDA: FORMULÁRIO -->
-      <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
+      <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-10 shadow-sm">
         <form id="contact-form" class="space-y-6" novalidate>
           
           <!-- Mensagem de Feedback -->
@@ -102,7 +105,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <!-- COLUNA DIREITA: INFORMAÇÕES -->
       <aside class="space-y-6">
-        <div class="bg-slate-50 rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="bg-slate-50 rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
           <h3 class="text-xl font-black text-slate-900 mb-4 flex items-center gap-2">
             <span class="text-cyan-600 text-2xl">ℹ️</span> Atendimento
           </h3>

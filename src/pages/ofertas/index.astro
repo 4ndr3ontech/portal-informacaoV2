@@ -15,21 +15,37 @@ try {
 }
 ---
 
-<BaseLayout 
-  title="Ofertas Selecionadas | OMundoEmUmCLICK" 
-  description="Produtos úteis para leitura, trabalho, tecnologia e produtividade recomendados pela equipe do portal."
+<BaseLayout
+  title="Ofertas de Tecnologia, Informática e Eletrônicos | O Mundo em um Clique"
+  description="Descubra ofertas de tecnologia, informática, hardware, eletrônicos e acessórios. Explore produtos, compare opções e consulte preços e condições diretamente nas lojas."
 >
-  <!-- CABEÇALHO COM CORES SÓLIDAS E ALTO CONTRASTE -->
-  <header class="bg-white py-12 px-4 border-b border-slate-200">
-    <div class="max-w-3xl mx-auto text-center space-y-4">
+  <!-- Cabeçalho da página de ofertas -->
+  <header class="bg-white py-12 sm:py-16 px-4 border-b border-slate-200">
+    <div class="max-w-3xl mx-auto text-center space-y-5">
+
       <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-slate-900">
-        Ofertas Selecionadas
+        Ofertas de Tecnologia, Informática e Eletrônicos
       </h1>
-      <p class="text-slate-600 font-bold text-lg">
-        Produtos úteis para leitura, trabalho, tecnologia e produtividade recomendados pela equipe do portal.
+
+      <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+        Explore produtos de tecnologia, componentes de hardware, computadores,
+        periféricos, eletrônicos e acessórios para diferentes necessidades.
+        Encontre opções para trabalhar, estudar, jogar ou renovar seus
+        equipamentos. Reunimos produtos e oportunidades de compra em um só
+        lugar para facilitar sua pesquisa, conhecer alternativas e comparar
+        as opções disponíveis nas lojas.
       </p>
+
+      <p class="text-sm text-slate-500 leading-relaxed">
+        Consulte os detalhes de cada produto e confira as informações
+        diretamente na loja responsável pela venda. Preços, descontos,
+        disponibilidade de estoque, frete e condições de pagamento podem
+        sofrer alterações sem aviso prévio.
+      </p>
+
     </div>
   </header>
+
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-[60vh]">
     
@@ -132,7 +148,7 @@ try {
         );
       })}
       
-      {/* Mensagem caso não tenha nenhuma oferta no banco */}
+      <!-- Mensagem caso não tenha nenhuma oferta no banco -->
       {offers.length === 0 && (
         <div class="col-span-full py-12 text-center">
           <p class="text-slate-500 font-bold">Nenhuma oferta disponível no momento. Volte em breve!</p>

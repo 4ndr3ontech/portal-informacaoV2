@@ -2,70 +2,108 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout 
-  title="Termos de Uso | OMundoEmUmCLICK" 
-  description="Termos de uso do portal O mundo em um click, incluindo natureza dos serviços e isenção de responsabilidade."
->
-  <!-- CABEÇALHO CLARO -->
-  <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
-    <div class="max-w-3xl mx-auto text-center space-y-4">
-      <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 pb-2">
+<BaseLayout title="Termos de Uso | O Mundo em um Clique">
+  <!-- Hero Section Refinado (Fundo Branco) -->
+  <header class="relative overflow-hidden bg-white border-b border-slate-200 px-4 pt-12 pb-16 sm:pt-20 sm:pb-24">
+    <!-- Efeito de iluminação decorativo suave -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-cyan-400/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto text-center space-y-4">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900">
         Termos de Uso
       </h1>
-      <p class="text-slate-600 font-bold text-lg">
-        Última atualização: 19 de outubro de 2026
+      <p class="text-base sm:text-lg font-medium text-slate-600 max-w-2xl mx-auto leading-relaxed">
+        Conheça as condições de utilização do diretório e as responsabilidades dos visitantes.
       </p>
     </div>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL CENTRALIZADO -->
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-[60vh]">
-    <div class="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-sm space-y-10">
-      
-      <!-- Seção 1 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">1</span> 
-          Aceitação dos Termos
-        </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          Ao acessar e navegar pelo portal O mundo em um click, o visitante concorda expressamente com os presentes Termos de Uso e com as diretrizes da nossa Política de Privacidade.
-        </p>
-      </section>
+  <!-- Conteúdo Principal -->
+  <main class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-3xl border border-slate-200/80 shadow-sm space-y-10">
 
-      <!-- Seção 2 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">2</span> 
-          Natureza dos Serviços
+      <!-- 1. Aceitação dos Termos -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">1.</span> Aceitação dos Termos
         </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          O portal O mundo em um click é um diretório e agregador editorial de links que direcionam para notícias publicadas em portais oficiais de imprensa. O portal não produz artigos jornalísticos próprios nem garante o conteúdo publicado em sites de terceiros.
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Ao acessar e utilizar o portal <strong>O Mundo em um Clique</strong>, o visitante declara estar ciente destas condições de uso. Caso não concorde com alguma disposição, recomendamos que não utilize o serviço.
         </p>
-      </section>
+      </div>
 
-      <!-- Seção 3 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">3</span> 
-          Isenção de Responsabilidade Comercial
+      <!-- 2. Natureza do Serviço -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">2.</span> Natureza do Serviço
         </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          As ofertas apresentadas na área comercial contêm preços e condições verificadas periodicamente, sujeitas a alterações sem aviso prévio pelas lojas parceiras. A responsabilidade pela venda, entrega e garantia dos produtos é exclusiva dos anunciantes e do Mercado Livre.
+        <p class="text-slate-700 font-medium leading-relaxed">
+          O Mundo em um Clique é um diretório digital que organiza e disponibiliza referências e links para sites de notícias, informação, tecnologia, entretenimento e outros conteúdos disponíveis na internet.
         </p>
-      </section>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          O portal atua como intermediário de acesso, direcionando os visitantes para páginas mantidas por terceiros. Não somos responsáveis pela produção, edição ou publicação do conteúdo disponibilizado nesses sites.
+        </p>
+      </div>
 
-      <!-- Seção 4 -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 text-base">4</span> 
-          Propriedade Intelectual
+      <!-- 3. Links e Sites de Terceiros -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">3.</span> Links e Sites de Terceiros
         </h2>
-        <p class="text-slate-600 font-bold text-sm sm:text-base leading-relaxed pl-10.5">
-          As marcas, logotipos e nomes de veículos citados pertencem aos seus respectivos proprietários e são utilizados apenas com fins indicativos de identificação e direcionamento.
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Os links disponibilizados direcionam para páginas externas, administradas por organizações e responsáveis independentes.
         </p>
-      </section>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Não exercemos controle sobre o funcionamento, a disponibilidade, as políticas de privacidade ou a exatidão das informações contidas em sites de terceiros. O acesso a tais páginas é de inteira responsabilidade do usuário.
+        </p>
+      </div>
 
-    </div>
+      <!-- 4. Propriedade Intelectual -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">4.</span> Propriedade Intelectual
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          A estrutura, o layout, o design, as marcas e os elementos visuais próprios do portal <strong>O Mundo em um Clique</strong> são protegidos por leis de propriedade intelectual.
+        </p>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Os logotipos, nomes e conteúdos vinculados aos sites externos pertencem exclusivamente aos seus respectivos proprietários e editores.
+        </p>
+      </div>
+
+      <!-- 5. Limitação de Responsabilidade -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">5.</span> Limitação de Responsabilidade
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          O portal é fornecido na forma em que se encontra, sem garantias expressas ou implícitas de funcionamento ininterrupto. Não nos responsabilizamos por eventuais instabilidades técnicas, indisponibilidade temporária de links externos ou prejuízos decorrentes do uso das informações encontradas no diretório.
+        </p>
+      </div>
+
+      <!-- 6. Atualizações dos Termos -->
+      <div class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">6.</span> Atualizações dos Termos
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Estes Termos de Uso poderão ser modificados a qualquer momento, visando a melhoria contínua da plataforma ou a adequação a novas exigências legais. Recomendamos a consulta periódica desta página.
+        </p>
+      </div>
+
+      <!-- Contato -->
+      <div class="space-y-4 pt-6 border-t border-slate-200">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-cyan-600">7.</span> Dúvidas e Contato
+        </h2>
+        <p class="text-slate-700 font-medium leading-relaxed">
+          Se houver qualquer dúvida sobre estes Termos de Uso, utilize a nossa <a href="/contato" class="text-cyan-600 font-bold hover:underline">página de contato oficial</a> para falar com a nossa equipe.
+        </p>
+        <p class="text-xs text-slate-400 font-medium pt-4">
+          Portal: Mundo em um Clique
+        </p>
+      </div>
+
+    </article>
   </main>
 </BaseLayout>

@@ -1,18 +1,8 @@
-import type { NewsSource, Category } from '../types';
-import brazilSources from '../data/brazil-sources.json';
 import { sources as fontesOriginais } from '../data/sources';
+import type { NewsSource, Category } from '../types';
 
-// Une e deduplica o catálogo completo de fontes baseado no nome em minúsculas
-const rawSources: NewsSource[] = [...fontesOriginais, ...(brazilSources as NewsSource[])];
-const seenNames = new Set<string>();
-
-const catalog: NewsSource[] = rawSources.filter(source => {
-  if (!source || !source.name) return false;
-  const key = source.name.toLowerCase().trim();
-  if (seenNames.has(key)) return false;
-  seenNames.add(key);
-  return true;
-});
+// Converte de forma segura passando por unknown para alinhar as propriedades (ex: score)
+const catalog: NewsSource[] = (fontesOriginais as unknown) as NewsSource[];
 
 /**
  * Retorna todas as fontes unificadas e ativas do diretório.
@@ -26,8 +16,20 @@ export function getAllSources(): NewsSource[] {
  * Adicionado fallback `|| 999` para evitar erro de null/undefined no rank.
  */
 export function getSourcesByCategory(category: string | Category): NewsSource[] {
+  const catLower = String(category).toLowerCase().trim();
+
   return catalog
-    .filter(source => source.active !== false && source.categories && source.categories.includes(category as any))
+    .filter(source => {
+      if (source.active === false) return false;
+
+      // Se a categoria solicitada for 'brasil', traz todas as fontes do país BR
+      if (catLower === 'brasil') {
+        return source.country === 'BR';
+      }
+
+      // Caso contrário, verifica se a categoria está presente no array
+      return source.categories && source.categories.some(c => c.toLowerCase() === catLower);
+    })
     .sort((a, b) => (a.rank || 999) - (b.rank || 999));
 }
 

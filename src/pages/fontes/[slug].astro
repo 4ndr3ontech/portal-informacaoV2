@@ -1,206 +1,122 @@
 ---
-export const prerender = true;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { sources } from '../../data/sources';
-import { categories } from '../../data/categories';
-import { sanitizeUrl, getExternalLinkProps } from '../../lib/links';
+import sources from '../../data/clean-news-sources.json';
 
-export function getStaticPaths() {
-  return sources.map((source) => ({
-    params: { slug: source.id },
+export const prerender = true;
+
+export async function getStaticPaths() {
+  return sources.map((source: any) => ({
+    params: { slug: source.slug || source.id },
     props: { source }
   }));
 }
 
 const { source } = Astro.props;
-const safeUrl = sanitizeUrl(source.url);
-const externalProps = getExternalLinkProps();
 
-const sourceCategories = categories.filter((c) => source.categories.includes(c.slug));
+if (!source) {
+  return Astro.redirect('/404');
+}
 ---
 
-<BaseLayout 
-  title={`${source.name} - Fonte de Notícia`}
-  description={source.description}
->
-  <div class="container">
-    <nav class="breadcrumb" aria-label="Navegação de retorno">
-      <a href="/">Início</a> &gt; <a href="/noticias">Fontes</a> &gt; <span>{source.name}</span>
-    </nav>
+<BaseLayout title={`${source.name} — Perfil da Fonte | O Mundo em um Clique`} description={source.description}>
+  
+  <!-- Cabeçalho do Perfil -->
+  <section class="bg-slate-950 text-white py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+    <div class="max-w-4xl mx-auto space-y-6">
+      
+      <div class="flex flex-wrap items-center gap-3 text-xs font-black uppercase tracking-wider text-cyan-400">
+        <span class="px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/30">
+          {source.mediaType || 'Portal de Notícias'}
+        </span>
+        <span>PAÍS: <strong>{source.country || 'Global'}</strong></span>
+        <span>IDIOMA: <strong>{source.language || (source.country === 'BR' ? 'pt-BR' : 'en/Multilíngue')}</strong></span>
+      </div>
 
-    <article class="source-detail-card">
-      <header class="detail-header">
-        <div class="detail-tags">
-          <span class="type-tag">{source.type}</span>
-          <span class="country-tag">País: {source.country}</span>
-          <span class="lang-tag">Idioma: {source.language}</span>
-        </div>
-        <h1>{source.name}</h1>
-      </header>
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center gap-4">
+        {source.favicon && (
+          <img src={source.favicon} alt={`Logo ${source.name}`} class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border border-slate-800 bg-white p-1" />
+        )}
+        {source.name}
+      </h1>
 
-      <div class="detail-body">
-        <h2>Sobre o Veículo</h2>
-        <p>{source.description}</p>
+      <p class="text-base sm:text-lg font-bold text-slate-300 leading-relaxed max-w-3xl">
+        {source.description || 'Portal catalogado e verificado no diretório global de fontes de informação.'}
+      </p>
 
-        <div class="info-grid">
-          <div class="info-item">
-            <strong>Tipo de Mídia:</strong>
-            <span style="text-transform: capitalize;">{source.type}</span>
+      <div class="pt-4 flex flex-wrap items-center gap-4">
+        <a 
+          href={source.url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg shadow-cyan-600/20"
+        >
+          Acessar Site Oficial ↗
+        </a>
+        <a 
+          href="/" 
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 font-black text-xs uppercase tracking-wider transition-all"
+        >
+          ← Voltar ao Diretório
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Detalhes e Transparência do Perfil -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full space-y-8">
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Informações Técnicas -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4 md:col-span-1">
+        <h2 class="text-lg font-black text-slate-900">Ficha Técnica</h2>
+        <ul class="space-y-3 text-xs font-bold text-slate-600">
+          <li class="flex justify-between border-b border-slate-100 pb-2">
+            <span>Tipo de Mídia:</span>
+            <strong class="text-slate-900 capitalize">{source.mediaType || 'Portal'}</strong>
+          </li>
+          <li class="flex justify-between border-b border-slate-100 pb-2">
+            <span>País de Origem:</span>
+            <strong class="text-slate-900">{source.countryName || (source.country === 'BR' ? 'Brasil' : 'Global')}</strong>
+          </li>
+          <li class="flex justify-between border-b border-slate-100 pb-2">
+            <span>Rank Global:</span>
+            <strong class="text-slate-900">#{source.rank || 'N/A'}</strong>
+          </li>
+          <li class="flex justify-between border-b border-slate-100 pb-2">
+            <span>Estado da Verificação:</span>
+            <strong class="text-emerald-600">Ativo e Verificado</strong>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Análise Editorial e Transparência -->
+      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4 md:col-span-2">
+        <h2 class="text-xl font-black text-slate-900">Sobre a Curadoria desta Fonte</h2>
+        <p class="text-slate-600 font-bold text-sm leading-relaxed">
+          Esta publicação faz parte do diretório independente <strong>O Mundo em um Clique</strong>. A inclusão tem como objetivo orientar utilizadores interessados em consultar conteúdos legítimos, oferecendo acesso direto ao portal oficial de <em>{source.name}</em>.
+        </p>
+        <div class="pt-4 border-t border-slate-100 space-y-2">
+          <h3 class="text-sm font-black text-slate-900">Categorias Associadas:</h3>
+          <div class="flex flex-wrap gap-2">
+            {source.categories && source.categories.length > 0 ? (
+              source.categories.map((cat: string) => (
+                <span class="px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-slate-900 text-xs font-black capitalize">
+                  {cat}
+                </span>
+              ))
+            ) : (
+              <span class="px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-slate-900 text-xs font-black">
+                Geral
+              </span>
+            )}
           </div>
-          <div class="info-item">
-            <strong>Última Verificação:</strong>
-            <span>{source.lastVerified}</span>
-          </div>
-          <div class="info-item">
-            <strong>Situação:</strong>
-            <span class="status-active">Ativo e Verificado</span>
-          </div>
-        </div>
-
-        <h3>Categorias Cobertas</h3>
-        <div class="categories-flex">
-          {sourceCategories.map((cat) => (
-            <a href={`/categorias/${cat.slug}`} class="cat-link">
-              {cat.name}
-            </a>
-          ))}
         </div>
       </div>
 
-      <footer class="detail-footer">
-        <p class="disclaimer">
-          Você será redirecionado para o site oficial e independente de <strong>{source.name}</strong>.
-        </p>
-        <a href={safeUrl} {...externalProps} class="access-button">
-          Acessar {source.name} no site oficial ↗
-        </a>
-      </footer>
-    </article>
-  </div>
+    </div>
+
+  </section>
+
 </BaseLayout>
-
-<style>
-  .breadcrumb {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-  }
-
-  .breadcrumb a {
-    color: var(--text-secondary);
-  }
-
-  .source-detail-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 2rem;
-    box-shadow: var(--shadow-sm);
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .detail-tags {
-    display: flex;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .detail-header h1 {
-    font-size: 2.25rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-  }
-
-  .detail-body {
-    border-top: 1px solid var(--border-color);
-    padding-top: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .detail-body h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .detail-body p {
-    color: var(--text-secondary);
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    background-color: var(--bg-secondary);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    margin-bottom: 1.5rem;
-  }
-
-  .info-item strong {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  .status-active {
-    color: #16a34a;
-    font-weight: 600;
-  }
-
-  .categories-flex {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-  }
-
-  .cat-link {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 0.3rem 0.75rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.875rem;
-  }
-
-  .cat-link:hover {
-    border-color: var(--accent-blue);
-    color: var(--accent-blue);
-    text-decoration: none;
-  }
-
-  .detail-footer {
-    border-top: 1px solid var(--border-color);
-    padding-top: 1.5rem;
-    text-align: center;
-  }
-
-  .disclaimer {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-  }
-
-  .access-button {
-    display: inline-block;
-    background-color: var(--accent-blue);
-    color: #ffffff;
-    font-weight: 700;
-    padding: 0.75rem 1.75rem;
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-  }
-
-  .access-button:hover {
-    background-color: var(--accent-blue-hover);
-    text-decoration: none;
-  }
-</style>

@@ -2,6 +2,7 @@ import { defineConfig, passthroughImageService } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import partytown from '@astrojs/partytown';
 import cloudflare from '@astrojs/cloudflare';
+// Remova esta linha: import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://omundoemumclick.com.br',
@@ -12,10 +13,11 @@ export default defineConfig({
     }
   }),
   image: {
-    service: passthroughImageService() // Resolve o aviso do Sharp na Cloudflare
+    service: passthroughImageService()
   },
   integrations: [
     tailwind(), 
-    partytown()
+    partytown(),
+    // Remova 'sitemap()' daqui
   ],
 });

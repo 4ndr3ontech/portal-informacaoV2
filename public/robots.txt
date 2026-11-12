@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /~partytown/
-Disallow: /cdn-cgi/
 
 Sitemap: https://omundoemumclick.com.br/sitemap.xml

@@ -1,96 +1,124 @@
 ---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import sources from '../../data/clean-news-sources.json';
+
 export const prerender = true;
-import BaseLayout from '../../layouts/BaseLayout.astro'; 
-import { getAllNiches, getSourcesByCategory } from '../../utils/filterSources';
-import type { Category } from '../../types';
 
 export async function getStaticPaths() {
-  const categories = getAllNiches();
-  
-  return categories.map((category) => {
-    const seoData: Record<string, { title: string, desc: string }> = {
-      'tecnologia': { title: 'Fontes de Tecnologia e Inovação', desc: 'Descubra os melhores sites e portais de tecnologia, inovação e ciência.' },
-      'economia': { title: 'Notícias de Economia e Negócios', desc: 'As principais fontes sobre o mercado financeiro, negócios e economia.' },
-      'brasil': { title: 'Notícias do Brasil', desc: 'Acompanhe os principais portais de notícias do Brasil em tempo real.' },
-      'politica': { title: 'Notícias de Política', desc: 'Fontes confiáveis e conceituadas para acompanhar o cenário político.' },
-      'esportes': { title: 'Notícias de Desporto', desc: 'Os melhores sites de desporto, futebol e competições desportivas.' },
-      'mundo': { title: 'Notícias do Mundo', desc: 'Cobertura internacional e geopolítica global.' },
-      'ciencia': { title: 'Notícias de Ciência', desc: 'Fontes sobre descobertas científicas e exploração espacial.' },
-      'saude': { title: 'Notícias de Saúde e Bem-Estar', desc: 'Portais com dicas de bem-estar, medicina e saúde.' },
-    };
+  const categories = [
+    { slug: 'brasil', name: 'Brasil', description: 'Principais veículos de notícias nacionais e regionais do país.', icon: '🇧🇷' },
+    { slug: 'mundo', name: 'Mundo', description: 'Análises, agências internacionais e acontecimentos globais.', icon: '🌍' },
+    { slug: 'politica', name: 'Política', description: 'Bastidores dos poderes executivo, legislativo e judiciário.', icon: '⚖️' },
+    { slug: 'economia', name: 'Economia', description: 'Mercado financeiro, negócios, câmbio e indicadores econômicos.', icon: '📈' },
+    { slug: 'tecnologia', name: 'Tecnologia', description: 'Inovação, inteligência artificial, hardware, software e segurança digital.', icon: '💻' },
+    { slug: 'games', name: 'Games', description: 'Indústria dos jogos eletrônicos, análises, hardware gamer e eSports.', icon: '🎮' },
+    { slug: 'esportes', name: 'Esportes', description: 'Futebol nacional, internacional e modalidades olímpicas.', icon: '⚽' },
+    { slug: 'ciencia', name: 'Ciência', description: 'Descobertas científicas, pesquisas acadêmicas, espaço e saúde.', icon: '🔬' }
+  ];
 
-    return {
-      params: { slug: category },
-      props: { 
-        categoryName: category,
-        seo: seoData[category] || { title: `Notícias de ${category}`, desc: `Encontre fontes de informação sobre ${category}.` }
-      },
-    };
-  });
+  return categories.map(cat => ({
+    params: { slug: cat.slug },
+    props: { category: cat }
+  }));
 }
 
-const { slug } = Astro.params;
-const { seo } = Astro.props;
+const { category } = Astro.props;
 
-// Dupla asserção resolve a validação estrita do TypeScript
-const sources = getSourcesByCategory(slug as unknown as Category);
+// Filtrar fontes associadas a esta categoria a partir do dataset unificado
+const categorySources = sources.filter((s: any) => {
+  if (!s.categories || !Array.isArray(s.categories)) return false;
+  return s.categories.some((c: string) => c.toLowerCase().includes(category.slug));
+});
 ---
 
-<BaseLayout title={`${seo.title} | OMundoEmUmCLICK`} description={seo.desc}>
-  <main class="min-h-screen bg-slate-50 pb-16">
+<BaseLayout title={`${category.name} — O Mundo em um Clique`}>
+  
+  <!-- Cabeçalho da Categoria -->
+  <section class="bg-slate-950 text-white py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+    <div class="max-w-4xl mx-auto text-center space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 text-xs font-black uppercase tracking-wider">
+        <span>Categoria Editorial</span>
+      </div>
+      
+      <div class="text-5xl">{category.icon}</div>
+      
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white">
+        Fontes de Informação: {category.name}
+      </h1>
+      
+      <p class="text-base sm:text-lg font-bold text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        {category.description} Explore portais verificados e referências independentes selecionadas para esta editoria.
+      </p>
+    </div>
+  </section>
+
+  <!-- Conteúdo Informativo e Lista de Fontes -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-10">
     
-    <!-- CABEÇALHO CLARO (FUNDO BRANCO) -->
-    <header class="bg-white text-slate-900 py-12 px-4 border-b border-slate-200">
-      <div class="max-w-7xl mx-auto space-y-3">
-        <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-slate-900">
-          {seo.title}
-        </h1>
-        <p class="text-slate-600 font-bold max-w-2xl text-lg">
-          {seo.desc}
-        </p>
-      </div>
-    </header>
+    <!-- Guia de Utilização da Categoria -->
+    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+      <h2 class="text-xl font-black text-slate-900">Sobre esta editoria no diretório</h2>
+      <p class="text-slate-600 font-bold text-sm leading-relaxed">
+        A curadoria da categoria <strong>{category.name}</strong> reúne portais independentes e publicações de referência. O nosso objetivo é fornecer um acesso rápido e transparente para que possa consultar diretamente as fontes originais com total segurança e praticidade.
+      </p>
+    </div>
 
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-      <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-        <h2 class="text-lg font-black text-slate-800">
-          {sources.length} fontes verificadas encontradas
-        </h2>
-        <a href="/" class="text-sm font-black text-cyan-600 hover:text-cyan-700 transition-colors flex items-center gap-1">
-          &larr; Voltar ao início
-        </a>
+    <!-- Grelha de Fontes Catalogadas -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between">
+        <h3 class="text-2xl font-black text-slate-900 tracking-tight">Veículos Catalogados ({categorySources.length})</h3>
+        <span class="text-xs font-bold text-slate-500">Acesso direto ao site oficial</span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sources.map((source) => (
-          <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="bg-slate-100 text-slate-800 text-xs px-2.5 py-1 rounded-lg font-black uppercase tracking-wider border border-slate-200">
-                {source.country}
-              </span>
-              <h3 class="text-xl font-black text-slate-900 truncate">
-                {source.name}
-              </h3>
+      {categorySources.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {categorySources.map((source: any) => (
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-cyan-500 transition-all duration-300 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs font-black text-slate-500 uppercase tracking-wider">
+                  <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">{source.mediaType || 'Portal'}</span>
+                  <span>{source.country || 'BR'}</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  {source.favicon && (
+                    <img src={source.favicon} alt={`Favicon ${source.name}`} class="w-6 h-6 rounded border border-slate-200 object-contain" />
+                  )}
+                  <h4 class="text-xl font-black text-slate-900 tracking-tight truncate">{source.name}</h4>
+                </div>
+                <p class="text-xs font-bold text-slate-600 leading-relaxed line-clamp-2">
+                  {source.description || 'Portal de informação catalogado no diretório global.'}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-400">Idioma: {source.language || (source.country === 'BR' ? 'pt-BR' : 'en/Multilíngue')}</span>
+                <div class="flex items-center gap-2">
+                  <a 
+                    href={`/fontes/${source.id}`}
+                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-wider transition-all"
+                  >
+                    Perfil
+                  </a>
+                  <a 
+                    href={source.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-cyan-600 text-white font-black text-xs uppercase tracking-wider transition-all"
+                  >
+                    Acessar ↗
+                  </a>
+                </div>
+              </div>
             </div>
-            
-            <p class="text-slate-600 font-bold text-sm mb-6 line-clamp-3 flex-grow leading-relaxed">
-              {source.description}
-            </p>
-            
-            <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
-              <span class="text-xs text-green-700 font-black flex items-center gap-1.5 bg-green-50 px-2.5 py-1 rounded-full border border-green-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                Verificado
-              </span>
-              
-              <a href={source.url} target="_blank" rel="noopener noreferrer" class="text-cyan-600 hover:text-cyan-700 font-black hover:underline flex items-center gap-1.5 text-sm transition-colors">
-                Aceder ao Site 
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              </a>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  </main>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16 bg-white rounded-3xl border border-slate-200">
+          <p class="text-slate-500 font-bold">Nenhuma fonte encontrada especificamente para esta categoria no momento.</p>
+        </div>
+      )}
+    </div>
+
+  </section>
+
 </BaseLayout>

@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "audit:sources": "node scripts/audit-sources.js"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^11.2.0",
@@ -27,5 +28,6 @@
   "allowScripts": {
     "esbuild@0.21.5": true,
     "sharp@0.33.5": true
-  }
+  },
+  "type": "module"
 }

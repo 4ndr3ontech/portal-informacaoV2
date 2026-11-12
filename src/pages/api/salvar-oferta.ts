@@ -2,13 +2,26 @@ import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
+// Cabeçalhos JSON obrigatórios para o frontend reconhecer a resposta
+const JSON_HEADERS = {
+  'Content-Type': 'application/json; charset=utf-8',
+  'Cache-Control': 'no-store',
+};
+
+function json(data: Record<string, unknown>, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: JSON_HEADERS,
+  });
+}
+
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const body = await request.json();
     const url = body?.url;
 
     if (!url) {
-      return new Response(JSON.stringify({ error: 'URL não fornecido' }), { status: 400 });
+      return json({ error: 'URL não fornecido' }, 400);
     }
 
     let titulo = 'Oferta Especial Mercado Livre';
@@ -30,32 +43,53 @@ export const POST: APIRoute = async ({ request, locals }) => {
       if (response.ok) {
         const html = await response.text();
         
-        // Título e Imagem
+        // 1. Título e Imagem
         const titleMatch = html.match(/<meta\s+property="og:title"\s+content="([^"]+)"/i) || html.match(/<title>([^<]+)<\/title>/i);
         if (titleMatch) titulo = titleMatch[1].replace(' - Mercado Livre', '').trim();
 
         const imageMatch = html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/i);
         if (imageMatch) imagem = imageMatch[1];
 
-        // CAPTURA DE PREÇOS (Desconto e Original)
-        // O Mercado Livre costuma ter múltiplos blocos de preço (o riscado e o promocional)
-        const fractionMatches = [...html.matchAll(/<span\s+class="andes-money-amount__fraction"[^>]*>([^<]+)<\/span>/gi)];
-        const centsMatches = [...html.matchAll(/<span\s+class="andes-money-amount__cents"[^>]*>([^<]+)<\/span>/gi)];
+        // 2. Descrição limpa
+        const descMatch = html.match(/<meta\s+property="og:description"\s+content="([^"]+)"/i) || html.match(/<meta\s+name="description"\s+content="([^"]+)"/i);
+        if (descMatch && descMatch[1]) {
+          descricao = descMatch[1]
+            .replace(/Compre-o no Mercado Livre/gi, '')
+            .replace(/Encontre mais produtos\.?/gi, '')
+            .replace(/Olha o que eu encontrei!/gi, '')
+            .replace(/Frete grátis em dia\.?/gi, '')
+            .trim();
+        }
 
-        if (fractionMatches.length >= 2) {
-          // Se houver dois ou mais, o primeiro costuma ser o preço original (riscado) e o segundo o promocional
-          const origInt = fractionMatches[0][1].trim();
-          const origCents = centsMatches.length > 0 ? centsMatches[0][1].trim() : '00';
-          precoOriginal = `${origInt},${origCents}`;
+        // 3. CAPTURA PRECISA DE PREÇOS (Original e Promocional)
+        // Procura primeiro pelo preço riscado dentro de tags <s> ou blocos de preço original
+        const sMatches = [...html.matchAll(/<s[^>]*>([\s\S]*?)<\/s>/gi)];
+        for (const sMatch of sMatches) {
+          const sContent = sMatch[1];
+          const frac = sContent.match(/andes-money-amount__fraction[^>]*>([^<]+)<\/span>/i);
+          const cent = sContent.match(/andes-money-amount__cents[^>]*>([^<]+)<\/span>/i);
+          if (frac) {
+            const intPart = frac[1].replace(/\./g, '').trim();
+            const centsPart = cent ? cent[1].trim() : '00';
+            precoOriginal = `${intPart},${centsPart}`;
+            break;
+          }
+        }
 
-          const promoInt = fractionMatches[1][1].trim();
-          const promoCents = centsMatches.length > 1 ? centsMatches[1][1].trim() : '00';
-          preco = `${promoInt},${promoCents}`;
-        } else if (fractionMatches.length === 1) {
-          // Apenas um preço disponível
-          const intPart = fractionMatches[0][1].trim();
+        // Removemos o bloco riscado do HTML para capturar o preço atual/promocional limpo
+        const htmlSemRiscado = html.replace(/<s[^>]*>[\s\S]*?<\/s>/gi, '');
+        const fractionMatches = [...htmlSemRiscado.matchAll(/andes-money-amount__fraction[^>]*>([^<]+)<\/span>/gi)];
+        const centsMatches = [...htmlSemRiscado.matchAll(/andes-money-amount__cents[^>]*>([^<]+)<\/span>/gi)];
+
+        if (fractionMatches.length > 0) {
+          const intPart = fractionMatches[0][1].replace(/\./g, '').trim();
           const centsPart = centsMatches.length > 0 ? centsMatches[0][1].trim() : '00';
           preco = `${intPart},${centsPart}`;
+        }
+
+        // Se o preço original for idêntico ao promocional, limpamos o original
+        if (preco === precoOriginal) {
+          precoOriginal = '';
         }
       }
     } catch (fetchErr) {
@@ -65,15 +99,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const runtime = (locals as any).runtime;
     const db = runtime?.env?.DB;
 
+    // Se o banco D1 não estiver vinculado localmente, retorna simulação com sucesso
     if (!db) {
-      return new Response(JSON.stringify({ 
+      return json({ 
         success: true, 
         message: 'Simulação concluída!',
-        data: { titulo, preco, precoOriginal, imagem, url } 
-      }), { status: 200 });
+        data: { titulo, preco, precoOriginal, imagem, descricao, url } 
+      });
     }
 
-    // Gravação real no D1 (incluindo o preço original)
+    // Gravação real no D1
     await db.prepare(
       `INSERT INTO offers (title, description, image_url, affiliate_link, price, original_price, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`
     ).bind(
@@ -82,16 +117,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
       imagem, 
       url, 
       preco, 
-      precoOriginal, 
+      precoOriginal || null, 
       new Date().toISOString()
     ).run();
 
-    return new Response(JSON.stringify({ 
+    return json({ 
       success: true, 
-      data: { titulo, preco, precoOriginal, imagem } 
-    }), { status: 200 });
+      data: { titulo, preco, precoOriginal, imagem, descricao } 
+    });
 
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || 'Erro no servidor' }), { status: 500 });
+    return json({ error: error.message || 'Erro no servidor' }, 500);
   }
 };
